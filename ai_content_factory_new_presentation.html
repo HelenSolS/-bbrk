@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Контент-Фабрика - Investor Pitch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-500: #007AFF;
+            --primary-300: #52A5FF;
+            --primary-100: #D6E9FF;
+            --bg-page: #000000;
+            --bg-surface: #111111;
+            --text-primary: #F5F5F7;
+            --text-secondary: #888888;
+            --border-subtle: #2A2A2A;
+            --success: #30D158;
+            --green-button: linear-gradient(135deg, #30D158, #32D74B);
+            --green-button-hover: linear-gradient(135deg, #32D74B, #28A745);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 64px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .hero-title {
+            font-size: 96px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 32px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+        
+        .hero-accent {
+            background: linear-gradient(135deg, var(--success), var(--primary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .slide-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: flex-start;
+            flex: 1;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-500);
+            box-shadow: 0 16px 64px rgba(0, 122, 255, 0.2);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+        }
+        
+        .card-metric {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 16px;
+        }
+        
+        .card-metric.success {
+            color: var(--success);
+        }
+        
+        .card-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, rgba(255, 69, 58, 0.1), rgba(255, 69, 58, 0.05));
+            border: 2px solid rgba(255, 69, 58, 0.3);
+            border-radius: 32px;
+            padding: 64px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(48, 209, 88, 0.1));
+            border: 2px solid rgba(0, 122, 255, 0.3);
+            border-radius: 32px;
+            padding: 64px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .factory-scheme {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            margin: 48px 0;
+        }
+        
+        .scheme-block {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 40px 24px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .scheme-block:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-500);
+        }
+        
+        .scheme-arrow {
+            font-size: 48px;
+            color: var(--primary-500);
+            animation: flow 2s ease-in-out infinite;
+        }
+        
+        @keyframes flow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+        
+        .demo-interface {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .demo-timer {
+            text-align: center;
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border-subtle);
+        }
+        
+        .demo-timer .timer-number {
+            font-size: 96px;
+            font-weight: 700;
+            color: var(--primary-500);
+            text-shadow: 0 0 64px rgba(0, 122, 255, 0.8);
+            animation: countdown 60s linear infinite;
+            margin-bottom: 16px;
+        }
+        
+        @keyframes countdown {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .bottom-buttons {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 24px;
+            z-index: 999;
+        }
+        
+        .green-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--green-button);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(48, 209, 88, 0.3);
+        }
+        
+        .green-button:hover {
+            background: var(--green-button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(48, 209, 88, 0.4);
+        }
+        
+        .button-icon {
+            font-size: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .metric-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+        }
+        
+        .metric-value {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 12px;
+            text-shadow: 0 0 32px rgba(0, 122, 255, 0.5);
+        }
+        
+        .metric-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .market-opportunity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+        }
+        
+        .opportunity-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .investment-ask {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(48, 209, 88, 0.2));
+            border: 2px solid var(--primary-500);
+            border-radius: 32px;
+            padding: 48px;
+            text-align: center;
+        }
+        
+        .investment-amount {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 24px;
+            text-shadow: 0 0 48px rgba(48, 209, 88, 0.6);
+        }
+        
+        .roadmap-timeline {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 32px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(0, 122, 255, 0.1);
+            transform: translateX(8px);
+        }
+        
+        .timeline-quarter {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-right: 24px;
+            min-width: 80px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+        }
+        
+        .tech-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
+        }
+        
+        .tech-section h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--primary-500);
+        }
+        
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        
+        .tech-icon {
+            font-size: 20px;
+        }
+        
+        .business-model-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+        }
+        
+        .revenue-source {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .revenue-source h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--primary-500);
+        }
+        
+        .revenue-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+        
+        .revenue-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .china-chart {
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .chart-title {
+            font-size: 20px;
+            margin-bottom: 24px;
+            color: var(--primary-500);
+            text-align: center;
+        }
+        
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            padding: 20px 0;
+        }
+        
+        .chart-bar {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .bar {
+            width: 60px;
+            margin: 0 auto;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            transform: scale(1.05);
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .bar-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            display: flex;
+            gap: 16px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            font-size: 20px;
+        }
+        
+        .nav-button:hover {
+            background: rgba(0, 122, 255, 0.3);
+            border-color: var(--primary-500);
+            transform: scale(1.1);
+        }
+        
+        /* Анимации для появления элементов */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .split-layout,
+            .market-opportunity,
+            .tech-grid,
+            .business-model-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 72px;
+            }
+            
+            .slide-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Слайд 1: Титульный -->
+        <div class="slide slide-1 active">
+            <div style="margin-bottom: 32px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🎬</div>
+                <h1 class="hero-title" style="margin-bottom: 16px;">AI Контент-Фабрика</h1>
+                <p class="hero-subtitle">Полностью автоматизированное производство видеоконтента</p>
+            </div>
+            
+            <div class="content-grid" style="margin-bottom: 48px;">
+                <div class="card slide-up">
+                    <div class="card-metric">∞</div>
+                    <div class="card-label">Масштабируемость</div>
+                </div>
+                <div class="card slide-up">
+                    <div class="card-metric">15</div>
+                    <div class="card-label">Минут на серию</div>
+                </div>
+                <div class="card slide-up">
+                    <div class="card-metric">1000x</div>
+                    <div class="card-label">Быстрее традиционного</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <div style="font-size: 24px; color: var(--text-secondary); margin-bottom: 16px;">
+                    От идеи до готового видео за минуты, а не недели
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 2: Проблема индустрии -->
+        <div class="slide slide-2">
+            <h2 class="slide-title">Проблема индустрии</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <div class="challenge-box" style="max-width: 600px; margin: 0 auto;">
+                        <h2 style="font-size: 28px; margin-bottom: 16px; color: #FF453A;">90% времени уходит на рутину</h2>
+                        <div style="font-size: 72px; font-weight: 700; color: #FF453A; margin-bottom: 16px;">90%</div>
+                        <p style="font-size: 20px; color: var(--text-primary);">времени уходит на рутину, а не на креатив</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="margin-bottom: 32px;">
+                        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary);">Традиционные проблемы:</h3>
+                        <ul style="font-size: 18px; color: var(--text-secondary); line-height: 1.6;">
+                            <li style="margin-bottom: 12px;">❌ Долгие циклы производства (4-13 недель)</li>
+                            <li style="margin-bottom: 12px;">❌ Высокие затраты ($187,500 за серию)</li>
+                            <li style="margin-bottom: 12px;">❌ Зависимость от команды</li>
+                            <li style="margin-bottom: 12px;">❌ Сложность масштабирования</li>
+                            <li style="margin-bottom: 12px;">❌ Ограниченные возможности для экспериментов</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; text-align: center;">
+                        <div style="font-size: 32px; color: var(--success); margin-bottom: 8px;">Решение есть</div>
+                        <div style="font-size: 18px; color: var(--text-secondary);">Полная автоматизация пайплайна</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 3: Наше решение с демонстрацией интерфейса -->
+        <div class="slide slide-3">
+            <h2 class="slide-title">Наше решение: Полностью автономный пайплайн</h2>
+            
+            <div class="demo-interface">
+                <div class="demo-timer">
+                    <div class="timer-number hero-accent">15</div>
+                    <div style="font-size: 32px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary);">минут</div>
+                    <div style="font-size: 20px; color: var(--text-secondary); margin-bottom: 24px;">от идеи до готовой серии мультфильма</div>
+                    
+                    <div class="factory-scheme">
+                        <div class="scheme-block">
+                            <div style="font-size: 32px; margin-bottom: 16px;">💡</div>
+                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Идея</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Концепция и сюжет</div>
+                        </div>
+                        <div class="scheme-arrow">→</div>
+                        <div class="scheme-block">
+                            <div style="font-size: 32px; margin-bottom: 16px;">🤖</div>
+                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">ИИ</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Автоматическая генерация</div>
+                        </div>
+                        <div class="scheme-arrow">→</div>
+                        <div class="scheme-block">
+                            <div style="font-size: 32px; margin-bottom: 16px;">🎬</div>
+                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Видео</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Готовый контент</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Зеленые кнопки внизу -->
+            <div class="bottom-buttons">
+                <a href="content_factory_mockup.html" class="green-button">
+                    <div class="button-icon">🎮</div>
+                    <div>Открыть интерактивный прототип</div>
+                </a>
+                <a href="content_factory_technical.html" class="green-button">
+                    <div class="button-icon">🎬</div>
+                    <div>Смотреть демо сценарии</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Слайд 4: Технологии -->
+        <div class="slide slide-4">
+            <h2 class="slide-title">Мощные технологии для массового производства</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-section">
+                    <h3>🧠 Искусственный интеллект</h3>
+                    <div class="tech-item">
+                        <div class="tech-icon">📝</div>
+                        <div>Создание сценариев и диалогов</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🎭</div>
+                        <div>Генерация персонажей и анимация</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🎨</div>
+                        <div>Визуальные эффекты и композитинг</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🎵</div>
+                        <div>Автоматический саундтрек</div>
+                    </div>
+                </div>
+                
+                <div class="tech-section">
+                    <h3>⚡ Высокая производительность</h3>
+                    <div class="tech-item">
+                        <div class="tech-icon">🚀</div>
+                        <div>Параллельная обработка контента</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">💾</div>
+                        <div>Умное кэширование результатов</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">⚙️</div>
+                        <div>Оптимизация GPU-ресурсов</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔄</div>
+                        <div>Непрерывное улучшение качества</div>
+                    </div>
+                </div>
+                
+                <div class="tech-section">
+                    <h3>🌍 Масштабируемая платформа</h3>
+                    <div class="tech-item">
+                        <div class="tech-icon">☁️</div>
+                        <div>Облачная инфраструктура</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📈</div>
+                        <div>Автоматическое масштабирование</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🛡️</div>
+                        <div>Надежность и безопасность</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔗</div>
+                        <div>API для интеграции</div>
+                    </div>
+                </div>
+                
+                <div class="tech-section">
+                    <h3>🎯 Бизнес-ориентированность</h3>
+                    <div class="tech-item">
+                        <div class="tech-icon">💰</div>
+                        <div>Оптимизация затрат на производство</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <div>Аналитика и метрики</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🎬</div>
+                        <div>Разные форматы контента</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">⚡</div>
+                        <div>Быстрый выход на рынок</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 5: Бизнес-модель -->
+        <div class="slide slide-5">
+            <h2 class="slide-title">Многоканальная модель монетизации</h2>
+            
+            <div style="text-align: center; margin-bottom: 32px;">
+                <div style="font-size: 24px; color: var(--text-secondary);">
+                    Стабильные доходы из разных источников
+                </div>
+            </div>
+            
+            <div class="business-model-grid">
+                <div class="revenue-source">
+                    <h3>🏢 B2B решения</h3>
+                    <div class="revenue-amount">40%</div>
+                    <div class="revenue-desc">Доля выручки</div>
+                    <div style="margin-top: 16px; font-size: 14px; color: var(--text-primary);">
+                        Лицензирование технологии студиям и платформам
+                    </div>
+                </div>
+                
+                <div class="revenue-source">
+                    <h3>👥 Подписки</h3>
+                    <div class="revenue-amount">35%</div>
+                    <div class="revenue-desc">Доля выручки</div>
+                    <div style="margin-top: 16px; font-size: 14px; color: var(--text-primary);">
+                        Месячные и годовые планы для контент-креаторов
+                    </div>
+                </div>
+                
+                <div class="revenue-source">
+                    <h3>📺 Платформенный контент</h3>
+                    <div class="revenue-amount">20%</div>
+                    <div class="revenue-desc">Доля выручки</div>
+                    <div style="margin-top: 16px; font-size: 14px; color: var(--text-primary);">
+                        Собственные каналы и стриминговые платформы
+                    </div>
+                </div>
+                
+                <div class="revenue-source">
+                    <h3>🎯 Консалтинг</h3>
+                    <div class="revenue-amount">5%</div>
+                    <div class="revenue-desc">Доля выручки</div>
+                    <div style="margin-top: 16px; font-size: 14px; color: var(--text-primary);">
+                        Внедрение и кастомизация решений
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 48px; text-align: center; background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                <div style="font-size: 20px; color: var(--success); margin-bottom: 16px;">
+                    Устойчивая модель с множественными источниками дохода
+                </div>
+                <div style="font-size: 16px; color: var(--text-secondary);">
+                    Минимизация рисков через диверсификацию монетизации
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 6: Рыночная возможность -->
+        <div class="slide slide-6">
+            <h2 class="slide-title">Огромная рыночная возможность</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">€6.8B</div>
+                    <div class="metric-label">TAM (Европейский рынок)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">€340M</div>
+                    <div class="metric-label">SOM (5% захват рынка)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">22M</div>
+                    <div class="metric-label">Пользователей в Китае уже используют AI</div>
+                </div>
+            </div>
+            
+            <div class="market-opportunity">
+                <div class="opportunity-box">
+                    <h3 style="font-size: 28px; margin-bottom: 24px; color: var(--text-primary);">Почему сейчас?</h3>
+                    <ul style="text-align: left; font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                        <li style="margin-bottom: 12px;">🚀 AI технологии стали доступными</li>
+                        <li style="margin-bottom: 12px;">💰 Снижение стоимости вычислений</li>
+                        <li style="margin-bottom: 12px;">📈 Растущий спрос на контент</li>
+                        <li style="margin-bottom: 12px;">🎯 Недостаток качественных решений в Европе</li>
+                        <li style="margin-bottom: 12px;">⚡ Быстрое время выхода на рынок</li>
+                    </ul>
+                </div>
+                
+                <div class="opportunity-box">
+                    <h3 style="font-size: 28px; margin-bottom: 24px; color: var(--text-primary);">Наши преимущества</h3>
+                    <ul style="text-align: left; font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                        <li style="margin-bottom: 12px;">✅ Первые на европейском рынке</li>
+                        <li style="margin-bottom: 12px;">✅ Европейская локализация</li>
+                        <li style="margin-bottom: 12px;">✅ GDPR-совместимость</li>
+                        <li style="margin-bottom: 12px;">✅ Мультиязычная поддержка</li>
+                        <li style="margin-bottom: 12px;">✅ Понимание местного менталитета</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 7: Опыт китайского рынка -->
+        <div class="slide slide-7">
+            <h2 class="slide-title">Видим опыт Китая - готовы повторить успех</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary);">Китайский рынок показывает путь</h3>
+                    <div class="challenge-box" style="margin-bottom: 32px;">
+                        <div style="font-size: 48px; font-weight: 700; color: #FF453A; margin-bottom: 16px;">22M</div>
+                        <div style="font-size: 18px; color: var(--text-primary); margin-bottom: 24px;">пользователей в Китае уже создают контент с ИИ</div>
+                        <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                            ✅ Экспоненциальный рост аудитории<br>
+                            ✅ Массовая доступность ИИ-инструментов<br>
+                            ✅ Налаженная экосистема генерации контента
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                        <h4 style="font-size: 20px; margin-bottom: 24px; color: var(--primary-500);">Наша стратегия адаптации</h4>
+                        <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                            🇪🇺 <strong>Европейский менталитет</strong> - адаптация под наши ценности<br>
+                            🌍 <strong>Мультиязычность</strong> - локализация для всех европейских рынков<br>
+                            ⚖️ <strong>GDPR-совместимость</strong> - строгие стандарты приватности<br>
+                            🎨 <strong>Высокое качество</strong> - европейский подход к креативности
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary); text-align: center;">Прогноз роста пользователей</h3>
+                    
+                    <div class="china-chart">
+                        <div class="chart-title">Пользователи (миллионы)</div>
+                        <div class="chart-container">
+                            <div class="chart-bar">
+                                <div class="bar" style="background: linear-gradient(to top, #FF453A, #FF6B6B); height: 160px;">
+                                    <div class="bar-value" style="color: #FF453A;">22M</div>
+                                </div>
+                                <div class="bar-label">Китай<br>(2024)</div>
+                            </div>
+                            <div class="chart-bar">
+                                <div class="bar" style="background: linear-gradient(to top, #30D158, #2ECC71); height: 80px;">
+                                    <div class="bar-value" style="color: #30D158;">15M</div>
+                                </div>
+                                <div class="bar-label">Европа<br>(2025)</div>
+                            </div>
+                            <div class="chart-bar">
+                                <div class="bar" style="background: linear-gradient(to top, var(--primary-500), var(--primary-300)); height: 120px;">
+                                    <div class="bar-value" style="color: var(--primary-500);">35M</div>
+                                </div>
+                                <div class="bar-label">Европа<br>(2026)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; background: var(--success); border-radius: 16px; padding: 24px;">
+                        <div style="font-size: 18px; font-weight: 600; color: white; margin-bottom: 8px;">
+                            60% роста в год
+                        </div>
+                        <div style="font-size: 14px; color: rgba(255,255,255,0.9);">
+                            Основываясь на китайском опыте, адаптированном под Европу
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 8: Команда и Timeline -->
+        <div class="slide slide-8">
+            <h2 class="slide-title">Команда разработки и план развития</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                <div>
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary); text-align: center;">Команда разработки</h3>
+                    
+                    <div style="margin-bottom: 32px; background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                        <h4 style="font-size: 20px; margin-bottom: 24px; color: var(--primary-500);">Core команда</h4>
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">2 специалиста по разработке</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">1 тестировщик</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--primary-500); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Маркетолог с опытом китайского рынка</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                        <h4 style="font-size: 20px; margin-bottom: 24px; color: var(--primary-500);">Команда креаторов</h4>
+                        <div style="font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                            <strong>Без автоматизации:</strong><br>
+                            5-6 креаторов работают над 3-4 сериалами<br>
+                            Выпускают 1 серию в день (≈ 1 минута контента)
+                        </div>
+                        <div style="font-size: 16px; color: var(--success); line-height: 1.6;">
+                            <strong>С автоматизацией:</strong><br>
+                            1 администратор линии производства<br>
+                            30 минут контента в день 🚀
+                        </div>
+                        <div style="margin-top: 16px; font-size: 14px; color: var(--text-secondary); text-align: center;">
+                            👥 Команда: 2 разработчика + 1 тестировщик + маркетолог<br>
+                            ⏱️ Срок: 4 недели до готового MVP<br>
+                            💰 Стоимость: $5,000-7,000 разработка<br>
+                            🏭 Цель: 30 минут контента в день
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-timeline">
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary); text-align: center;">Timeline развития</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Месяц 1</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">MVP готов</div>
+                            <div class="timeline-desc">Базовая функциональность работает</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Месяцы 2-6</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Тестирование и допилка</div>
+                            <div class="timeline-desc">Интерактивные доработки по ситуации</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-quarter">Месяц 7+</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Запуск продукта</div>
+                            <div class="timeline-desc">Полноценная работа с клиентами</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 32px; padding: 24px; background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(48, 209, 88, 0.1)); border-radius: 16px;">
+                        <div style="font-size: 18px; color: var(--text-primary); margin-bottom: 12px; text-align: center;">
+                            Фокус на быстрой итерации
+                        </div>
+                        <div style="font-size: 14px; color: var(--text-secondary); text-align: center;">
+                            Гибкий подход к развитию продукта
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 9: Экономика производства -->
+        <div class="slide slide-9">
+            <h2 class="slide-title">Экономика производства</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                <div>
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary); text-align: center;">Без фабрики (традиционно)</h3>
+                    
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px; margin-bottom: 32px;">
+                        <h4 style="font-size: 20px; margin-bottom: 24px; color: #FF453A;">Ежемесячные затраты</h4>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>5-6 креаторов × $3,000</span>
+                            <span style="font-weight: 600;">$15,000-18,000</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>Администратор контента × $2,500</span>
+                            <span style="font-weight: 600;">$2,500</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>Оборудование</span>
+                            <span style="font-weight: 600;">$3,000</span>
+                        </div>
+                        <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0;">
+                        <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; color: #FF453A;">
+                            <span>Итого в месяц</span>
+                            <span>$20,500-23,500</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 69, 58, 0.1); border: 1px solid rgba(255, 69, 58, 0.3); border-radius: 16px; padding: 24px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: #FF453A; margin-bottom: 8px;">1 минута</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">контента в день</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary); text-align: center;">С фабрикой (автоматизировано)</h3>
+                    
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px; margin-bottom: 32px;">
+                        <h4 style="font-size: 20px; margin-bottom: 24px; color: var(--success);">Ежемесячные затраты</h4>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>1 администратор линии × $4,000</span>
+                            <span style="font-weight: 600;">$4,000</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>AI API сервисы</span>
+                            <span style="font-weight: 600;">$2,000</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>Облачная инфраструктура</span>
+                            <span style="font-weight: 600;">$1,500</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span>Техническая поддержка</span>
+                            <span style="font-weight: 600;">$1,000</span>
+                        </div>
+                        <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0;">
+                        <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; color: var(--success);">
+                            <span>Итого в месяц</span>
+                            <span>$8,500</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(48, 209, 88, 0.1); border: 1px solid rgba(48, 209, 88, 0.3); border-radius: 16px; padding: 24px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 8px;">30 минут</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">контента в день</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 48px; text-align: center; background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(48, 209, 88, 0.2)); border: 2px solid var(--primary-500); border-radius: 32px; padding: 32px;">
+                <div style="font-size: 24px; color: var(--text-primary); margin-bottom: 16px;">
+                    💰 Экономия: $12,000-15,000 в месяц (50-65% снижение затрат)
+                </div>
+                <div style="font-size: 18px; color: var(--success); font-weight: 600;">
+                    🚀 Увеличение производительности в 30 раз!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 10: Инвестиции -->
+        <div class="slide slide-10">
+            <h2 class="slide-title">Инвестиции и Roadmap</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                <div class="investment-ask">
+                    <h3 style="font-size: 28px; margin-bottom: 32px; color: var(--text-primary);">Раунд инвестиций</h3>
+                    <div class="investment-amount">$1.5M</div>
+                    <div style="font-size: 18px; color: var(--text-secondary); margin-bottom: 32px;">Seed / Series A</div>
+                    
+                    <div style="text-align: left; margin-top: 32px;">
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Разработка MVP (1 месяц)</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Команда (4 человека)</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Тестирование (3-6 месяцев)</span>
+                        </div>
+                        <div style="margin-bottom: 16px; display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Маркетинг и продажи</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 12px;"></div>
+                            <span style="font-size: 16px;">Партнерства</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 32px;">
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                        <h3 style="font-size: 24px; margin-bottom: 24px; color: var(--text-primary); text-align: center;">Ожидаемые результаты</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: center;">
+                            <div>
+                                <div style="font-size: 36px; font-weight: 700; color: var(--success); margin-bottom: 8px;">50,000+</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">Подписчиков Year 1</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 36px; font-weight: 700; color: var(--primary-500); margin-bottom: 8px;">€8M+</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">Выручка Year 1</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--bg-surface); border-radius: 20px; padding: 32px;">
+                        <h3 style="font-size: 24px; margin-bottom: 24px; color: var(--text-primary); text-align: center;">Цели компании</h3>
+                        <ul style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                            <li style="margin-bottom: 12px;">🎯 Стать лидером AI content в Европе</li>
+                            <li style="margin-bottom: 12px;">🚀 Масштабирование на весь континент</li>
+                            <li style="margin-bottom: 12px;">💡 Создание экосистемы инструментов</li>
+                            <li style="margin-bottom: 12px;">🎬 Партнерство с ведущими студиями</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Слайд 11: Заключение -->
+        <div class="slide slide-11">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; text-align: center;">
+                <div style="font-size: 64px; margin-bottom: 32px;">🚀</div>
+                <h1 class="hero-title" style="margin-bottom: 24px;">Готовы изменить индустрию?</h1>
+                <p class="hero-subtitle" style="margin-bottom: 64px;">Давайте вместе создадим будущее контент-производства</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 800px;">
+                    <div class="card">
+                        <div style="font-size: 48px; margin-bottom: 16px;">💰</div>
+                        <div style="font-size: 24px; font-weight: 600; margin-bottom: 8px;">€8M+</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Year 1 выручка</div>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚡</div>
+                        <div style="font-size: 24px; font-weight: 600; margin-bottom: 8px;">15 минут</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Время создания серии</div>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🎯</div>
+                        <div style="font-size: 24px; font-weight: 600; margin-bottom: 8px;">First-mover</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Преимущество в Европе</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 64px; padding: 32px; background: var(--bg-surface); border-radius: 20px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 20px; color: var(--text-primary); margin-bottom: 16px;">Свяжитесь с нами</div>
+                    <div style="font-size: 16px; color: var(--text-secondary);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b5d6dadbc1d4d6c1f5d4dcd3d4d6c1dac7cc9bd6dad8">[email&#160;protected]</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Навигация -->
+    <div class="slide-indicator">
+        <span id="current-slide">1</span> / 11
+    </div>
+    
+    <div class="navigation">
+        <div class="nav-button" id="prev-btn" onclick="changeSlide(-1)">‹</div>
+        <div class="nav-button" id="next-btn" onclick="changeSlide(1)">›</div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+
+        function updateSlideIndicator() {
+            document.getElementById('current-slide').textContent = currentSlide;
+        }
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            document.querySelector(`.slide-${currentSlide}`).classList.add('active');
+            updateSlideIndicator();
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'Home') {
+                currentSlide = 1;
+                showSlide(currentSlide);
+            }
+            if (e.key === 'End') {
+                currentSlide = totalSlides;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Auto-start animations
+        setTimeout(() => {
+            const animatedElements = document.querySelectorAll('.slide-up, .fade-in');
+            animatedElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationDelay = `${index * 0.1}s`;
+                    el.classList.add('fade-in');
+                }, index * 100);
+            });
+        }, 500);
+
+        // Initialize
+        updateSlideIndicator();
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a7d24efbeef4434","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
+</body>
+</html>
