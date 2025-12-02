@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Factory - Демо сценарии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .scenarios-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .scenario-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .scenario-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .scenario-icon {
+            font-size: 32px;
+        }
+        
+        .scenario-description {
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .workflow-steps {
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1f2937;
+        }
+        
+        .step-content p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .time-indicator {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .demo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .demo-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .progress-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .processing-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        
+        .step-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .step-status.pending {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .step-status.processing {
+            background: #f59e0b;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .step-status.completed {
+            background: #10b981;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .result-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .result-preview {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            grid-column: 1 / -1;
+            margin-top: 20px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .table th,
+        .table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .table td {
+            color: #6b7280;
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .scenarios-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Content Factory - Демо сценарии</h1>
+            <p>Посмотрите, как ваш контент-завод создает видеоконтент за минуты</p>
+        </div>
+        
+        <div class="scenarios-container">
+            <!-- Scenario 1: Cartoon Series -->
+            <div class="scenario-card">
+                <div class="scenario-title">
+                    <span class="scenario-icon">🎭</span>
+                    Мультсериал
+                </div>
+                <div class="scenario-description">
+                    Создание полноценной серии мультфильма с персонажами, сюжетом и озвучкой. 
+                    Идеально для регулярного контента и студий анимации.
+                </div>
+                
+                <div class="time-indicator">
+                    ⏱️ 1 серия = 15 минут
+                </div>
+                
+                <div class="workflow-steps">
+                    <div class="step">
+                        <div class="step-icon">1</div>
+                        <div class="step-content">
+                            <h4>Идея и концепция</h4>
+                            <p>Вводите концепцию серии: "Приключения Байта в космосе"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">2</div>
+                        <div class="step-content">
+                            <h4>Автоматическая генерация</h4>
+                            <p>Создаются персонажи, сценарий, промпты для изображений</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">3</div>
+                        <div class="step-content">
+                            <h4>Производство кадров</h4>
+                            <p>Генерация всех необходимых изображений для анимации</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">4</div>
+                        <div class="step-content">
+                            <h4>Сборка и озвучка</h4>
+                            <p>Монтаж видео и синтез речи для персонажей</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">5</div>
+                        <div class="step-content">
+                            <h4>Публикация</h4>
+                            <p>Загрузка во все социальные сети и видеоплатформы</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="demo-button" onclick="startDemo('cartoon')">
+                    🎬 Демо: Создание серии мультфильма
+                </button>
+            </div>
+            
+            <!-- Scenario 2: Auto Video -->
+            <div class="scenario-card">
+                <div class="scenario-title">
+                    <span class="scenario-icon">⚡</span>
+                    Автоматическое видео
+                </div>
+                <div class="scenario-description">
+                    Мгновенное создание видео от простой идеи до готового ролика. 
+                    Идеально для контент-маркетинга и быстрого реагирования на тренды.
+                </div>
+                
+                <div class="time-indicator">
+                    ⏱️ От идеи до видео = 5-10 минут
+                </div>
+                
+                <div class="workflow-steps">
+                    <div class="step">
+                        <div class="step-icon">1</div>
+                        <div class="step-content">
+                            <h4>Ввод идеи</h4>
+                            <p>Просто напишите: "Польза утренней медитации"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">2</div>
+                        <div class="step-content">
+                            <h4>Анализ и планирование</h4>
+                            <p>ИИ анализирует тему и создает структуру ролика</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">3</div>
+                        <div class="step-content">
+                            <h4>Генерация контента</h4>
+                            <p>Создаются сценарий, изображения и визуальные элементы</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">4</div>
+                        <div class="step-content">
+                            <h4>Монтаж и финализация</h4>
+                            <p>Сборка всех элементов в единое видео с переходами</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-icon">5</div>
+                        <div class="step-content">
+                            <h4>Готово к публикации</h4>
+                            <p>Видео оптимизировано для всех платформ и готово к загрузке</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="demo-button" onclick="startDemo('auto')">
+                    🚀 Демо: Создание видео от идеи
+                </button>
+            </div>
+        </div>
+        
+        <!-- Comparison Table -->
+        <div class="comparison-table">
+            <h2 style="text-align: center; margin-bottom: 20px;">📊 Сравнение с традиционными методами</h2>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th>Традиционное производство</th>
+                        <th>Content Factory</th>
+                        <th>Экономия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Время создания</strong></td>
+                        <td>1-4 недели</td>
+                        <td>5-15 минут</td>
+                        <td><span class="highlight">В 1000+ раз быстрее</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Стоимость производства</strong></td>
+                        <td>$10,000 - $50,000</td>
+                        <td>$50 - $200</td>
+                        <td><span class="highlight">В 200+ раз дешевле</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Персонал</strong></td>
+                        <td>5-20 человек</td>
+                        <td>1 оператор</td>
+                        <td><span class="highlight">Функциональная замена целой студии</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Масштабирование</strong></td>
+                        <td>Линейный рост затрат</td>
+                        <td>Автоматическое</td>
+                        <td><span class="highlight">Неограниченное производство</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Качество контента</strong></td>
+                        <td>Зависит от команды</td>
+                        <td>Стабильно высокое</td>
+                        <td><span class="highlight">Стандартизированное качество</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Адаптация под тренды</strong></td>
+                        <td>1-2 недели</td>
+                        <td>1-5 минут</td>
+                        <td><span class="highlight">Мгновенная реакция на тренды</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Demo Modal -->
+    <div class="demo-modal" id="demoModal">
+        <div class="demo-content">
+            <button class="demo-close" onclick="closeDemo()">×</button>
+            <div id="demoContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDemo = null;
+        
+        function startDemo(type) {
+            currentDemo = type;
+            const modal = document.getElementById('demoModal');
+            const content = document.getElementById('demoContent');
+            
+            if (type === 'cartoon') {
+                content.innerHTML = createCartoonDemo();
+            } else {
+                content.innerHTML = createAutoDemo();
+            }
+            
+            modal.style.display = 'flex';
+            runDemo(type);
+        }
+        
+        function createCartoonDemo() {
+            return `
+                <h2 style="margin-bottom: 20px;">🎭 Демо: Создание серии мультфильма</h2>
+                <p style="color: #6b7280; margin-bottom: 30px;">
+                    <strong>Исходные данные:</strong> "Приключения Байта в космосе" - 5-минутная серия
+                </p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div id="demoSteps">
+                    ${generateSteps(['Анализ концепции', 'Создание персонажей', 'Генерация сценария', 'Создание изображений', 'Синтез речи', 'Монтаж видео', 'Экспорт и публикация'])}
+                </div>
+                
+                <div id="demoResults" style="display: none;">
+                    <h3 style="margin: 30px 0 20px 0; color: #10b981;">✅ Серия готова!</h3>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-preview">🎬</div>
+                            <h4>Основное видео</h4>
+                            <p>5:32 мин, 1920x1080</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">📱</div>
+                            <h4>Instagram версия</h4>
+                            <p>1:00 мин, вертикальная</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">🎵</div>
+                            <h4>TikTok версия</h4>
+                            <p>0:30 мин, вертикальная</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">📊</div>
+                            <h4>Субтитры</h4>
+                            <p>5 языков</p>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #10b981; font-weight: 600;">
+                        🎉 Общее время производства: <span style="font-size: 24px;">14:47</span>
+                    </p>
+                </div>
+            `;
+        }
+        
+        function createAutoDemo() {
+            return `
+                <h2 style="margin-bottom: 20px;">⚡ Демо: Создание видео от идеи</h2>
+                <p style="color: #6b7280; margin-bottom: 30px;">
+                    <strong>Исходные данные:</strong> "Польза утренней медитации" - образовательный ролик
+                </p>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div id="demoSteps">
+                    ${generateSteps(['Анализ темы', 'Создание структуры', 'Генерация сценария', 'Создание визуалов', 'Озвучка', 'Монтаж', 'Оптимизация и экспорт'])}
+                </div>
+                
+                <div id="demoResults" style="display: none;">
+                    <h3 style="margin: 30px 0 20px 0; color: #10b981;">✅ Видео готово!</h3>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-preview">🎬</div>
+                            <h4>Основной ролик</h4>
+                            <p>2:15 мин, HD качество</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">📱</div>
+                            <h4>Короткая версия</h4>
+                            <p>0:60 мин для соцсетей</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">🎨</div>
+                            <h4>Стикеры и GIF</h4>
+                            <p>5 анимированных элементов</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-preview">📝</div>
+                            <h4>Текстовые версии</h4>
+                            <p>Посты для всех соцсетей</p>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #10b981; font-weight: 600;">
+                        🚀 Общее время производства: <span style="font-size: 24px;">8:23</span>
+                    </p>
+                </div>
+            `;
+        }
+        
+        function generateSteps(steps) {
+            return steps.map((step, index) => `
+                <div class="processing-step" id="step-${index}">
+                    <div class="step-status pending" id="status-${index}">${index + 1}</div>
+                    <span>${step}</span>
+                </div>
+            `).join('');
+        }
+        
+        function runDemo(type) {
+            const steps = document.querySelectorAll('.processing-step');
+            const progressFill = document.getElementById('progressFill');
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    // Update step status
+                    const status = document.getElementById(`status-${currentStep}`);
+                    status.className = 'step-status processing';
+                    
+                    // Progress bar
+                    const progress = ((currentStep + 1) / steps.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    
+                    // Complete current step after delay
+                    setTimeout(() => {
+                        status.className = 'step-status completed';
+                        status.innerHTML = '✓';
+                        
+                        if (currentStep === steps.length - 1) {
+                            // All steps completed
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                document.getElementById('demoResults').style.display = 'block';
+                                progressFill.style.width = '100%';
+                            }, 1000);
+                        }
+                        
+                        currentStep++;
+                    }, type === 'cartoon' ? 2000 : 1200); // Different speeds for different demos
+                }
+            }, 100);
+        }
+        
+        function closeDemo() {
+            const modal = document.getElementById('demoModal');
+            modal.style.display = 'none';
+            currentDemo = null;
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('demoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDemo();
+            }
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a7a0f66a8505cc8","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
+</body>
+</html>

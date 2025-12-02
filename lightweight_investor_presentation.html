@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Factory - Investor Pitch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-500: #007AFF;
+            --primary-300: #52A5FF;
+            --primary-100: #D6E9FF;
+            --bg-page: #000000;
+            --bg-surface: #111111;
+            --text-primary: #F5F5F7;
+            --text-secondary: #888888;
+            --border-subtle: #2A2A2A;
+            --success: #30D158;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 64px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .slide-1 {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .slide-2, .slide-3, .slide-4, .slide-5, .slide-6, .slide-7 {
+            flex-direction: column;
+            gap: 48px;
+        }
+        
+        .hero-title {
+            font-size: 96px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .hero-accent {
+            color: var(--primary-500);
+            text-shadow: 0 0 48px rgba(0, 122, 255, 0.5);
+            animation: glow-pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow-pulse {
+            0% { text-shadow: 0 0 48px rgba(0, 122, 255, 0.5); }
+            100% { text-shadow: 0 0 64px rgba(0, 122, 255, 0.8); }
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 48px;
+            flex: 1;
+            align-items: center;
+        }
+        
+        .card {
+            background: var(--bg-surface);
+            padding: 48px 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 48px rgba(0, 122, 255, 0.3);
+            transform: translateY(-4px);
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .card-metric {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 16px;
+        }
+        
+        .card-metric.success {
+            color: var(--success);
+        }
+        
+        .card-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .factory-scheme {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding: 48px;
+        }
+        
+        .scheme-block {
+            background: var(--bg-surface);
+            padding: 32px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .scheme-block:hover {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 32px rgba(0, 122, 255, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .scheme-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .scheme-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .scheme-arrow {
+            font-size: 32px;
+            color: var(--primary-500);
+            animation: slide-arrow 2s ease-in-out infinite;
+        }
+        
+        @keyframes slide-arrow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+        
+        .countdown-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            background: radial-gradient(ellipse at center, rgba(0, 122, 255, 0.1) 0%, transparent 70%);
+            border-radius: 24px;
+            padding: 64px;
+        }
+        
+        .demo-timer {
+            font-size: 120px;
+            font-weight: 700;
+            color: var(--primary-500);
+            text-shadow: 0 0 64px rgba(0, 122, 255, 0.8);
+            animation: countdown 60s linear infinite;
+            margin-bottom: 24px;
+        }
+        
+        @keyframes countdown {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .demo-subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .demo-description {
+            font-size: 20px;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            padding: 48px 0;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--border-subtle);
+            z-index: 1;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-dot {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-500);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 24px rgba(0, 122, 255, 0.6);
+        }
+        
+        .timeline-label {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-date {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        
+        .nav-btn:hover {
+            border-color: var(--primary-500);
+            background: rgba(0, 122, 255, 0.1);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            top: 32px;
+            right: 32px;
+            background: var(--bg-surface);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .challenge-box {
+            background: rgba(255, 69, 58, 0.1);
+            border: 1px solid #FF453A;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .opportunity-box {
+            background: rgba(48, 209, 88, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .investment-ask {
+            background: var(--bg-surface);
+            border: 2px solid var(--primary-500);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 0 64px rgba(0, 122, 255, 0.3);
+        }
+        
+        .ask-amount {
+            font-size: 120px;
+            font-weight: 700;
+            color: var(--primary-500);
+            text-shadow: 0 0 64px rgba(0, 122, 255, 0.8);
+            margin-bottom: 24px;
+        }
+        
+        .use-of-funds {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .fund-item {
+            text-align: center;
+        }
+        
+        .fund-percentage {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 8px;
+        }
+        
+        .fund-purpose {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        .china-validation {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(82, 165, 255, 0.1));
+            border: 1px solid var(--primary-300);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+        
+        .china-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 16px;
+        }
+        
+        .china-stat {
+            flex: 1;
+        }
+        
+        .china-stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-500);
+        }
+        
+        .china-stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title & Problem -->
+        <div class="slide slide-1 active">
+            <div style="margin-bottom: 48px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🎬</div>
+                <h1 class="hero-title" style="margin-bottom: 16px;">AI Content Factory</h1>
+                <p class="subtitle">Создание студийного контента со скоростью мысли</p>
+            </div>
+            
+            <div class="challenge-box" style="max-width: 600px;">
+                <h2 style="font-size: 28px; margin-bottom: 16px; color: #FF453A;">Проблема индустрии</h2>
+                <div style="font-size: 72px; font-weight: 700; color: #FF453A; margin-bottom: 16px;">90%</div>
+                <p style="font-size: 20px; color: var(--text-primary);">времени уходит на рутину, а не на креатив</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Solution -->
+        <div class="slide slide-2">
+            <h2 class="slide-title">Наше решение: Полностью автономный пайплайн</h2>
+            
+            <div class="factory-scheme">
+                <div class="scheme-block">
+                    <div class="scheme-icon">📝</div>
+                    <div class="scheme-title">Сценарий</div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">AI генерация</div>
+                </div>
+                
+                <div class="scheme-arrow">→</div>
+                
+                <div class="scheme-block">
+                    <div class="scheme-icon">🎭</div>
+                    <div class="scheme-title">Персонажи</div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">3D моделирование</div>
+                </div>
+                
+                <div class="scheme-arrow">→</div>
+                
+                <div class="scheme-block">
+                    <div class="scheme-icon">🎵</div>
+                    <div class="scheme-title">Озвучка</div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Синтез голоса</div>
+                </div>
+                
+                <div class="scheme-arrow">→</div>
+                
+                <div class="scheme-block">
+                    <div class="scheme-icon">🎬</div>
+                    <div class="scheme-title">Анимация</div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Авто-рендеринг</div>
+                </div>
+            </div>
+            
+            <div class="china-validation">
+                <h3 style="text-align: center; margin-bottom: 16px; color: var(--primary-500);">🈸 Валидировано китайским рынком</h3>
+                <div class="china-stats">
+                    <div class="china-stat">
+                        <div class="china-stat-number">22M</div>
+                        <div class="china-stat-label">пользователей Kling AI</div>
+                    </div>
+                    <div class="china-stat">
+                        <div class="china-stat-number">168M</div>
+                        <div class="china-stat-label">видео создано</div>
+                    </div>
+                    <div class="china-stat">
+                        <div class="china-stat-number">$0.70</div>
+                        <div class="china-stat-label">за короткое видео</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Demo -->
+        <div class="slide slide-3">
+            <div class="countdown-demo">
+                <div class="demo-timer hero-accent">15</div>
+                <div class="demo-subtitle">минут от идеи до готовой серии мультфильма</div>
+                <div class="demo-description">
+                    То, что раньше занимало месяцы работы целой студии, теперь происходит за чашку кофе
+                </div>
+                
+                <div style="margin-top: 48px; display: flex; gap: 32px;">
+                    <div class="card">
+                        <div class="card-metric">1000x</div>
+                        <div class="card-title">Ускорение</div>
+                        <div class="card-description">производства</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-metric success">95%</div>
+                        <div class="card-title">Экономия</div>
+                        <div class="card-description">бюджета</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-metric">∞</div>
+                        <div class="card-title">Масштабирование</div>
+                        <div class="card-description">контента</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Business Potential -->
+        <div class="slide slide-4">
+            <h2 class="slide-title">Потенциал роста</h2>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-title">Рынок анимации</div>
+                    <div class="card-metric">$587B</div>
+                    <div class="card-description">к 2030 году<br/>全球市场规模</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Снижение затрат</div>
+                    <div class="card-metric success">до 95%</div>
+                    <div class="card-description">в сравнении с<br/>традиционной студией</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Новые рынки</div>
+                    <div class="card-description">
+                        • Гипер-персонализация<br/>
+                        • Образовательный контент<br/>
+                        • Корпоративное обучение<br/>
+                        • Gaming & Metaverse
+                    </div>
+                </div>
+            </div>
+            
+            <div class="opportunity-box" style="margin-top: 32px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--success);">💰 Инвестиционная возможность</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; text-align: center;">
+                    <div>
+                        <div style="font-size: 36px; font-weight: 700; color: var(--success);">€6.8B</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">European TAM</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 36px; font-weight: 700; color: var(--success);">€340M</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">SOM (5% capture)</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 36px; font-weight: 700; color: var(--success);">2-3 года</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">technology moat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Why Us / Why Now -->
+        <div class="slide slide-5">
+            <h2 class="slide-title">Почему мы? Почему сейчас?</h2>
+            
+            <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="opportunity-box">
+                    <h3 style="font-size: 28px; margin-bottom: 24px; color: var(--success);">🚀 Почему сейчас</h3>
+                    <div style="text-align: left; font-size: 18px; line-height: 1.8;">
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• AI зрелость:</strong> Модели готовы к продакшн
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• Китайский proof:</strong> Валидированный спрос
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• Regulatory window:</strong> EU AI Act создает окно
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• Market gap:</strong> Нет достойных игроков в EU
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenge-box">
+                    <h3 style="font-size: 28px; margin-bottom: 24px; color: var(--primary-500);">🎯 Почему мы</h3>
+                    <div style="text-align: left; font-size: 18px; line-height: 1.8;">
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• First-mover:</strong> 12-18 месяцев форы
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• EU-native:</strong> Автоматический GDPR
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• Modular tech:</strong> Гибкость кастомизации
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <strong style="color: var(--primary-500);">• Local advantage:</strong> Культурная адаптация
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Investment & Roadmap -->
+        <div class="slide slide-6">
+            <h2 class="slide-title">Инвестиции и Roadmap</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+                <div class="investment-ask">
+                    <div style="font-size: 24px; margin-bottom: 24px; color: var(--text-secondary);">Запрашиваем</div>
+                    <div class="ask-amount">$1.5M</div>
+                    <div style="font-size: 20px; margin-bottom: 32px; color: var(--text-secondary);">Series Seed</div>
+                    
+                    <div class="use-of-funds">
+                        <div class="fund-item">
+                            <div class="fund-percentage">40%</div>
+                            <div class="fund-purpose">Команда<br/>(12→25 чел)</div>
+                        </div>
+                        <div class="fund-item">
+                            <div class="fund-percentage">35%</div>
+                            <div class="fund-purpose">R&D<br/>(AI models)</div>
+                        </div>
+                        <div class="fund-item">
+                            <div class="fund-percentage">25%</div>
+                            <div class="fund-purpose">Go-to-market<br/>(продажи)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--bg-surface); border-radius: 16px; padding: 32px; border: 1px solid var(--border-subtle);">
+                    <h3 style="font-size: 24px; margin-bottom: 32px; text-align: center;">Timeline 18 месяцев</h3>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label">MVP Launch</div>
+                            <div class="timeline-date">Q1 2025</div>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+                                • Первые клиенты<br/>
+                                • Product-market fit
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label">Scale</div>
+                            <div class="timeline-date">Q2 2025</div>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+                                • 100+ enterprise<br/>
+                                • €5M ARR
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label">Profitability</div>
+                            <div class="timeline-date">Q3 2025</div>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+                                • Break-even<br/>
+                                • Series A ready
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Contact -->
+        <div class="slide slide-7">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; text-align: center;">
+                <div style="font-size: 64px; margin-bottom: 32px;">🚀</div>
+                <h1 class="hero-title" style="margin-bottom: 24px;">Готовы изменить индустрию?</h1>
+                <p class="subtitle" style="max-width: 600px; margin-bottom: 48px;">
+                    Присоединяйтесь к революции в создании контента. Вместе мы создадим будущее медиа-индустрии.
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 600px;">
+                    <div class="card">
+                        <div style="font-size: 32px; margin-bottom: 16px;">📧</div>
+                        <div class="card-title">Email</div>
+                        <div class="card-description" style="color: var(--primary-500);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afccc0c1dbceccdbefcec6c9ceccdbc0ddd681ccc0c2">[email&#160;protected]</a></div>
+                    </div>
+                    
+                    <div class="card">
+                        <div style="font-size: 32px; margin-bottom: 16px;">📱</div>
+                        <div class="card-title">Phone</div>
+                        <div class="card-description" style="color: var(--primary-500);">+1 (555) 123-4567</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 48px; padding: 24px 48px; background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-subtle);">
+                    <div style="font-size: 18px; color: var(--text-secondary);">
+                        <strong style="color: var(--primary-500);">Next step:</strong> Demo call для обсуждения деталей
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-indicator">
+        <span id="current-slide">1</span> / 7
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+        
+        // Auto-play countdown demo
+        let timeLeft = 15;
+        const countdownElement = document.querySelector('.demo-timer');
+        
+        if (countdownElement) {
+            setInterval(() => {
+                timeLeft = timeLeft <= 1 ? 15 : timeLeft - 1;
+                countdownElement.textContent = timeLeft;
+            }, 1000);
+        }
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a7a0fdb1f065cc8","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
+</body>
+</html>
