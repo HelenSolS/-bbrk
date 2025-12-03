@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Контент-Фабрика  - Инвестиционный анализ 2025</title>
+    <title>AI Content Factory - Инвестиционный анализ 2025</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -616,7 +616,68 @@
             </div>
         </div>
 
-       
+        <!-- Risk Matrix -->
+        <div class="card">
+            <h2>🔍 Risk Matrix для инвесторов</h2>
+            
+            <div class="risk-matrix">
+                <table class="risk-table">
+                    <thead>
+                        <tr>
+                            <th>Платформа</th>
+                            <th>Reliability</th>
+                            <th>Cost Stability</th>
+                            <th>Quality</th>
+                            <th>Compliance</th>
+                            <th>Risk Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>OpenAI</strong></td>
+                            <td>High (99.9%)</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td><span class="risk-score risk-medium">🟡 Medium</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>DeepSeek</strong></td>
+                            <td>Medium (95%)</td>
+                            <td>High</td>
+                            <td>Medium</td>
+                            <td>Low</td>
+                            <td><span class="risk-score risk-high">🔴 High</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Runway ML</strong></td>
+                            <td>High (99%)</td>
+                            <td>Medium</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td><span class="risk-score risk-medium">🟡 Medium</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Synthesia</strong></td>
+                            <td>High (99.5%)</td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td><span class="risk-score risk-low">🟢 Low</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>⚠️ Regulatory & Compliance Risks</h3>
+            <ul style="font-size: 1.1rem; line-height: 1.8; margin: 20px 0;">
+                <li><strong>EU AI Act compliance:</strong> +15-25% operational costs</li>
+                <li><strong>Data residency:</strong> может потребовать локальные модели</li>
+                <li><strong>Content authenticity:</strong> disclosure requirements для AI-generated</li>
+                <li><strong>IP concerns:</strong> legal risks при training данных</li>
+            </ul>
+        </div>
+
         <!-- Investment Recommendations -->
         <div class="card">
             <h2>🚀 Инвестиционные рекомендации</h2>
@@ -654,7 +715,44 @@
             </div>
         </div>
 
-       
+        <!-- Financial Projections -->
+        <div class="card">
+            <h2>💹 Финансовые прогнозы (3 года)</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Сценарий</th>
+                            <th>Год 1</th>
+                            <th>Год 2</th>
+                            <th>Год 3</th>
+                            <th>Break-even</th>
+                            <th>Annual ROI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f0f9ff;">
+                            <td><strong>Conservative</strong></td>
+                            <td>2 потока × бюджетный = $240-960/month</td>
+                            <td>4 потока × средний = $1,920-7,680/month</td>
+                            <td>8 потоков × премиум = $15,360-115,200/month</td>
+                            <td>Month 2-3</td>
+                            <td>300-1000%</td>
+                        </tr>
+                        <tr style="background: #fef3c7;">
+                            <td><strong>Aggressive</strong></td>
+                            <td>4 потока × средний = $1,920-7,680/month</td>
+                            <td>8 потоков × премиум = $15,360-115,200/month</td>
+                            <td>16 потоков × корпоративный = $60K-500K/month</td>
+                            <td>Month 1</td>
+                            <td>500-2000%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- Charts -->
         <div class="card">
             <h2>📊 Анализ производственных мощностей</h2>
@@ -744,7 +842,89 @@
             }
         });
 
+        // ROI Comparison Chart
+        const roiCtx = document.getElementById('roiChart').getContext('2d');
+        new Chart(roiCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Бюджетный сегмент',
+                    data: [
+                        {x: 0.1, y: 90}, // Cost vs Profit Margin
+                        {x: 0.15, y: 85},
+                        {x: 0.2, y: 80}
+                    ],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    pointRadius: 8
+                }, {
+                    label: 'Средний сегмент',
+                    data: [
+                        {x: 0.5, y: 85},
+                        {x: 1.0, y: 82},
+                        {x: 2.0, y: 78}
+                    ],
+                    backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                    borderColor: 'rgba(245, 158, 11, 1)',
+                    pointRadius: 8
+                }, {
+                    label: 'Премиум сегмент',
+                    data: [
+                        {x: 2.0, y: 80},
+                        {x: 5.0, y: 75},
+                        {x: 15.0, y: 70}
+                    ],
+                    backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    pointRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'ROI vs Стоимость производства по сегментам',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'logarithmic',
+                        title: {
+                            display: true,
+                            text: 'Стоимость за минуту ($)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Profit Margin (%)'
+                        }
+                    }
+                }
+            }
+        });
 
+        // Interactive functions
+        function downloadPDF() {
+            alert('Функция скачивания PDF будет доступна в полной версии');
+        }
+
+        function scheduleMeeting() {
+            alert('Система планирования встреч будет интегрирована в production версию');
+        }
+
+        function requestDueDiligence() {
+            alert('Due Diligence пакет документов будет отправлен по запросу');
+        }
+    </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a8562971e472a51","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
 </body>
 </html>
