@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обоснование стоимости 1 минуты видео в AI Контент-Фабрике</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg: #050509;
+            --surface: #111119;
+            --surface-soft: #181824;
+            --accent: #007AFF;
+            --accent-soft: #3B82F6;
+            --accent-green: #22C55E;
+            --text: #F9FAFB;
+            --text-soft: #9CA3AF;
+            --border: #27272f;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+            color: var(--text);
+            padding: 32px 16px;
+            line-height: 1.6;
+        }
+        .doc {
+            max-width: 960px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(15,23,42,0.98), rgba(3,7,18,0.98));
+            border-radius: 24px;
+            border: 1px solid rgba(148,163,184,0.3);
+            box-shadow:
+                0 24px 80px rgba(15,23,42,0.9),
+                0 0 0 1px rgba(148,163,184,0.16);
+            padding: 32px 28px 36px;
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--accent-soft), #38BDF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 {
+            font-size: 20px;
+            margin: 24px 0 6px;
+            color: #E5E7EB;
+        }
+        h3 {
+            font-size: 16px;
+            margin: 16px 0 4px;
+            color: #E5E7EB;
+        }
+        p {
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-bottom: 8px;
+        }
+        ul {
+            margin: 4px 0 8px 20px;
+        }
+        li {
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-bottom: 3px;
+        }
+        .tagline {
+            font-size: 13px;
+            color: var(--text-soft);
+            margin-bottom: 18px;
+        }
+        .pill {
+            display: inline-block;
+            font-size: 11px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.5);
+            color: var(--text-soft);
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        .pill--accent {
+            border-color: rgba(59,130,246,0.8);
+            color: #BFDBFE;
+            background: radial-gradient(circle at top left, rgba(59,130,246,0.45), transparent 60%);
+        }
+        .box {
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 55%),
+                        radial-gradient(circle at bottom right, rgba(34,197,94,0.13), transparent 55%),
+                        var(--surface-soft);
+            padding: 16px 16px 14px;
+            margin: 10px 0 14px;
+        }
+        .box--outline {
+            background: rgba(15,23,42,0.8);
+        }
+        .inline-accent {
+            color: #E0F2FE;
+            font-weight: 500;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+            gap: 20px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 6px 0 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(55,65,81,0.7);
+        }
+        th, td {
+            padding: 8px 10px;
+            text-align: left;
+        }
+        th {
+            background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.96));
+            color: #E5E7EB;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(55,65,81,0.9);
+        }
+        tr:nth-child(even) td {
+            background: rgba(15,23,42,0.72);
+        }
+        tr:nth-child(odd) td {
+            background: rgba(15,23,42,0.9);
+        }
+        .num {
+            font-variant-numeric: tabular-nums;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        .highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(15,118,110,0.2);
+            border: 1px solid rgba(45,212,191,0.7);
+            color: #A5F3FC;
+            margin-left: 6px;
+        }
+        .footer-note {
+            margin-top: 18px;
+            font-size: 12px;
+            color: #6B7280;
+        }
+        @media (max-width: 720px) {
+            .doc { padding: 20px 16px 24px; border-radius: 20px; }
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            .grid-2 { grid-template-columns: minmax(0, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="doc">
+    <h1>Обоснование стоимости 1 минуты видео в AI&nbsp;Контент‑Фабрике</h1>
+    <p class="tagline">
+        Документ описывает логику формирования стоимости одной минуты финального видео, 
+        производимого через AI Контент‑Фабрику, и показывает, почему рыночный диапазон 
+        <span class="inline-accent">20–40&nbsp;€ за минуту</span> является обоснованным и устойчивым.
+    </p>
+
+    <div>
+        <span class="pill pill--accent">Unit economics</span>
+        <span class="pill">Variable / fixed costs</span>
+        <span class="pill">AI‑модели (видео, голос, GPT)</span>
+        <span class="pill">Инфраструктура</span>
+        <span class="pill">Мини‑команда</span>
+    </div>
+
+    <h2>1. Структура себестоимости минуты</h2>
+    <p>
+        Себестоимость одной минуты видео складывается из трёх основных компонент:
+    </p>
+    <ul>
+        <li><strong>Variable cost</strong> — прямые расходы на генерацию: видео‑модель, голос, GPT, хранение.</li>
+        <li><strong>Semi‑fixed cost</strong> — инфраструктура: серверы, очереди задач, логирование, мониторинг.</li>
+        <li><strong>Fixed cost</strong> — команда: 1 разработчик и 1 тестировщик/оператор линии.</li>
+    </ul>
+
+    <div class="box box--outline">
+        <p class="num">
+            Себестоимость минуты = (video + voice + gpt + storage) + (infrastructure / объём) + (команда / объём)
+        </p>
+    </div>
+
+    <h2>2. Variable cost: модели и генерация</h2>
+
+    <h3>2.1. Видео‑генерация</h3>
+    <p>
+        Актуальные AI‑видео‑модели (Runway, Luma, Kling, Veo и др.) при использовании через API 
+        в среднем стоят <span class="num">0.05–0.12&nbsp;€</span> за секунду видео в зависимости от разрешения и сложности сцены.
+    </p>
+    <p>
+        Для 1 минуты (60 секунд):
+    </p>
+    <ul>
+        <li><span class="num">60 × 0.05&nbsp;€ = 3.00&nbsp;€</span></li>
+        <li><span class="num">60 × 0.12&nbsp;€ = 7.20&nbsp;€</span></li>
+    </ul>
+    <p>
+        Таким образом, реалистичный диапазон расходов на генерацию одной минуты видео: 
+        <span class="inline-accent num">3–7&nbsp;€</span>.
+    </p>
+
+    <h3>2.2. Голос (TTS)</h3>
+    <p>
+        Качественные TTS‑модели (человеческое звучание, несколько языков и эмоций) стоят ориентировочно 
+        <span class="num">0.02–0.08&nbsp;€</span> за минуту озвучки.
+    </p>
+
+    <h3>2.3. GPT / текст / промптинг</h3>
+    <p>
+        GPT‑модели используются для разбиения сценария на сцены, генерации описаний шотов, эмоциональных подсказок и пр.
+        При оптимизации промптов расходы на GPT на 1 минуту финального видео находятся в диапазоне 
+        <span class="num">0.01–0.07&nbsp;€</span>.
+    </p>
+
+    <h3>2.4. Хранение, трафик, CDN</h3>
+    <p>
+        Дополнительные расходы на хранение и доставку видео (облако, CDN, трафик) можно оценить как 
+        <span class="num">0.01–0.03&nbsp;€</span> на 1 минуту, в зависимости от выбранного провайдера и объёма.
+    </p>
+
+    <div class="box">
+        <h3>Итог по variable cost</h3>
+        <p>
+            Суммарные переменные расходы на генерацию одной минуты видео:
+        </p>
+        <ul>
+            <li>Видео: <span class="num">3.0–7.2&nbsp;€</span></li>
+            <li>Голос: <span class="num">0.02–0.08&nbsp;€</span></li>
+            <li>GPT: <span class="num">0.01–0.07&nbsp;€</span></li>
+            <li>Хранение/трафик: <span class="num">0.01–0.03&nbsp;€</span></li>
+        </ul>
+        <p>
+            Итого variable cost: <span class="inline-accent num">3.2–7.3&nbsp;€ за минуту</span>.
+        </p>
+    </div>
+
+    <h2>3. Semi‑fixed cost: инфраструктура</h2>
+    <p>
+        Инфраструктура не растёт линейно с каждым дополнительным видео, поэтому её удобно рассматривать как 
+        условно фиксированную с распределением на объём выпуска.
+    </p>
+
+    <h3>3.1. Состав инфраструктуры</h3>
+    <ul>
+        <li>Облачные серверы (оркестратор, API‑слой): <span class="num">70–140&nbsp;€ / мес</span></li>
+        <li>Очереди задач, логирование, резерв: <span class="num">30–70&nbsp;€ / мес</span></li>
+        <li>Мониторинг, алерты, панель управления: <span class="num">30–60&nbsp;€ / мес</span></li>
+    </ul>
+    <p>
+        В сумме: ориентировочно <span class="inline-accent num">130–270&nbsp;€ / месяц</span>.
+    </p>
+
+    <h3>3.2. Распределение на объём выпуска</h3>
+    <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>Объём выпуска</th>
+                <th>Инфраструктура в месяц</th>
+                <th>Инфраструктура на минуту</th>
+            </tr>
+            <tr>
+                <td class="num">300 мин</td>
+                <td class="num">130–270&nbsp;€</td>
+                <td class="num">0.43–0.90&nbsp;€</td>
+            </tr>
+            <tr>
+                <td class="num">500 мин</td>
+                <td class="num">130–270&nbsp;€</td>
+                <td class="num">0.26–0.54&nbsp;€</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>4. Fixed cost: команда</h2>
+    <p>
+        Благодаря высокой степени автоматизации базовая команда фабрики минимальна:
+        <span class="inline-accent">1 разработчик + 1 тестировщик/оператор линии</span>. 
+        Все остальные роли (сценарист, режиссёр шотов, монтажёр) реализованы через ИИ‑модули.
+    </p>
+
+    <h3>4.1. Оценка расходов на команду</h3>
+    <ul>
+        <li>Разработчик: <span class="num">3,500–4,500&nbsp;€ / мес</span></li>
+        <li>Тестировщик/оператор: <span class="num">1,800–2,500&nbsp;€ / мес</span></li>
+    </ul>
+    <p>
+        В сумме: <span class="inline-accent num">5,300–7,000&nbsp;€ / месяц</span>.
+    </p>
+
+    <h3>4.2. Распределение затрат команды на минуту</h3>
+    <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>Объём выпуска</th>
+                <th>Команда в месяц</th>
+                <th>Команда на минуту</th>
+            </tr>
+            <tr>
+                <td class="num">300 мин</td>
+                <td class="num">5,300–7,000&nbsp;€</td>
+                <td class="num">17.7–23.3&nbsp;€</td>
+            </tr>
+            <tr>
+                <td class="num">500 мин</td>
+                <td class="num">5,300–7,000&nbsp;€</td>
+                <td class="num">10.6–14.0&nbsp;€</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>5. Итоговая себестоимость минуты</h2>
+    <div class="grid-2">
+        <div>
+            <h3>5.1. При объёме 300 минут в месяц</h3>
+            <p>Диапазон себестоимости складывается так:</p>
+            <ul>
+                <li>Variable cost: <span class="num">3.2–7.3&nbsp;€</span></li>
+                <li>Инфраструктура: <span class="num">0.43–0.90&nbsp;€</span></li>
+                <li>Команда: <span class="num">17.7–23.3&nbsp;€</span></li>
+            </ul>
+            <p>
+                Итого: <span class="highlight num">~20.6–31.5&nbsp;€ за минуту</span>.
+            </p>
+        </div>
+        <div>
+            <h3>5.2. При объёме 500 минут в месяц</h3>
+            <p>Диапазон себестоимости:</p>
+            <ul>
+                <li>Variable cost: <span class="num">3.2–7.3&nbsp;€</span></li>
+                <li>Инфраструктура: <span class="num">0.26–0.54&nbsp;€</span></li>
+                <li>Команда: <span class="num">10.6–14.0&nbsp;€</span></li>
+            </ul>
+            <p>
+                Итого: <span class="highlight num">~13.4–21.8&nbsp;€ за минуту</span>.
+            </p>
+        </div>
+    </div>
+
+    <h2>6. Рыночная цена с учётом маржи</h2>
+    <p>
+        Для устойчивого продукта в сегменте SaaS/AI‑инструментов целевая валовая маржа обычно находится в диапазоне 
+        <span class="num">30–50&nbsp;%</span>.
+    </p>
+    <p>
+        При добавлении маржи к рассчитанной себестоимости мы получаем рыночный диапазон:
+    </p>
+    <div class="box">
+        <p>
+            <span class="highlight">Финальная цена для клиента: 20–40&nbsp;€ за минуту</span>
+            <span class="badge">целевая вилка</span>
+        </p>
+        <p>
+            Нижняя часть диапазона актуальна при высоком объёме выпуска (500+ минут в месяц), 
+            верхняя — при небольших объёмах и/или сложных сценариях, требующих большего числа пересборок.
+        </p>
+    </div>
+
+    <h2>7. Ключевые выводы для инвестора</h2>
+    <ul>
+        <li>Модель прозрачна: каждый компонент стоимости минуты можно разложить на отдельные статьи.</li>
+        <li>С ростом объёма выпуска себестоимость минуты падает, что повышает маржу.</li>
+        <li>Минимальная команда (1 разработчик + 1 тестировщик/оператор) снижает fixed‑cost‑нагрузку.</li>
+        <li>Инфраструктура масштабируется предсказуемо и хорошо ложится на SaaS‑подписку.</li>
+        <li>Диапазон <span class="inline-accent">20–40&nbsp;€ за минуту</span> конкурентоспособен относительно классического продакшена и других AI‑решений.</li>
+    </ul>
+
+    <p class="footer-note">
+        Все приведённые цифры являются ориентировочными оценками, основанными на текущих рыночных ценах 
+        на AI‑модели и облачную инфраструктуру, и могут уточняться по мере развития продукта и изменения 
+        стоимости сторонних сервисов.
+    </p>
+</div>
+</body>
+</html>
