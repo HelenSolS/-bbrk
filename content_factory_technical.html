@@ -440,8 +440,33 @@
                 
                 <div class="comparison-highlight">
                     <h3>🚀 Революционное превосходство</h3>
-                    <p>Время создания контента сокращено с недель до <strong>минут</strong>, 
-                    стоимость - в <strong>200+ раз</strong>, а качество остается стабильно высоким</p>
+                    <p>Время создания контента сокращено с недель до <strong>15 минут</strong>, 
+                    стоимость - с $700+ до <strong onclick="toggleCostDetails()" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                        $9.40 за минуту 
+                        <span id="costArrow" style="transition: transform 0.3s; font-size: 14px;">▼</span>
+                    </strong> (экономия 98.7% vs традиционные методы),
+                    <div id="costDetails" style="display: none; margin-top: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; font-size: 14px; text-align: left;">
+                        <div style="margin-bottom: 8px; display: flex; justify-content: space-between;">
+                            <span style="color: rgba(255,255,255,0.7);">Месяц 1 (5 мин/день):</span>
+                            <span style="color: white; font-weight: 600;">$64.80/мин</span>
+                        </div>
+                        <div style="margin-bottom: 8px; display: flex; justify-content: space-between;">
+                            <span style="color: rgba(255,255,255,0.7);">Месяц 2 (15 мин/день):</span>
+                            <span style="color: white; font-weight: 600;">$21.60/мин</span>
+                        </div>
+                        <div style="margin-bottom: 8px; display: flex; justify-content: space-between;">
+                            <span style="color: rgba(255,255,255,0.7);">Месяц 3+ (30 мин/день):</span>
+                            <span style="color: white; font-weight: 600;">$10.80/мин</span>
+                        </div>
+                        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between;">
+                            <span style="color: white; font-weight: 700;">Средняя стоимость:</span>
+                            <span style="color: #007AFF; font-weight: 700;">$9.40/мин</span>
+                        </div>
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; text-align: center;">
+                            *Включая 20% буфер на операционные расходы
+                        </div>
+                    </div> 
+                    а качество остается стабильно высоким</p>
                 </div>
             </div>
         </div>
@@ -757,6 +782,23 @@
             document.getElementById(tabName + '-tab').classList.add('active');
         }
     </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a7d398b69a74434","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
+
+
+        
+        // Cost details toggle function
+        function toggleCostDetails() {
+            const details = document.getElementById('costDetails');
+            const arrow = document.getElementById('costArrow');
+            
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                details.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a80b03ba92d1348","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
 </body>
 </html>
