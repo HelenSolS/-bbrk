@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Контент-Фабрика - Investor Pitch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-500: #007AFF;
+            --primary-300: #52A5FF;
+            --primary-100: #D6E9FF;
+            --bg-page: #000000;
+            --bg-surface: #111111;
+            --text-primary: #F5F5F7;
+            --text-secondary: #888888;
+            --border-subtle: #2A2A2A;
+            --success: #30D158;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 64px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .hero-title {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 28px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+        
+        .hero-accent {
+            background: linear-gradient(135deg, var(--success), var(--primary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            text-align: left;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 48px;
+            align-items: flex-start;
+            flex: 1;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-500);
+            box-shadow: 0 16px 64px rgba(0, 122, 255, 0.2);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+        }
+        
+        .card-metric {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 8px;
+        }
+        
+        .card-metric.success {
+            color: var(--success);
+        }
+        
+        .card-label {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .pill.primary {
+            border-color: var(--primary-500);
+            color: var(--primary-300);
+            background: rgba(0, 122, 255, 0.08);
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, rgba(255, 69, 58, 0.07), rgba(255, 69, 58, 0.03));
+            border: 2px solid rgba(255, 69, 58, 0.4);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 69, 58, 0.12) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.12), rgba(48, 209, 88, 0.12));
+            border: 2px solid rgba(0, 122, 255, 0.4);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-box::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -40%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(48, 209, 88, 0.18) 0%, transparent 70%);
+            animation: pulse 5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+        
+        .factory-scheme {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 24px 0;
+        }
+        
+        .scheme-block {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .scheme-block:hover {
+            transform: scale(1.03);
+            border-color: var(--primary-500);
+        }
+        
+        .scheme-arrow {
+            font-size: 40px;
+            color: var(--primary-500);
+            animation: flow 2s ease-in-out infinite;
+        }
+        
+        @keyframes flow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .metric-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-300));
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 4px;
+            text-shadow: 0 0 24px rgba(0, 122, 255, 0.5);
+        }
+        
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .market-opportunity {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .opportunity-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .investment-ask {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(48, 209, 88, 0.2));
+            border: 2px solid var(--primary-500);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: left;
+        }
+        
+        .investment-amount {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 8px;
+            text-shadow: 0 0 32px rgba(48, 209, 88, 0.7);
+        }
+        
+        .roadmap-timeline {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 24px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(0, 122, 255, 0.06);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(0, 122, 255, 0.12);
+            transform: translateX(6px);
+        }
+        
+        .timeline-quarter {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-right: 14px;
+            min-width: 70px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border-radius: 32px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+        
+        .nav-button {
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: rgba(0, 122, 255, 0.3);
+            border-color: var(--primary-500);
+            transform: scale(1.08);
+        }
+        
+        .tagline {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        
+        .list {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-left: 18px;
+        }
+        
+        .list li {
+            margin-bottom: 6px;
+        }
+        
+        .highlight {
+            color: var(--primary-300);
+            font-weight: 500;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .badge.success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .badge.warn {
+            border-color: #FF9F0A;
+            color: #FF9F0A;
+        }
+        
+        .badge.danger {
+            border-color: #FF453A;
+            color: #FF453A;
+        }
+        
+        .button-link {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        
+        .button-link.primary {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            color: white;
+        }
+        
+        .button-link.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 36px rgba(0, 122, 255, 0.5);
+        }
+        
+        .button-link.ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+        
+        .button-link.ghost:hover {
+            border-color: var(--primary-500);
+            color: var(--primary-300);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+            margin-top: 8px;
+        }
+        
+        .team-card {
+            background: var(--bg-surface);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            padding: 24px;
+        }
+        
+        .team-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .team-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 20%, #52A5FF, #111);
+            margin-right: 12px;
+        }
+        
+        .team-role {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .team-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 1200px) {
+            .split-layout,
+            .market-opportunity,
+            .team-grid,
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 54px;
+            }
+            
+            .slide-title {
+                font-size: 34px;
+            }
+            
+            .slide {
+                padding: 32px 20px 96px;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            body {
+                overflow-y: auto;
+            }
+            .presentation-container {
+                height: auto;
+            }
+            .slide {
+                position: relative;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        
+        <!-- Slide 1: Title & one-liner -->
+        <div class="slide slide-1 active">
+            <div style="margin-bottom: 32px;">
+                <div style="font-size: 40px; margin-bottom: 12px;">🎬</div>
+                <h1 class="hero-title">AI Контент-Фабрика</h1>
+                <p class="hero-subtitle">
+                    Полностью автоматизированная линия для выпуска видео-контента: 
+                    <span class="hero-accent">от идеи до готового ролика за минуты, а не недели.</span>
+                </p>
+                <div class="tagline">
+                    Для создателей курсов, маркетинговых команд и студий, которые хотят производить
+                    <span class="highlight">в 20–50 раз больше контента</span> без роста штата.
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-metric">4–8 нед.</div>
+                    <div class="card-label">Сейчас: типичный цикл от брифа до релиза</div>
+                </div>
+                <div class="card">
+                    <div class="card-metric success">15–40 мин</div>
+                    <div class="card-label">С нами: от сценария до готового видео-драфта</div>
+                </div>
+                <div class="card">
+                    <div class="card-metric">70–80%</div>
+                    <div class="card-label">Снижение доли ручной рутины в производстве</div>
+                </div>
+            </div>
+            
+            <div>
+                <span class="pill primary">AI-first пайплайн</span>
+                <span class="pill">Авто-промптинг</span>
+                <span class="pill">Видео, голос, монтаж</span>
+                <span class="pill">Готово к масштабированию</span>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Problem -->
+        <div class="slide slide-2">
+            <h2 class="slide-title">Проблема: видео растут, команды — нет</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <div class="challenge-box">
+                        <h3 style="font-size: 22px; margin-bottom: 12px; color: #FF453A; position: relative; z-index: 1;">
+                            Видео-контент нужен всем, но производство упирается в людей
+                        </h3>
+                        <p style="font-size: 14px; color: var(--text-primary); margin-bottom: 18px; position: relative; z-index: 1;">
+                            Даже с ИИ-инструментами компании всё ещё тратят недели на согласования,
+                            ручной монтаж и переделки. AI решает куски задачи, но не весь пайплайн.
+                        </p>
+                        <ul class="list" style="position: relative; z-index: 1;">
+                            <li>4–8 недель от брифа до релиза для образовательного или маркетингового видео.</li>
+                            <li>$30–80k за сезон контента при работе с агентством или студией.</li>
+                            <li>До 80% времени команды уходит на рутину: варианты сцен, экспорт, правки.</li>
+                            <li>Отсутствие “кнопки фабрики”: инструменты разрознены, нет единой линии.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <div class="card-metric">3–5×</div>
+                        <div class="card-label">так растёт спрос на видео-контент у экспертов и компаний в год</div>
+                    </div>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <div class="card-metric">1–2 чел.</div>
+                        <div class="card-label">типичная in-house-команда у экспертов / малых студий</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-metric">“Patchwork AI”</div>
+                        <div class="card-label">
+                            Сейчас: набор несвязанных сервисов (GPT, Runway, голос, монтаж).
+                            Нет конвейера, который бы **сам** управлял процессом.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Solution + links (keep prototype & architecture) -->
+        <div class="slide slide-3">
+            <h2 class="slide-title">Решение: AI Контент-Фабрика как конвейер</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <div class="solution-box">
+                        <h3 style="font-size: 22px; margin-bottom: 12px; position: relative; z-index: 1;">
+                            Единая линия: сценарий → сцены → видео → голос → монтаж → экспорт
+                        </h3>
+                        <p style="font-size: 14px; color: var(--text-primary); margin-bottom: 16px; position: relative; z-index: 1;">
+                            Мы не делаем ещё один генератор. Мы создаём <span class="highlight">управляемую фабрику</span>,
+                            которая связывает лучшие модели (GPT, видео, звук) в один автономный пайплайн.
+                        </p>
+                        <ul class="list" style="position: relative; z-index: 1;">
+                            <li>Авто-разбиение сценария на шоты и сцены.</li>
+                            <li>Автоматическое создание промптов под видео-модели.</li>
+                            <li>Генерация видео, голоса и базового монтажа без участия оператора.</li>
+                            <li>Один человек запускает и контролирует линию, а не собирает пазл из сервисов.</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 18px;">
+                        <span class="badge success">Автономный пайплайн</span>
+                        <span class="badge">API-first архитектура</span>
+                        <span class="badge">Готово к B2B и студиям</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <h3 style="font-size: 16px; margin-bottom: 8px;">Техническая архитектура</h3>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                            Детальное описание модулей: оркестратор сцен, генерация промптов, видеомодель,
+                            голосовой модуль, авто-монтаж, экспорт, логирование.
+                        </p>
+                        <a href="content_factory_technical.html" target="_blank" class="button-link primary">
+                            Открыть архитектуру
+                        </a>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="font-size: 16px; margin-bottom: 8px;">Живой интерактивный прототип</h3>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                            Демонстрация интерфейса “сборки серии”: выбор сценария, запуск конвейера,
+                            прогресс-бар, предпросмотр шотов, экспорт в нужный формат.
+                        </p>
+                        <a href="content_factory_mockup.html" target="_blank" class="button-link primary" style="background: linear-gradient(135deg, var(--success), #32D74B);">
+                            Открыть прототип
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Use cases / product view -->
+        <div class="slide slide-4">
+            <h2 class="slide-title">Продукт: где фабрика даёт максимальный эффект</h2>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="badge">Сегмент: EdTech / Курсы</div>
+                    <h3 style="font-size: 18px; margin: 10px 0;">Образовательные программы</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                        Быстрый выпуск видео-лекций, практических шотов, тизеров и коротких нарезок
+                        для соцсетей на основе одного сценария.
+                    </p>
+                    <ul class="list">
+                        <li>1 сценарий → серия видео + short-версии.</li>
+                        <li>А/В версии под разные рынки и языки.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="badge">Сегмент: Маркетинг / SMB</div>
+                    <h3 style="font-size: 18px; margin: 10px 0;">Маркетинговые кампании</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                        Видео для продуктов и сервисов, лендинги, промо-ролики, UGC-формат на базе
+                        одного бренд-нарратива.
+                    </p>
+                    <ul class="list">
+                        <li>Серии роликов для TikTok / Reels / Shorts.</li>
+                        <li>Быстрые итерации и тест гипотез.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="badge">Сегмент: Студии / Продакшен</div>
+                    <h3 style="font-size: 18px; margin: 10px 0;">AI-линия внутри студии</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                        Внутренний инструмент студии для удешевления и ускорения части проектов
+                        с сохранением креативного контроля.
+                    </p>
+                    <ul class="list">
+                        <li>Цены ниже рынка — маржа студии выше.</li>
+                        <li>Фабрика как white-label решение.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Market -->
+        <div class="slide slide-5">
+            <h2 class="slide-title">Рынок: европейский спрос на видео и AI-инструменты</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">€6.8B</div>
+                    <div class="metric-label">Оценочный TAM рынка AI‑видео и автоматизации продакшена в Европе</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">€340M</div>
+                    <div class="metric-label">SOM: 5% от рынка при фокусе на EdTech, маркетинге и студиях</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">20–30%</div>
+                    <div class="metric-label">Ожидаемый годовой рост спроса на видео‑контент и AI‑решения</div>
+                </div>
+            </div>
+            
+            <div class="market-opportunity">
+                <div class="opportunity-box">
+                    <h3 style="font-size: 18px; margin-bottom: 12px;">Почему сейчас</h3>
+                    <ul class="list">
+                        <li>Видео становится базовым форматом обучения и маркетинга.</li>
+                        <li>Модели (Runway, Luma, Kling, Sora) уже достаточно хороши — но нет фабрики вокруг них.</li>
+                        <li>Европейским компаниям нужны решения с GDPR, прозрачной стоимостью и поддержкой.</li>
+                    </ul>
+                </div>
+                <div class="opportunity-box">
+                    <h3 style="font-size: 18px; margin-bottom: 12px;">Наше позиционирование</h3>
+                    <ul class="list">
+                        <li><span class="highlight">Не ещё один генератор видео, а операционная система</span> для видеолинии.</li>
+                        <li>API-first: интеграции с существующим стеком клиента.</li>
+                        <li>Фокус на “из сценария в серию роликов” вместо единичных шотов.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Business model -->
+        <div class="slide slide-6">
+            <h2 class="slide-title">Бизнес-модель: SaaS + usage</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <h3 style="font-size: 18px; margin-bottom: 12px;">Подписка для разных сегментов</h3>
+                    <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="metric-card">
+                            <div class="metric-value" style="font-size: 22px;">€49</div>
+                            <div class="metric-label">Creator / месяц<br>До N минут видео, базовый набор моделей.</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="font-size: 22px;">€149</div>
+                            <div class="metric-label">Team / месяц<br>До M минут, несколько проектов, приоритет в очереди.</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="font-size: 22px;">€399+</div>
+                            <div class="metric-label">Studio / месяц<br>White-label, API‑доступ, поддержка.</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="font-size: 18px; margin: 16px 0 8px;">Usage‑модель</h3>
+                    <ul class="list">
+                        <li>Поминутная тарификация за сгенерированное видео сверх лимитов.</li>
+                        <li>Отдельные тарифы для heavy‑users (студии, продакшн‑команды).</li>
+                        <li>Дополнительные платные модули: кастомные персонажи, фирменные стили, интеграции.</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px;">Логика unit‑экономики (пример)</h3>
+                    <div class="card" style="margin-bottom: 12px;">
+                        <p style="font-size: 13px; color: var(--text-secondary);">
+                            При среднем клиенте уровня Team (€149/мес + usage):
+                        </p>
+                        <ul class="list">
+                            <li>Расходы на модели и инфраструктуру: ~€40–60 в месяц.</li>
+                            <li>Валовая маржа: 60–70% при гибриде подписки и usage.</li>
+                            <li>Цель: LTV клиента ≥ €600 при CAC ≤ €120.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <p style="font-size: 13px; color: var(--text-secondary);">
+                            На уровне студий (Studio tier) фабрика становится частью их прайса:
+                            мы помогаем им выпускать больше, они платят за стабильность и масштаб.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Production economics & comparison -->
+        <div class="slide slide-7">
+            <h2 class="slide-title">Экономика производства: фабрика vs ручной продакшен</h2>
+            
+            <div class="factory-scheme" style="margin-bottom: 24px;">
+                <div class="scheme-block" style="background: linear-gradient(135deg, rgba(255,69,58,0.12), rgba(255,69,58,0.06));">
+                    <h3 style="font-size: 16px; margin-bottom: 8px; color:#FF453A;">Традиционный продакшен</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">
+                        Сценарист, режиссёр, монтажёр, дизайнер, продюсер.
+                    </p>
+                    <div style="font-size: 26px; font-weight: 700; color:#FF453A; margin-bottom: 4px;">
+                        €80–150 / мин
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        Полноценный ролик (анимация / компиляция) под ключ.
+                    </div>
+                </div>
+                
+                <div class="scheme-arrow">→</div>
+                
+                <div class="scheme-block" style="background: linear-gradient(135deg, rgba(48,209,88,0.14), rgba(0,122,255,0.08));">
+                    <h3 style="font-size: 16px; margin-bottom: 8px; color:var(--success);">AI Контент‑Фабрика</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">
+                        1 разработчик + 1 тестировщик/оператор линии, плюс ИИ‑оркестратор.
+                    </p>
+                    <div style="font-size: 26px; font-weight: 700; color:var(--success); margin-bottom: 4px;">
+                        €20–40 / мин
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        При объёме 300–500 минут контента в месяц.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="split-layout">
+                <div>
+                    <div class="card">
+                        <h3 style="font-size: 16px; margin-bottom: 6px;">Структура затрат фабрики (пример)</h3>
+                        <ul class="list">
+                            <li>API моделей (видео, текст, голос): ~35–40% переменных затрат.</li>
+                            <li>Облако и инфраструктура оркестратора: ~20–25%.</li>
+                            <li>Команда (1 разработчик + 1 тестировщик/оператор): фикс‑кост.</li>
+                            <li>Остальное: мониторинг, логирование, резерв.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <h3 style="font-size: 16px; margin-bottom: 6px;">Наши цели по эффективности</h3>
+                        <ul class="list">
+                            <li>Снизить стоимость минуты до нижней границы диапазона благодаря оптимизации промптов и кэшей.</li>
+                            <li>Обеспечить предсказуемое SLA по времени генерации.</li>
+                            <li>Сделать фабрику выгодной и для нас, и для клиента при любом выбранном сегменте.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Roadmap & stage -->
+        <div class="slide slide-8">
+            <h2 class="slide-title">Статус проекта и дорожная карта</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">Где мы сейчас</h3>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <ul class="list">
+                            <li><span class="highlight">Функционирующий прототип</span> пайплайна: сценарий → сцены → промпты → видео → базовый монтаж.</li>
+                            <li>Тестирование на собственных кейсах (образовательный и маркетинговый контент).</li>
+                            <li>Понимание ограничений текущих моделей и узких мест инфраструктуры.</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">Краткосрочная цель</h3>
+                    <div class="card">
+                        <p style="font-size: 13px; color: var(--text-secondary);">
+                            В течение 12–18 месяцев — превратить прототип в продукт с платящими пользователями,
+                            доказать unit‑экономику и подготовиться к масштабированию.
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">Дорожная карта (пример)</h3>
+                    <div class="roadmap-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-quarter">Q1–Q2</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Product MVP</div>
+                                <div class="timeline-desc">
+                                    Доработка оркестратора, стабильные сценарии для 2–3 основных use case (EdTech, маркетинг),
+                                    первые пилоты с клиентами.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-quarter">Q3</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Первые продажи и партнёрства</div>
+                                <div class="timeline-desc">
+                                    Подписка для малых команд, пилоты со студиями, оптимизация стоимости минуты.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-quarter">Q4</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Масштабирование</div>
+                                <div class="timeline-desc">
+                                    Расширение инфраструктуры, углубление интеграций, подготовка к следующему раунду
+                                    на основе доказанной выручки и метрик удержания.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Team -->
+        <div class="slide slide-9">
+            <h2 class="slide-title">Команда: минимальный штат + максимальная автоматизация</h2>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">Операционная команда фабрики</h3>
+                    
+                    <div class="team-row">
+                        <div class="team-avatar"></div>
+                        <div>
+                            <div class="team-role">Разработчик</div>
+                            <div class="team-desc">
+                                Отвечает за оркестратор, интеграции с моделями и стабильность ядра фабрики.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-row">
+                        <div class="team-avatar"></div>
+                        <div>
+                            <div class="team-role">Тестировщик / оператор линии</div>
+                            <div class="team-desc">
+                                Тестирует пайплайн, ловит сбои, управляет запуском и мониторингом линий,
+                                при необходимости берёт на себя поддержку пользователей.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
+                        Эти два человека совместно закрывают поддержку продукта и работу фабрики в проде.
+                        Остальные “роли” (сценарист, ассистент режиссёра, монтажёр) — реализованы через ИИ‑модули.
+                    </p>
+                </div>
+                
+                <div class="team-card">
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">Роли, переданные ИИ и автоматизации</h3>
+                    <ul class="list">
+                        <li>💡 “AI‑сценарист” — разбиение идеи на сцены и реплики.</li>
+                        <li>🎭 “AI‑режиссёр шотов” — выбор ракурсов, стилей и визуальных решений.</li>
+                        <li>🎬 “AI‑монтажёр” — сборка последовательности, добавление переходов и длительностей.</li>
+                        <li>🗣 “AI‑озвучка” — голос, темп, эмоциональная окраска.</li>
+                    </ul>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">
+                        Такой подход позволяет держать команду компактной, а капитал — направить в продукт и инфраструктуру,
+                        а не в раздувание штата.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Investment ask -->
+        <div class="slide slide-10">
+            <h2 class="slide-title">Инвестиционное предложение</h2>
+            
+            <div class="split-layout">
+                <div>
+                    <div class="investment-ask">
+                        <h3 style="font-size: 18px; margin-bottom: 8px;">Поднимаемый раунд (pre‑seed)</h3>
+                        <div class="investment-amount">€250,000</div>
+                        <p style="font-size: 13px; color: var(--text-primary); margin-bottom: 10px;">
+                            на 18 месяцев runway для вывода AI Контент‑Фабрики из стадии прототипа
+                            в полнофункциональный продукт с доказанной unit‑экономикой.
+                        </p>
+                        <ul class="list">
+                            <li>35% — разработка продукта и оркестратора.</li>
+                            <li>30% — модели, GPU‑мощности и инфраструктура.</li>
+                            <li>25% — маркетинг, пилотные проекты и выход на рынок.</li>
+                            <li>10% — юридические вопросы, GDPR, комплаенс и резерв.</li>
+                        </ul>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                            Условия (equity, структура раунда) готовы обсуждаться в зависимости от формата участия инвестора.
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <h3 style="font-size: 16px; margin-bottom: 6px;">Что получает инвестор</h3>
+                        <ul class="list">
+                            <li>Участие в создании фабрики, а не очередного single‑tool сервиса.</li>
+                            <li>Продукт на пересечении трёх растущих трендов: видео, ИИ, автоматизация.</li>
+                            <li>Возможность масштабирования в Европе и далее глобально.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 16px; margin-bottom: 6px;">Следующие шаги</h3>
+                        <ul class="list">
+                            <li>Показ живой демо‑линии (прототип + архитектура).</li>
+                            <li>Детальное обсуждение roadmap, метрик и рисков.</li>
+                            <li>Совместная настройка целевых показателей раунда.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="slide-indicator" id="slide-indicator">
+        Слайд 1 / 10 — Стрелки ← → для переключения
+    </div>
+    <div class="navigation">
+        <div class="nav-button" id="prev-btn">←</div>
+        <div class="nav-button" id="next-btn">→</div>
+    </div>
+    
+    <script>
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach((s, i) => {
+                if (i === index) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            currentSlide = index;
+            const indicator = document.getElementById('slide-indicator');
+            if (indicator) {
+                indicator.textContent = `Слайд ${currentSlide + 1} / ${slides.length} — Стрелки ← → для переключения`;
+            }
+        }
+        
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            const next = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(next);
+        });
+        
+        document.getElementById('next-btn').addEventListener('click', () => {
+            const next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const next = (currentSlide + 1) % slides.length;
+                showSlide(next);
+            } else if (e.key === 'ArrowLeft') {
+                const next = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(next);
+            }
+        });
+        
+        showSlide(0);
+    </script>
+</body>
+</html>
