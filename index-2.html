@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Factory - Главная страница</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-500: #007AFF;
+            --primary-300: #52A5FF;
+            --primary-100: #D6E9FF;
+            --bg-page: #000000;
+            --bg-surface: #111111;
+            --bg-surface-2: #1a1a1a;
+            --text-primary: #F5F5F7;
+            --text-secondary: #888888;
+            --border-subtle: #2A2A2A;
+            --border-strong: #3A3A3A;
+            --success: #30D158;
+            --warning: #FF9500;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(0, 122, 255, 0.05));
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-500);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 122, 255, 0.1), transparent);
+        }
+        
+        .hero-icon {
+            font-size: 80px;
+            margin-bottom: 32px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-500);
+            box-shadow: 0 10px 40px rgba(0, 122, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Presentations Grid */
+        .presentations-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .presentations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+        
+        .presentation-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .presentation-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-500);
+            box-shadow: 0 20px 60px rgba(0, 122, 255, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            padding: 32px 24px 24px;
+            text-align: center;
+        }
+        
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .card-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .card-body {
+            padding: 24px;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        
+        .card-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .feature-icon {
+            width: 16px;
+            height: 16px;
+            background: var(--success);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-300));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary-500);
+            color: var(--primary-500);
+        }
+        
+        /* External Links */
+        .external-links {
+            padding: 60px 0;
+            background: var(--bg-surface-2);
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .external-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .external-card:hover {
+            border-color: var(--warning);
+            transform: translateY(-4px);
+        }
+        
+        .external-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--primary-500);
+        }
+        
+        .external-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--bg-surface-2);
+            border-top: 1px solid var(--border-subtle);
+            padding: 48px 0 24px;
+            text-align: center;
+        }
+        
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-links {
+                gap: 16px;
+            }
+            
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .presentations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🎬</div>
+                    <div class="logo-text">
+                        <h1>AI Content Factory</h1>
+                        <p>Автоматизированное производство видеоконтента</p>
+                    </div>
+                </div>
+                <nav class="nav-links">
+                    <a href="#presentations" class="nav-link">Презентации</a>
+                    <a href="#external" class="nav-link">Внешние ссылки</a>
+                    <a href="#about" class="nav-link">О проекте</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-icon">🚀</div>
+            <h1 class="hero-title">AI Content Factory Hub</h1>
+            <p class="hero-subtitle">
+                Полная коллекция презентаций, демо и документации для автоматизированного производства видеоконтента
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Минут от идеи до видео</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1000x</div>
+                    <div class="stat-label">Быстрее традиционного</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">€6.8B</div>
+                    <div class="stat-label">TAM на европейском рынке</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$14.80</div>
+                    <div class="stat-label">Себестоимость за минуту</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Presentations Section -->
+    <section id="presentations" class="presentations-section">
+        <div class="container">
+            <h2 class="section-title">📊 Презентации</h2>
+            <p class="section-subtitle">Полная коллекция инвесторских презентаций от MVP до финальных версий</p>
+            
+            <div class="presentations-grid">
+                <!-- Main Presentation -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Основная презентация</h3>
+                        <p class="card-description">Финальная версия для инвесторов</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Полная бизнес-модель</li>
+                            <li><div class="feature-icon"></div>Техническая архитектура</li>
+                            <li><div class="feature-icon"></div>Экономические расчеты</li>
+                            <li><div class="feature-icon"></div>План масштабирования</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="ai_content_factory_new_presentation.html" class="btn btn-primary">Открыть локально</a>
+                            <a href="https://helensols.github.io/-bbrk/ai_content_factory_new_presentation_updated.html" target="_blank" class="btn btn-secondary">Внешняя ссылка</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Responsive Version -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">📱</div>
+                        <h3 class="card-title">Мобильная версия</h3>
+                        <p class="card-description">Адаптивная презентация</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Оптимизирована для мобильных</li>
+                            <li><div class="feature-icon"></div>Сенсорное управление</li>
+                            <li><div class="feature-icon"></div>Компактный дизайн</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="ai_content_factory_mobile_responsive.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restored Version -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔄</div>
+                        <h3 class="card-title">Восстановленная версия</h3>
+                        <p class="card-description">Оригинальная презентация</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Базовая версия</li>
+                            <li><div class="feature-icon"></div>Историческая версия</li>
+                            <li><div class="feature-icon"></div>Для сравнения</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="ai_content_factory_restored_presentation.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lightweight Series -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">Облегченные версии</h3>
+                        <p class="card-description">Серия облегченных презентаций</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Краткие версии</li>
+                            <li><div class="feature-icon"></div>Быстрая загрузка</li>
+                            <li><div class="feature-icon"></div>Для питчей</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="lightweight_investor_presentation_final.html" class="btn btn-primary">Финальная</a>
+                            <a href="lightweight_investor_presentation.html" class="btn btn-secondary">Базовая</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Resources -->
+    <section class="presentations-section">
+        <div class="container">
+            <h2 class="section-title">🔧 Технические ресурсы</h2>
+            <p class="section-subtitle">Документация, прототипы и демо</p>
+            
+            <div class="presentations-grid">
+                <!-- Technical Documentation -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">Техническая документация</h3>
+                        <p class="card-description">Архитектура и API</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Архитектура системы</li>
+                            <li><div class="feature-icon"></div>API документация</li>
+                            <li><div class="feature-icon"></div>Инфраструктура</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="content_factory_technical.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Prototype -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎮</div>
+                        <h3 class="card-title">Интерактивный прототип</h3>
+                        <p class="card-description">Живая демонстрация</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Работающий интерфейс</li>
+                            <li><div class="feature-icon"></div>Реальный функционал</li>
+                            <li><div class="feature-icon"></div>Создание контента</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="content_factory_mockup.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎬</div>
+                        <h3 class="card-title">Демо</h3>
+                        <p class="card-description">Примеры использования</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Сценарии применения</li>
+                            <li><div class="feature-icon"></div>Готовые примеры</li>
+                            <li><div class="feature-icon"></div>Кейсы</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="content_factory_demo.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Examples -->
+                <div class="presentation-card">
+                    <div class="card-header">
+                        <div class="card-icon">💡</div>
+                        <h3 class="card-title">Примеры</h3>
+                        <p class="card-description">Образцы контента</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="card-features">
+                            <li><div class="feature-icon"></div>Образцы видео</li>
+                            <li><div class="feature-icon"></div>Шаблоны</li>
+                            <li><div class="feature-icon"></div>Стили</li>
+                        </ul>
+                        <div class="card-actions">
+                            <a href="examples.html" class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- External Links -->
+    <section id="external" class="external-links">
+        <div class="container">
+            <h2 class="section-title">🔗 Внешние ссылки</h2>
+            <p class="section-subtitle">Ссылки на публично доступные версии</p>
+            
+            <div class="links-grid">
+                <a href="https://helensols.github.io/-bbrk/ai_content_factory_new_presentation_updated.html" target="_blank" class="external-card">
+                    <h4>🌐 Главная презентация</h4>
+                    <p>Полная инвесторская презентация с обновленной экономикой и планом масштабирования</p>
+                </a>
+                
+                <div class="external-card">
+                    <h4>📊 Метрики и KPI</h4>
+                    <p>$13,340/месяц операционные расходы, $14.80/минута себестоимость, €6.8B TAM</p>
+                </div>
+                
+                <div class="external-card">
+                    <h4>🎯 Целевые рынки</h4>
+                    <p>EdTech (образование), Marketing (маркетинг), Studios (студии)</p>
+                </div>
+                
+                <div class="external-card">
+                    <h4>💰 Бизнес-модель</h4>
+                    <p>Creator (€49), Team (€149), Studio (€399+), комбинация подписки и pay-per-use</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                © 2025 AI Content Factory • Автоматизированное производство видеоконтента • 
+                От идеи до готового видео за 15 минут
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation for cards
+        const cards = document.querySelectorAll('.presentation-card, .stat-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"9a857ac6fa01ef8b","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.9.1","token":"e72945439c264b3b85d2e3b689102d27"}' crossorigin="anonymous"></script>
+</body>
+</html>
