@@ -2,239 +2,387 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Kling Avatar 2.0 vs Higgsfield Soul — простое объяснение</title>
+  <title>Планируемые расходы на Kling Avatar 2.0 и Higgsfield Soul</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #0b1020; color: #f5f5f5; }
-    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1, h2, h3 { font-weight: 700; }
-    h1 { font-size: 28px; margin-bottom: 8px; }
-    h2 { font-size: 22px; margin-top: 32px; border-bottom: 1px solid #333; padding-bottom: 4px; }
-    h3 { font-size: 18px; margin-top: 20px; }
+    body { font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #050816; color: #f9fafb; }
+    main { max-width: 1024px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1,h2,h3 { font-weight: 700; }
+    h1 { font-size: 26px; margin-bottom: 4px; }
+    h2 { font-size: 20px; margin-top: 28px; border-bottom: 1px solid #111827; padding-bottom: 4px; }
+    h3 { font-size: 17px; margin-top: 18px; }
     p { margin: 8px 0; }
-    .tagline { color: #a0aec0; margin-bottom: 16px; }
-    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; background: #1e293b; color: #e2e8f0; margin-bottom: 6px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 12px; }
-    .card { background: #111827; border-radius: 12px; padding: 14px 16px; border: 1px solid #1f2937; }
-    .card-strong { border-color: #4f46e5; box-shadow: 0 0 0 1px rgba(79,70,229,0.4); }
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; background: #111827; color: #e5e7eb; border: 1px solid #374151; margin-left: 6px; }
-    .badge-good { border-color: #22c55e; color: #bbf7d0; }
-    .badge-bad { border-color: #f97373; color: #fecaca; }
-    ul { padding-left: 18px; margin: 6px 0 10px; }
-    li { margin-bottom: 4px; }
-    table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 14px; }
-    th, td { border: 1px solid #1f2937; padding: 6px 8px; text-align: left; }
-    th { background: #111827; font-weight: 600; }
-    tr:nth-child(even) td { background: #020617; }
-    .hl { color: #facc15; font-weight: 600; }
-    .summary-box { background: #111827; border-radius: 12px; padding: 12px 14px; border: 1px dashed #4b5563; margin-top: 8px; }
-    .code { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; background: #020617; padding: 1px 5px; border-radius: 4px; }
-    .footnote { font-size: 12px; color: #9ca3af; margin-top: 4px; }
-    @media (max-width: 640px) {
-      h1 { font-size: 22px; }
-      h2 { font-size: 19px; }
+    .subtitle { color: #9ca3af; margin-bottom: 16px; }
+    .pill { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; background:#111827; color:#e5e7eb; margin-bottom:6px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:10px; }
+    .card { background:#020617; border-radius:10px; padding:12px 14px; border:1px solid #1f2937; }
+    .card-strong { border-color:#4f46e5; box-shadow:0 0 0 1px rgba(79,70,229,0.5); }
+    .note { font-size:12px; color:#9ca3af; margin-top:4px; }
+    table { width:100%; border-collapse:collapse; margin:10px 0 16px; font-size:14px; }
+    th,td { border:1px solid #111827; padding:6px 8px; text-align:left; }
+    th { background:#020617; font-weight:600; }
+    tr:nth-child(even) td { background:#030712; }
+    ul { margin:6px 0 8px; padding-left:18px; }
+    li { margin-bottom:4px; }
+    .hl { color:#facc15; font-weight:600; }
+    .tag { display:inline-block; font-size:11px; padding:1px 6px; border-radius:999px; border:1px solid #374151; color:#e5e7eb; margin-left:6px; }
+    .tag-ok { border-color:#22c55e; color:#bbf7d0; }
+    .tag-risk { border-color:#f97373; color:#fecaca; }
+    .summary-box { background:#020617; border-radius:10px; padding:10px 12px; border:1px dashed #4b5563; margin-top:8px; }
+    .code { font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:13px; background:#020617; padding:1px 4px; border-radius:4px; }
+    @media (max-width:640px) {
+      h1 { font-size:22px; }
+      h2 { font-size:18px; }
     }
   </style>
 </head>
 <body>
 <main>
-  <div class="pill">Разбор тарифов 2025</div>
-  <h1>Kling Avatar 2.0 vs Higgsfield Soul</h1>
-  <p class="tagline">
-    Страница, которая объясняет цены на аватары и картинки так, чтобы понял школьник.
-    Сколько роликов и картинок реально можно сделать за месяц и какой набор подписок выгоднее.
+  <div class="pill">Финансовое обоснование</div>
+  <h1>Расходы на Kling Avatar 2.0 и Higgsfield Soul</h1>
+  <p class="subtitle">
+    Цель: оценить, во сколько обойдётся ежемесячное производство видео с говорящими аватарами и связанных кадров для видео,
+    если использовать Kling Avatar 2.0 для анимации лица и Higgsfield Soul/Soul ID для создания персонажей и кадров.
   </p>
 
-  <!-- 1. Что за сервисы -->
-  <h2>Что это за две нейросети</h2>
+  <!-- 1. Краткое сравнение ролей сервисов -->
+  <h2>Роли сервисов в пайплайне</h2>
 
   <div class="grid">
     <div class="card">
-      <h3>Kling AI Avatar 2.0</h3>
-      <p><span class="hl">Задача:</span> делать говорящие видео-аватары из одной фотки и аудио.</p>
+      <h3>Kling Avatar 2.0</h3>
+      <p><span class="hl">Задача:</span> генерация видео с говорящей головой по одной фотографии и аудиодорожке.</p>
       <ul>
-        <li>Сильная сторона — <b>реалистичные лица и мимика</b>.</li>
-        <li>Считает всё в <b>кредитах за секунды видео</b>.[web:75][web:87][web:110]</li>
+        <li>Используется как основной генератор говорящих аватаров.</li>
+        <li>Тарификация поминутная: расход кредитов привязан к длительности ролика.</li>
       </ul>
     </div>
     <div class="card">
-      <h3>Higgsfield Soul</h3>
-      <p><span class="hl">Задача:</span> делать фотореалистичные картинки (и видео) по тексту или рефу.</p>
+      <h3>Higgsfield Soul и Soul ID</h3>
+      <p><span class="hl">Задача:</span> создание консистентного персонажа и кадров с этим лицом.</p>
       <ul>
-        <li>Модель <b>Soul</b> — именно для картинок.[web:56][web:67]</li>
-        <li>Каждая картинка Soul ≈ <b>0.25 кредита</b>.[web:67][web:56]</li>
+        <li>Soul ID (аналог LoRA) обучается на наборе фото и создаёт «персонажа».</li>
+        <li>Soul генерирует статичные кадры с этим персонажем и может использоваться как источник референсов/фреймов.</li>
       </ul>
     </div>
   </div>
 
-  <!-- 2. Тарифы Kling -->
-  <h2>Тарифы Kling: сколько роликов в месяц</h2>
+  <!-- 2. Kling: тарифы и стоимость минут -->
+  <h2>Kling Avatar 2.0: тарифы и стоимость минут видео</h2>
 
-  <p>У Kling есть планы с фиксированным числом кредитов в месяц. Для нас важны три:</p>
+  <p>Для оценки используем актуальные планы Kling AI: Pro и Premier, так как они релевантны рабочим объёмам.</p>
 
   <table>
     <thead>
       <tr>
         <th>План</th>
-        <th>Цена в месяц</th>
-        <th>Кредиты / месяц</th>
-        <th>Примерное использование</th>
+        <th>Ориентир по цене</th>
+        <th>Кредиты в месяц</th>
+        <th>Комментарий</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Standard</td>
-        <td>≈ $10</td>
-        <td>660</td>
-        <td>Для тестов и коротких роликов.[web:75][web:85][web:110]</td>
-      </tr>
-      <tr>
         <td>Pro</td>
-        <td>≈ $37</td>
-        <td>3000</td>
-        <td>Уже можно работать как креатору.[web:75][web:87]</td>
+        <td>≈ 37&nbsp;USD/мес</td>
+        <td>≈ 3000 кредитов</td>
+        <td>Подходит для индивидуального креатора или небольшого канала.</td>
       </tr>
       <tr>
         <td>Premier</td>
-        <td>≈ $92</td>
-        <td>8000</td>
-        <td>Под крупный объём, ближе к студии.[web:75][web:85]</td>
+        <td>≈ 92&nbsp;USD/мес</td>
+        <td>≈ 8000 кредитов</td>
+        <td>Подходит для регулярного выпуска роликов и маленькой «студии».</td>
       </tr>
     </tbody>
   </table>
 
-  <p>Для Avatar 2.0 удобно считать так: в среднем нужно около <b>3 кредита за 1 секунду видео</b>. Это соответствует цифрам по клипам у пользователей и оценкам по стоимости в обзорах.[web:81][web:109]</p>
+  <p>По данным от пользователей и вспомогательных гайдов:</p>
+  <ul>
+    <li>Средний расход Avatar 2.0 находится на уровне около <span class="hl">3 кредита за 1 секунду видео</span>.</li>
+  </ul>
 
   <div class="card card-strong">
-    <h3>Пример: 2‑минутный аватар в Kling</h3>
+    <h3>Пример: стоимость минуты видео в Kling</h3>
     <ul>
-      <li>Длина: <span class="code">120 секунд</span>.</li>
-      <li>Расход: <span class="code">3 кредита × 120 секунд = 360 кредитов</span>.</li>
-      <li>На <b>Pro (3000 кредитов)</b> можно сделать:<br>
-        <span class="hl">3000 / 360 ≈ 8–9 роликов по 2 минуты в месяц</span>.</li>
+      <li>1 секунда видео ≈ 3 кредита.</li>
+      <li>1 минута (60 секунд) ≈ 180 кредитов.</li>
+      <li>2 минуты (120 секунд) ≈ 360 кредитов.</li>
+      <li>5 минут (300 секунд) ≈ 900 кредитов.</li>
     </ul>
-    <p class="footnote">Это и есть та самая фраза «8+ аватаров по 2 мин» — про реальный предел Pro‑плана.</p>
+    <p class="note">
+      На плане Pro (3000 кредитов) можно выпустить примерно 8–9 роликов по 2 минуты или около 3 роликов по 5 минут в месяц.
+    </p>
   </div>
 
-  <!-- 3. Тарифы Higgsfield -->
-  <h2>Тарифы Higgsfield: сколько картинок Soul</h2>
+  <!-- 3. Стоимость создания аватара в Kling -->
+  <h2>Kling: создание самого аватара</h2>
 
-  <p>У Higgsfield планы с кредитами, которые можно тратить и на картинки, и на видео.[web:58][web:103]</p>
+  <p>В модели Avatar 2.0 аватар создаётся из загруженного изображения. Отдельной дорогой «обучающей» процедуры, как для LoRA, нет:</p>
+  <ul>
+    <li>Загрузка базового портрета и настройка эмоций входят в ту же операцию, что и рендер видео.</li>
+    <li>То есть фактически оплачивается только сгенерированное видео по его длительности.</li>
+  </ul>
+
+  <div class="summary-box">
+    <p><b>Вывод по Kling:</b> создание нового аватара не требует отдельного большого бюджета.
+      Реальные расходы привязаны к общему количеству минут видео. Новый персонаж = новая исходная фотография.</p>
+  </div>
+
+  <!-- 4. Higgsfield: создание персонажа и кадры -->
+  <h2>Higgsfield Soul ID: стоимость персонажа и кадров</h2>
+
+  <h3>Создание персонажа (Soul ID / LoRA‑аналог)</h3>
+  <p>По материалам по Soul ID:</p>
+  <ul>
+    <li>Создание одного персонажа Soul ID стоит порядка <span class="hl">30 кредитов</span> за обучение.</li>
+    <li>Рекомендуется набор из 20 и более исходных фото для лучшего качества.</li>
+  </ul>
+
+  <div class="card">
+    <h3>Стоимость входа на 1 персонажа</h3>
+    <ul>
+      <li>30 кредитов при обучении Soul ID для одного аватара.</li>
+      <li>На плане Ultimate это менее 3 % месячного лимита.</li>
+    </ul>
+  </div>
+
+  <h3>Кадры с этим персонажем (Soul)</h3>
+  <p>Модель Soul тарифицируется по фиксированной ставке за изображение:</p>
+  <ul>
+    <li>Одна картинка Soul ≈ <span class="hl">0.25 кредита</span>.</li>
+  </ul>
 
   <table>
     <thead>
       <tr>
-        <th>План</th>
-        <th>Цена в месяц</th>
-        <th>Кредиты / месяц</th>
-        <th>Сколько картинок Soul</th>
+        <th>План Higgsfield</th>
+        <th>Кредиты в месяц</th>
+        <th>Персонажей (Soul ID) в теории</th>
+        <th>Картинок Soul (0.25 кредита)</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Basic</td>
-        <td>≈ $5.99–9</td>
-        <td>150</td>
-        <td>150 / 0.25 = 600 картинок.[web:67][web:107]</td>
-      </tr>
-      <tr>
-        <td>Pro</td>
-        <td>≈ $16.99</td>
-        <td>600</td>
-        <td>600 / 0.25 = 2400 картинок.[web:58][web:67]</td>
-      </tr>
       <tr>
         <td>Ultimate</td>
-        <td>≈ $29.99</td>
-        <td>1500 (+ бонус 200)</td>
-        <td>1500 / 0.25 = 6000 теоретически.[web:58][web:67]</td>
+        <td>≈ 1500 кредитов</td>
+        <td>до 50 персонажей, если тратить всё только на обучение</td>
+        <td>до 6000 картинок, если тратить только на изображения</td>
       </tr>
     </tbody>
   </table>
 
   <div class="summary-box">
-    <p><b>Важно:</b> Soul‑картинка стоит <span class="hl">0.25 кредита</span> по официальному описанию.[web:67][web:56]</p>
-    <p>Даже если часть кредитов уйдёт на видео, <b>Ultimate спокойно тянет ~5000 картинок в месяц</b>, и ещё останется запас.[web:58][web:67]</p>
-  </div>
-
-  <!-- 4. Почему связка "8 аватаров + 5000 картинок" -->
-  <h2>Откуда взялось «8 аватаров + 5000 картинок»</h2>
-
-  <div class="card">
-    <h3>1. Kling Pro → 8+ аватаров</h3>
+    <p><b>Практично считать так:</b></p>
     <ul>
-      <li>У тебя <b>3000 кредитов</b> на месяц.[web:75][web:87]</li>
-      <li>Один 2‑минутный аватар ≈ <b>360 кредитов</b>.</li>
-      <li>3000 / 360 ≈ 8.3 → <b>8–9 роликов по 2 минуты</b>.</li>
+      <li>На одного нового персонажа — заложить 30 кредитов.</li>
+      <li>На кадры с ним — отдельный лимит в сотни–тысячи кадров в зависимости от задач.</li>
     </ul>
   </div>
 
-  <div class="card">
-    <h3>2. Higgsfield Ultimate → ~5000 картинок</h3>
-    <ul>
-      <li>У тебя <b>1500 кредитов</b> на месяц.[web:58][web:83]</li>
-      <li>Одна Soul‑картинка = <b>0.25 кредита</b>.[web:67][web:56]</li>
-      <li>1500 / 0.25 = 6000 теоретический максимум.</li>
-      <li>Если часть кредитов иногда тратить на видео и запас, разумно считать <b>около 5000 картинок в месяц</b>.</li>
-    </ul>
-  </div>
+  <!-- 5. Видео в Higgsfield с этими лицами -->
+  <h2>Видео в Higgsfield с созданным лицом</h2>
 
-  <div class="summary-box">
-    <p>Поэтому формулировка для простоты:</p>
-    <p><b>Kling Pro</b> ≈ <span class="hl">8 двухминутных говорящих аватаров</span> в месяц.</p>
-    <p><b>Higgsfield Ultimate</b> ≈ <span class="hl">до 5000 Soul‑картинок</span> в месяц.</p>
-  </div>
-
-  <!-- 5. Сводная таблица -->
-  <h2>Сводная таблица для школьника</h2>
+  <p>Higgsfield позволяет использовать персонажа из Soul ID в видео‑моделях. Расход кредитов зависит от длины и качества ролика:</p>
+  <ul>
+    <li>По практическим примерам: 8 секунд видео в 720p могут стоить от 10 до 45 кредитов в зависимости от модели и качества.</li>
+    <li>Для оценки удобно считать, что 1 секунда видео в нормальном качестве занимает 3–5 кредитов.</li>
+  </ul>
 
   <table>
     <thead>
       <tr>
-        <th>Что хотим</th>
-        <th>Какой план взять</th>
-        <th>Что реально получаем за месяц</th>
-        <th>Кому это удобно</th>
+        <th>Длина ролика</th>
+        <th>Оценка расхода (кредиты)</th>
+        <th>Максимум роликов в месяц на 1500 кредитов</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Только аватары</td>
-        <td>Kling Pro</td>
-        <td>~8–9 роликов по 2 минуты</td>
-        <td>Личный блогер, эксперт.[web:75][web:87]</td>
+        <td>10 секунд</td>
+        <td>≈ 10–25 кредитов</td>
+        <td>60–150 коротких клипов</td>
       </tr>
       <tr>
-        <td>Только картинки</td>
-        <td>Higgsfield Ultimate</td>
-        <td>до ~5000 Soul‑картинок</td>
-        <td>Художник, дизайнер, контент‑фабрика.[web:58][web:67]</td>
+        <td>30 секунд</td>
+        <td>≈ 30–75 кредитов</td>
+        <td>20–50 клипов</td>
       </tr>
       <tr>
-        <td>И аватары, и много картинок</td>
-        <td>Kling Pro + Higgsfield Ultimate</td>
-        <td>8+ аватаров + тысячи картинок</td>
-        <td>Автоматизированный конвейер контента.</td>
+        <td>60 секунд</td>
+        <td>≈ 60–150 кредитов</td>
+        <td>10–25 клипов</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- 6. Совсем простое объяснение -->
-  <h2>Совсем по‑простому</h2>
+  <p>То есть Higgsfield удобнее использовать как источник коротких вставок или b‑roll с тем же лицом, а длинные монологи выгоднее рендерить в Kling Avatar.</p>
 
-  <div class="card">
-    <h3>Если объяснять школьнику</h3>
+  <!-- 6. Сценарии: 2 и 4 новых аватара в месяц -->
+  <h2>Сценарии по количеству новых аватаров в месяц</h2>
+
+  <h3>Сценарий A: 2 новых аватара в месяц</h3>
+
+  <p><b>Предположения:</b></p>
+  <ul>
+    <li>Для каждого аватара: обучение Soul ID (30 кредитов) + серия кадров и несколько коротких фрагментов видео в Higgsfield.</li>
+    <li>Основной говорящий ролик (монолог) делается в Kling.</li>
+    <li>Целевая длительность основного ролика: 3–4 минуты на каждого аватара в месяц.</li>
+  </ul>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Компонент</th>
+        <th>Расход за 1 аватара</th>
+        <th>Расход за 2 аватара</th>
+        <th>Комментарий</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Обучение Soul ID</td>
+        <td>30 кредитов</td>
+        <td>60 кредитов</td>
+        <td>Создание двух новых персональных персонажей.</td>
+      </tr>
+      <tr>
+        <td>Кадры Soul</td>
+        <td>условно 200 кадров × 0.25 = 50 кредитов</td>
+        <td>100 кредитов</td>
+        <td>Кадры для слайдов, заставок, фреймов.</td>
+      </tr>
+      <tr>
+        <td>Видео Higgsfield, короткие вставки</td>
+        <td>10 клипов по 10–15 секунд ≈ 150–250 кредитов</td>
+        <td>≈ 300–500 кредитов</td>
+        <td>Небольшие клипы с тем же лицом.</td>
+      </tr>
+      <tr>
+        <td>Итого Higgsfield</td>
+        <td>≈ 230–330 кредитов</td>
+        <td>≈ 460–660 кредитов</td>
+        <td>Укладывается в Ultimate (1500 кредитов).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><b>Kling при этом:</b></p>
+  <ul>
+    <li>На 2 аватара по 4 минуты видео каждый: 2 × 4 минуты = 8 минут.</li>
+    <li>8 минут × 60 секунд × 3 кредита = 1440 кредитов.</li>
+    <li>На плане Pro (3000 кредитов) остаётся запас примерно на ещё 8 минут.</li>
+  </ul>
+
+  <div class="summary-box">
+    <p><b>Сценарий A (2 аватара в месяц):</b></p>
     <ul>
-      <li><b>Кредиты</b> — это как монетки в игре. Ты их тратишь на ролики и картинки.</li>
-      <li>У Kling каждая <b>секунда видео‑аватара</b> стоит примерно 3 монетки.</li>
-      <li>У Higgsfield каждая <b>картинка Soul</b> стоит четверть монетки.</li>
-      <li>Когда берёшь подписку, тебе раз в месяц выдают мешок монеток и ты решаешь, на что их тратить.</li>
+      <li>Kling Pro: ≈ 37 USD/мес.</li>
+      <li>Higgsfield Ultimate: ≈ 30–50 USD/мес в зависимости от источника.</li>
+      <li>Совокупный бюджет: порядка 70–90 USD/мес для комфортного запаса.</li>
     </ul>
   </div>
 
+  <h3>Сценарий B: 4 новых аватара в месяц</h3>
+
+  <p>Здесь удваивается число новых персонажей и возрастает объём видео.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Компонент</th>
+        <th>Расход за 4 аватара</th>
+        <th>Комментарий</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Обучение Soul ID</td>
+        <td>4 × 30 = 120 кредитов</td>
+        <td>Меньше 10 % лимита Ultimate.</td>
+      </tr>
+      <tr>
+        <td>Кадры Soul</td>
+        <td>4 × 200 кадров × 0.25 = 200 кредитов</td>
+        <td>Около 800 кадров на всех.</td>
+      </tr>
+      <tr>
+        <td>Видео Higgsfield (короткие клипы)</td>
+        <td>4 × (150–250) = 600–1000 кредитов</td>
+        <td>Суммарно начинает приближаться к потолку Ultimate.</td>
+      </tr>
+      <tr>
+        <td>Итого Higgsfield</td>
+        <td>≈ 920–1320 кредитов</td>
+        <td>Вмещается в Ultimate (1500), но без большого запаса.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>По Kling:</p>
+  <ul>
+    <li>Допустим, на каждого аватара делается по 4 минуты говорящего видео.</li>
+    <li>4 аватара × 4 минуты = 16 минут видео в месяц.</li>
+    <li>16 минут × 60 секунд × 3 кредита = 2880 кредитов.</li>
+    <li>Это практически полностью заполняет план Pro (3000 кредитов).</li>
+  </ul>
+
   <div class="summary-box">
-    <p>Вывод в одном предложении:</p>
-    <p><b>Связка «Kling Pro + Higgsfield Ultimate» даёт тебе примерно 8–9 качественных говорящих аватаров в месяц И одновременно тысячи фотореалистичных картинок.</b></p>
+    <p><b>Сценарий B (4 аватара и 16 минут видео в Kling):</b></p>
+    <ul>
+      <li>Kling Pro остаётся на грани: почти весь лимит уходит на 16 минут видео.</li>
+      <li>Higgsfield Ultimate закрывает обучение + кадры + короткие клипы, но без значительного резерва.</li>
+      <li>Если планируется рост длительности или частоты выпусков, целесообразно рассмотреть:</li>
+      <li>- переход на Kling Premier или покупку дополнительных кредитов;</li>
+      <li>- либо второй аккаунт Higgsfield, если объём коротких клипов вырастет.</li>
+    </ul>
+  </div>
+
+  <!-- 7. Резюме для решения о бюджете -->
+  <h2>Резюме для утверждения бюджета</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Сценарий</th>
+        <th>План Kling</th>
+        <th>План Higgsfield</th>
+        <th>Ориентировочный месячный бюджет</th>
+        <th>Комментарии по рискам</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2 новых аватара, до 8 минут говорящего видео</td>
+        <td>Pro</td>
+        <td>Ultimate</td>
+        <td>≈ 70–90 USD/мес</td>
+        <td>Есть запас по кредитам на обеих платформах.</td>
+      </tr>
+      <tr>
+        <td>4 новых аватара, до 16 минут говорящего видео</td>
+        <td>Pro (на пределе)</td>
+        <td>Ultimate (на пределе)</td>
+        <td>≈ 90–120 USD/мес</td>
+        <td>При росте длительности потребуется Premier или дополнительные кредиты.</td>
+      </tr>
+      <tr>
+        <td>Рост объёмов (более 16 минут и больше коротких клипов)</td>
+        <td>Premier</td>
+        <td>Ultimate или Creator</td>
+        <td>от 140 USD/мес и выше</td>
+        <td>Имеет смысл рассматривать переговоры об enterprise‑условиях.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary-box">
+    <p><b>Предлагаемый стартовый пакет:</b></p>
+    <ul>
+      <li>Kling Pro — для до 16 минут говорящих аватаров в месяц (включая 4 новых персонажа).</li>
+      <li>Higgsfield Ultimate — для обучения 2–4 Soul ID в месяц и генерации кадров/коротких клипов с этими лицами.</li>
+      <li>Этот набор даёт рабочий объём контента при контролируемых и предсказуемых расходах.</li>
+    </ul>
   </div>
 
 </main>
