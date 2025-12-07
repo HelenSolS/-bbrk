@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kling AI Avatar 2.0 vs Higgsfield Soul/Video — Финальный отчёт 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      padding: 24px;
+      background: #0b1020;
+      color: #f5f5f7;
+    }
+    h1, h2, h3 {
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+
+    a {
+      color: #4ea8ff;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(18, 24, 48, 0.95);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 18px 20px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(78,168,255,0.12);
+      color: #9cd1ff;
+      letter-spacing: 0.08em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 4px;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    th {
+      font-weight: 600;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    code {
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .emoji { font-style: normal; }
+
+    .note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+    }
+
+    .scenario-header {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .checklist li { margin-bottom: 4px; }
+
+    .highlight {
+      background: #ffd94a33;
+      color: #ffda79;
+      font-weight: 700;
+      padding: 0 3px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tag">Отчёт по стоимости · 2025</div>
+  <h1>Kling AI Avatar 2.0 vs Higgsfield Soul/Video — Финальный отчёт на одной странице</h1>
+
+  <p>
+    <span class="highlight">Kling — дешёвый и простой мотор для серийных говорящих аватаров с голосом,</span>
+    а <span class="highlight">Higgsfield WAN 2.5 и Veo — более дорогие, но кинематографичные движки для “вау‑видео”.</span>
+  </p>
+
+  <p><span class="emoji">👁️</span> Цель: одним взглядом увидеть, сколько реально стоит 1 минута видео (с учётом звука/озвучки) в разных сценариях и моделях.</p>
+
+  <!-- КРАТКОЕ РЕЗЮМЕ ТАРИФОВ -->
+
+  <h2>Краткое резюме тарифов (всё в $/минуту)</h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Kling AI Avatar 2.0</div>
+        <span class="pill">Говорящие аватары</span>
+      </div>
+      <table>
+        <tr>
+          <th>План</th>
+          <th>Цена/мес</th>
+          <th>Кредиты/мес</th>
+          <th>Минут видео/мес*</th>
+          <th>Стоимость 1 мин видео*</th>
+        </tr>
+        <tr>
+          <td><strong>Standard</strong></td>
+          <td>$10</td>
+          <td>660</td>
+          <td>≈3.7 мин</td>
+          <td>≈$1.36</td>
+        </tr>
+        <tr>
+          <td><strong>Pro</strong></td>
+          <td>$37</td>
+          <td>3,000</td>
+          <td>≈16.7 мин</td>
+          <td>≈$2.22</td>
+        </tr>
+        <tr>
+          <td><strong>Premier</strong></td>
+          <td>$92</td>
+          <td>8,000</td>
+          <td>≈44.4 мин</td>
+          <td>≈$2.07</td>
+        </tr>
+      </table>
+      <div class="note">
+        *Оценка по 3 кредитам за 1 секунду (1 минута = 180 кредитов). <span class="highlight">Kling сразу отдаёт говорящий аватар с озвучкой и lip‑sync.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Higgsfield AI (Soul + Video / WAN)</div>
+        <span class="pill">Фото + видео</span>
+      </div>
+      <table>
+        <tr>
+          <th>План</th>
+          <th>Цена/мес</th>
+          <th>Кредиты/мес</th>
+          <th>Минут видео/мес*</th>
+          <th>Стоимость 1 мин видео*</th>
+        </tr>
+        <tr>
+          <td><strong>Basic</strong></td>
+          <td>$5.99</td>
+          <td>150</td>
+          <td>≈0.8 мин</td>
+          <td>≈$7.19</td>
+        </tr>
+        <tr>
+          <td><strong>Pro</strong></td>
+          <td>$16.99</td>
+          <td>600</td>
+          <td>≈3.3 мин</td>
+          <td>≈$4.25</td>
+        </tr>
+        <tr>
+          <td><strong>Ultimate</strong></td>
+          <td>$29.99</td>
+          <td>1,500 (+200 бонус)</td>
+          <td>≈8.3–9.4 мин</td>
+          <td>≈$3.20–$3.60</td>
+        </tr>
+      </table>
+      <div class="note">
+        *Расчёт по 3 кредитам за 1 секунду. WAN 2.5 поддерживает native‑аудио, но это скорее кино‑звук, а не поток говорящих ведущих. [web:55][web:58][web:103][web:139][web:156]
+      </div>
+      <div class="note">
+        Soul‑изображения стоят ≈0.3 кредита за картинку, что делает Higgsfield удобным банком фото‑контента. [web:55][web:58]
+      </div>
+    </div>
+  </div>
+
+  <!-- РЕАЛЬНЫЕ СЦЕНАРИИ -->
+
+  <h2>Реальные сценарии использования</h2>
+
+  <div class="card">
+    <div class="scenario-header">Сценарий 1: 20 видео по 2 минуты в месяц</div>
+    <div class="note">Объём: 40 минут видео в месяц (20 × 2 мин) → требуется ≈7,200 кредитов.</div>
+    <table>
+      <tr>
+        <th>Сервис</th>
+        <th>План</th>
+        <th>Достаточно кредитов?</th>
+        <th>Цена/мес</th>
+        <th>Покрытие объёма</th>
+      </tr>
+      <tr>
+        <td>Kling AI</td>
+        <td>Standard</td>
+        <td>❌ Нет</td>
+        <td>$10</td>
+        <td>≈9%</td>
+      </tr>
+      <tr>
+        <td>Kling AI</td>
+        <td>Pro</td>
+        <td>❌ Нет</td>
+        <td>$37</td>
+        <td>≈42%</td>
+      </tr>
+      <tr>
+        <td><strong>Kling AI</strong></td>
+        <td><strong>Premier</strong></td>
+        <td><strong>✓ Да</strong></td>
+        <td><strong>$92</strong></td>
+        <td><strong>≈111%</strong></td>
+      </tr>
+      <tr>
+        <td>Higgsfield</td>
+        <td>Pro</td>
+        <td>❌ Нет</td>
+        <td>$16.99</td>
+        <td>≈8%</td>
+      </tr>
+      <tr>
+        <td>Higgsfield</td>
+        <td>Ultimate</td>
+        <td>❌ Нет</td>
+        <td>$29.99</td>
+        <td>≈21%</td>
+      </tr>
+    </table>
+    <div class="note">
+      Эффективная цена минуты при Kling Premier: $92 / 40 мин ≈ <span class="highlight">$2.30 за 1 минуту говорящего видео с голосом.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="scenario-header">Сценарий 2: 10 аватаров по 3 минуты + 200 изображений</div>
+    <div class="note">Объём: 30 минут видео + 200 Soul‑изображений → требуется ≈5,460 кредитов.</div>
+    <table>
+      <tr>
+        <th>Сервис</th>
+        <th>План</th>
+        <th>Достаточно?</th>
+        <th>Цена/мес</th>
+        <th>Видео</th>
+        <th>Картинки</th>
+      </tr>
+      <tr>
+        <td>Kling AI</td>
+        <td>Pro</td>
+        <td>❌ Нет</td>
+        <td>$37</td>
+        <td>≈55% нужных кредитов</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Kling AI</strong></td>
+        <td><strong>Premier</strong></td>
+        <td><strong>✓ Да</strong></td>
+        <td><strong>$92</strong></td>
+        <td><strong>≈147% нужных кредитов</strong></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Higgsfield</td>
+        <td>Ultimate</td>
+        <td>❌ Нет</td>
+        <td>$29.99</td>
+        <td>≈27% на видео</td>
+        <td>✓ Хватает на картинки</td>
+      </tr>
+      <tr>
+        <td><strong>Combo</strong></td>
+        <td><strong>Kling Pro + Higgsfield Ultimate</strong></td>
+        <td><strong>✓ Идеально</strong></td>
+        <td><strong>$67</strong></td>
+        <td><strong>≈180% (Kling) / 27% (Higgs)</strong></td>
+        <td><strong>✓ Да (до 5,000 Soul‑картинок)</strong></td>
+      </tr>
+    </table>
+    <div class="note">
+      Эффективная цена минуты при комбо $67 / 30 мин ≈ <span class="highlight">$2.23 за минуту видео + огромный запас картинок.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="scenario-header">Сценарий 3: Студийный объём — 50 видео по 5 минут</div>
+    <div class="note">Объём: 250 минут видео в месяц (50 × 5 мин) → ≈45,000 кредитов.</div>
+    <table>
+      <tr>
+        <th>Сервис</th>
+        <th>План</th>
+        <th>Достаточно?</th>
+        <th>Базовая цена</th>
+        <th>Доп. кредиты</th>
+        <th>Итого</th>
+      </tr>
+      <tr>
+        <td>Kling AI</td>
+        <td>Premier</td>
+        <td>❌ Нет</td>
+        <td>$92</td>
+        <td>+37,000 кредитов</td>
+        <td><strong>≈$392</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Рекомендация</strong></td>
+        <td><strong>Enterprise / прямые переговоры</strong></td>
+        <td><strong>?</strong></td>
+        <td><strong>Кастомный прайс</strong></td>
+        <td><strong>Объёмные скидки</strong></td>
+        <td><strong>≈$300–500</strong></td>
+      </tr>
+    </table>
+    <div class="note">
+      <span class="highlight">При студийном объёме выгодно сразу обсуждать Enterprise‑тариф с фиксированной ценой минуты.</span>
+    </div>
+  </div>
+
+  <!-- ВИДЕО + ЗВУК -->
+
+  <h2>Видео + звук: что даёт каждый сервис</h2>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>Модель / сервис</th>
+        <th>Видео</th>
+        <th>Речь / озвучка</th>
+        <th>Комментарий</th>
+      </tr>
+      <tr>
+        <td><strong>Kling AI Avatar 2.0</strong></td>
+        <td>✔ Да</td>
+        <td>✔ Готовая речь, lip‑sync</td>
+        <td><span class="highlight">Лучший вариант для серийных говорящих аватаров “текст → видео с голосом”.</span> [web:68][web:79][web:87][web:147]</td>
+      </tr>
+      <tr>
+        <td><strong>Higgsfield (WAN 2.5)</strong></td>
+        <td>✔ Да</td>
+        <td>✔ Native audio (диалоги, ambience)</td>
+        <td>Ориентирован на кинематографичный визуал + звук; “классический ведущий в кадре” требует настройки промптов и/или собственного голоса. [web:103][web:139][web:156]</td>
+      </tr>
+      <tr>
+        <td><strong>Veo 3 / 3.1</strong></td>
+        <td>✔ Да</td>
+        <td>✔ Видео + аудио в одном проходе</td>
+        <td><span class="highlight">Дороже всего по $/мин, но даёт максимально “киношное” видео с синхронным звуком.</span> [web:150][web:152][web:159]</td>
+      </tr>
+    </table>
+    <p class="note">
+      Если нужен именно поток “говорящих аватаров под сценарий”, Kling закрывает задачу дешевле и проще;
+      Higgsfield WAN 2.5 и Veo логичнее использовать как кино‑движки для отдельных «вау‑роликов». [web:68][web:79][web:87][web:103][web:139][web:150][web:156][web:159]
+    </p>
+  </div>
+
+  <!-- API СТОИМОСТЬ МИНУТЫ -->
+
+  <h2>API: сколько стоит 1 минута видео</h2>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>Модель / канал</th>
+        <th>Тип вывода</th>
+        <th>Цена за 1 секунду</th>
+        <th>Цена за 1 минуту</th>
+        <th>Аудио</th>
+      </tr>
+      <tr>
+        <td><strong>Kling Avatar v2 (Comet / Fal)</strong></td>
+        <td>Standard (480p)</td>
+        <td>$0.056</td>
+        <td>≈$3.36</td>
+        <td>✔ Голос, lip‑sync</td>
+      </tr>
+      <tr>
+        <td>Kling Avatar v2 (Comet / Fal)</td>
+        <td>Pro (720p+)</td>
+        <td>$0.115</td>
+        <td>≈$6.90</td>
+        <td>✔ Голос, lip‑sync</td>
+      </tr>
+      <tr>
+        <td><strong>Veo 3 (API)</strong></td>
+        <td>Видео + аудио</td>
+        <td>≈$0.75</td>
+        <td>≈$45.00</td>
+        <td>✔ Видео + звук</td>
+      </tr>
+      <tr>
+        <td>Veo 3.1 Fast</td>
+        <td>Только видео</td>
+        <td>≈$0.10–0.25</td>
+        <td>≈$6–15</td>
+        <td>✖ Нет</td>
+      </tr>
+    </table>
+    <p class="note">
+      <span class="highlight">Минута Veo 3 с аудио в 5–10 раз дороже минуты Kling‑аватара через Comet/Fal.</span>
+      Veo выгоден под штучные кино‑ролики, а не под массовую генерацию говорящих видео. [web:144][web:149][web:150][web:159]
+    </p>
+  </div>
+
+  <!-- ЧЕКЛИСТ ВЫБОРА -->
+
+  <h2>Чек-лист выбора тарифа</h2>
+
+  <div class="card">
+    <ul class="checklist">
+      <li><span class="highlight">Solo‑creator, 1–5 аватаров в неделю</span> → Kling Pro ($37/мес) как базовый рабочий мотор. [web:68][web:79][web:87]</li>
+      <li><span class="highlight">Контент‑фабрика, 20–30 видео/мес</span> → Kling Premier ($92/мес) или комбо Kling Pro + Higgsfield Ultimate ($67/мес). [web:68][web:79][web:55][web:58]</li>
+      <li><span class="highlight">Смешанный поток: видео + 200+ изображений</span> → Higgsfield Ultimate ($29.99/мес) + Kling Pro ($37/мес) = $67. [web:55][web:58][web:103]</li>
+      <li><span class="highlight">Только картинки Soul</span> → Higgsfield Ultimate (до 5,000 изображений/мес). [web:55][web:58]</li>
+      <li><span class="highlight">Максимум видео за меньшую цену</span> → Kling Premier с годовой оплатой (минимальная стоимость кредита). [web:68][web:79][web:87]</li>
+      <li><span class="highlight">Переменная нагрузка / тесты</span> → Kling через Comet/Fal API (поминутная тарификация). [web:144][web:149]</li>
+      <li><span class="highlight">50+ видео/мес или студийный поток</span> → прямые переговоры (Enterprise‑сделка). [web:68][web:79][web:147]</li>
+    </ul>
+  </div>
+
+  <!-- ГОДОВЫЕ ПЛАНЫ И ДОП. КРЕДИТЫ -->
+
+  <h2>Годовые планы и дополнительные кредиты</h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Годовые подписки</div>
+      </div>
+      <table>
+        <tr>
+          <th>Сервис</th>
+          <th>План</th>
+          <th>Месячно (номинал)</th>
+          <th>Годовая цена</th>
+        </tr>
+        <tr>
+          <td>Kling AI</td>
+          <td>Pro</td>
+          <td>$37</td>
+          <td>$444</td>
+        </tr>
+        <tr>
+          <td>Kling AI</td>
+          <td>Premier</td>
+          <td>$92</td>
+          <td>$1,104</td>
+        </tr>
+        <tr>
+          <td>Higgsfield</td>
+          <td>Pro</td>
+          <td>$16.99</td>
+          <td>$203.88</td>
+        </tr>
+        <tr>
+          <td>Higgsfield</td>
+          <td>Ultimate</td>
+          <td>$29.99</td>
+          <td>$359.88</td>
+        </tr>
+      </table>
+      <div class="note">
+        <span class="highlight">Годовая оплата Higgsfield даёт до ≈58% экономии против помесячной подписки.</span> [web:55][web:58]
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Дополнительные кредиты</div>
+      </div>
+      <ul style="font-size:13px; padding-left:18px; margin-top:0;">
+        <li><strong>Kling AI</strong>: ~$1.06–1.52 за 100 кредитов (цена зависит от активного плана). [web:79][web:87][web:97]</li>
+        <li><strong>Higgsfield</strong>: доп. кредиты и Enterprise‑объёмы согласуются через саппорт/sales, публичного прайса нет. [web:55][web:58][web:103]</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ФИНАЛЬНЫЙ ВЕРДИКТ -->
+
+  <h2>Финальный вердикт: что выбирать</h2>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>Сценарий использования</th>
+        <th>Рекомендация</th>
+        <th>Бюджет</th>
+        <th>Комментарий</th>
+      </tr>
+      <tr>
+        <td><strong>Только аватары, малый объём</strong></td>
+        <td>Kling Pro</td>
+        <td>$37</td>
+        <td><span class="highlight">Оптимальное $/мин для регулярных говорящих видео с голосом.</span></td>
+      </tr>
+      <tr>
+        <td><strong>Аватары + картинки</strong></td>
+        <td>Combo (Kling Pro + Higgsfield Ultimate)</td>
+        <td>$67</td>
+        <td>Закрывает и видео‑аватары, и до 5,000 Soul‑изображений в месяц.</td>
+      </tr>
+      <tr>
+        <td><strong>Только картинки Soul</strong></td>
+        <td>Higgsfield Ultimate</td>
+        <td>$29.99</td>
+        <td>5,000 изображений/мес по ~0.3 кредита за штуку — удобный image‑мотор.</td>
+      </tr>
+      <tr>
+        <td><strong>Максимум видео за меньшую цену</strong></td>
+        <td>Kling Premier (годовая)</td>
+        <td>от $92/мес эквивалент</td>
+        <td>Минимальная стоимость кредита и большой буфер по минутам.</td>
+      </tr>
+      <tr>
+        <td><strong>Переменная нагрузка / POC</strong></td>
+        <td>API (Comet/Fal) + Kling</td>
+        <td>$3–7 за минуту</td>
+        <td>Гибко, без подписки; можно точечно подключать Veo/WAN для “кино‑вставок”.</td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise / 50+ видео</strong></td>
+        <td>Прямые переговоры</td>
+        <td>TBD</td>
+        <td><span class="highlight">При крупных объёмах почти всегда выгоднее зафиксировать цену минуты в Enterprise‑контракте.</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ССЫЛКИ -->
+
+  <h2>Ссылки</h2>
+
+  <ul>
+    <li><a href="https://app.klingai.com/global/membership/membership-plan" target="_blank" rel="noopener noreferrer">Kling AI — тарифы</a></li>
+    <li><a href="https://higgsfield.ai/pricing" target="_blank" rel="noopener noreferrer">Higgsfield — тарифы</a></li>
+    <li><a href="https://higgsfield.ai/wan-ai-video" target="_blank" rel="noopener noreferrer">Higgsfield WAN 2.5 — видео + audio</a></li>
+    <li><a href="https://www.cometapi.com" target="_blank" rel="noopener noreferrer">Comet API (Kling, Veo)</a></li>
+    <li><a href="https://fal.ai/models/kling-avatar-v2" target="_blank" rel="noopener noreferrer">Fal.ai — Kling Avatar v2</a></li>
+    <li><a href="https://costgoat.com/pricing/google-veo" target="_blank" rel="noopener noreferrer">Veo 3 — калькулятор стоимости</a></li>
+  </ul>
+
+</body>
+</html>
+
