@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СИНЕМАТОК | Поставщик нейросетей и инструментов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #020617;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(2,6,23,0.9) 0%, transparent 100%);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #f1f5f9;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-5px);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0ea5e9;
+        }
+
+        .nav-progress {
+            display: flex;
+            gap: 10px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #0ea5e9;
+            transform: scale(1.3);
+        }
+
+        .progress-dot:hover {
+            background: rgba(14, 165, 233, 0.6);
+        }
+
+        /* Slides Container */
+        .slides-container {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100px);
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .bg-orb-1 {
+            width: 700px;
+            height: 700px;
+            background: rgba(14, 165, 233, 0.2);
+            top: -250px;
+            left: -250px;
+        }
+
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(59, 130, 246, 0.15);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .bg-orb-3 {
+            width: 400px;
+            height: 400px;
+            background: rgba(6, 182, 212, 0.1);
+            top: 30%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 50px) scale(1.1); }
+            66% { transform: translate(50px, -50px) scale(0.9); }
+        }
+
+        /* Network animation */
+        .network-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .network-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #0ea5e9;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: pulse 3s infinite;
+        }
+
+        .network-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+            opacity: 0.2;
+            animation: scan 4s infinite linear;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Slide Content */
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1200px;
+        }
+
+        .slide-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .slide-title {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-subtitle {
+            font-size: 28px;
+            color: #7dd3fc;
+            margin-bottom: 40px;
+        }
+
+        .slide-description {
+            font-size: 20px;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Stats with Animations */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 72px;
+            font-weight: 800;
+            color: #0ea5e9;
+            text-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #7dd3fc;
+            margin-top: 10px;
+        }
+
+        /* AI Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #0ea5e9;
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.3);
+        }
+
+        .model-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .model-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        .model-desc {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .model-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(14, 165, 233, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            color: #0ea5e9;
+            margin-top: 10px;
+        }
+
+        /* Category Cards */
+        .category-section {
+            margin-top: 50px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            color: #7dd3fc;
+            margin-bottom: 25px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: #0ea5e9;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            font-size: 36px;
+        }
+
+        .category-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .category-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .category-list li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .category-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #0ea5e9;
+        }
+
+        /* Parallel Processing Visualization */
+        .parallel-viz {
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(14, 165, 233, 0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .parallel-title {
+            font-size: 24px;
+            color: #7dd3fc;
+            margin-bottom: 30px;
+        }
+
+        .parallel-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .parallel-card {
+            padding: 25px;
+            border-radius: 16px;
+        }
+
+        .parallel-card.old {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .parallel-card.new {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .parallel-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .parallel-card.old .parallel-card-title { color: #ef4444; }
+        .parallel-card.new .parallel-card-title { color: #0ea5e9; }
+
+        .task-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .task-label {
+            width: 80px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .task-track {
+            flex: 1;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .task-fill {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 1s ease;
+        }
+
+        .task-fill.sequential {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .task-fill.parallel {
+            background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+        }
+
+        .task-fill.parallel-1 { width: 100%; animation-delay: 0s; }
+        .task-fill.parallel-2 { width: 100%; animation-delay: 0.2s; }
+        .task-fill.parallel-3 { width: 100%; animation-delay: 0.4s; }
+        .task-fill.parallel-4 { width: 100%; animation-delay: 0.6s; }
+
+        /* Access Methods */
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .access-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .access-card:hover {
+            transform: translateY(-10px);
+            border-color: #0ea5e9;
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.2);
+        }
+
+        .access-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .access-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .access-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .access-features li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .access-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0ea5e9;
+        }
+
+        /* Video Presentation Section */
+        .video-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .video-icon {
+            font-size: 40px;
+        }
+
+        .video-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.2));
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(56, 189, 248, 0.3));
+        }
+
+        .play-button {
+            font-size: 64px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover .play-button {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .video-placeholder-text {
+            font-size: 16px;
+            color: #7dd3fc;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            margin-top: 50px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #020617;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(14, 165, 233, 0.6);
+        }
+
+        /* Navigation Arrows */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-arrow {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(14, 165, 233, 0.5);
+            color: #0ea5e9;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            background: #0ea5e9;
+            color: #020617;
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Counter Box */
+        .counter-box {
+            display: inline-block;
+            margin: 0 20px;
+            padding: 20px 40px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .counter-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0ea5e9;
+        }
+
+        .counter-label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .slide {
+                padding: 100px 20px 80px;
+            }
+
+            .slide-title {
+                font-size: 42px;
+            }
+
+            .slide-subtitle {
+                font-size: 22px;
+            }
+
+            .models-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .access-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .parallel-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-back">
+            ← Назад к СИНЕМАТОК-Трио
+        </a>
+        <div class="nav-logo">СИНЕМАТОК</div>
+        <div class="nav-progress">
+            <div class="progress-dot active" data-slide="0"></div>
+            <div class="progress-dot" data-slide="1"></div>
+            <div class="progress-dot" data-slide="2"></div>
+            <div class="progress-dot" data-slide="3"></div>
+            <div class="progress-dot" data-slide="4"></div>
+            <div class="progress-dot" data-slide="5"></div>
+        </div>
+    </nav>
+
+    <!-- Slides Container -->
+    <div class="slides-container">
+        <!-- Animated Background -->
+        <div class="bg-animated">
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="bg-orb bg-orb-3"></div>
+            <div class="network-bg" id="network-bg"></div>
+        </div>
+
+        <!-- Slide 1: Hero -->
+        <div class="slide active" data-index="0">
+            <div class="slide-content">
+                <div class="slide-icon">🔵</div>
+                <h1 class="slide-title">СИНЕМАТОК</h1>
+                <p class="slide-subtitle">Поставщик нейросетей и инструментов</p>
+                <p class="slide-description">
+                    90+ современных нейросетевых моделей в одном месте.<br>
+                    Параллельная обработка. Простой доступ. Без очередей.
+                </p>
+
+                <div class="stats-row">
+                    <div class="counter-box">
+                        <div class="counter-number">90+</div>
+                        <div class="counter-label">Нейросетей</div>
+                    </div>
+                    <div class="counter-box">
+                        <div class="counter-number">4K</div>
+                        <div class="counter-label">Качество видео</div>
+                    </div>
+                    <div class="counter-box">
+                        <div class="counter-number">∞</div>
+                        <div class="counter-label">Параллельные задачи</div>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Начать использовать →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: AI Models -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <div class="slide-icon">🧠</div>
+                <h1 class="slide-title">Современные модели</h1>
+                <p class="slide-subtitle">Лучшие нейросети мира в твоём распоряжении</p>
+
+                <div class="models-grid">
+                    <div class="model-card">
+                        <div class="model-icon">🎬</div>
+                        <div class="model-name">Kling 2.5</div>
+                        <div class="model-desc">Генерация видео из текста и изображений</div>
+                        <span class="model-tag">Видео</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎬</div>
+                        <div class="model-name">Sora 2</div>
+                        <div class="model-desc">Реалистичные видео от OpenAI</div>
+                        <span class="model-tag">Видео</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎬</div>
+                        <div class="model-name">Runway Gen-3</div>
+                        <div class="model-desc">Профессиональная генерация</div>
+                        <span class="model-tag">Видео</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎬</div>
+                        <div class="model-name">Veo 2</div>
+                        <div class="model-desc">Google DeepMind технологии</div>
+                        <span class="model-tag">Видео</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎨</div>
+                        <div class="model-name">Flux Pro</div>
+                        <div class="model-desc">Высококачественные изображения</div>
+                        <span class="model-tag">Изображения</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎨</div>
+                        <div class="model-name">Midjourney v6.1</div>
+                        <div class="model-desc">Арт и иллюстрации</div>
+                        <span class="model-tag">Изображения</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">📝</div>
+                        <div class="model-name">GPT-4o</div>
+                        <div class="model-desc">Тексты и анализ данных</div>
+                        <span class="model-tag">Текст</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-icon">🎙️</div>
+                        <div class="model-name">ElevenLabs</div>
+                        <div class="model-desc">Синтез речи 50+ голосов</div>
+                        <span class="model-tag">Аудио</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Categories -->
+        <div class="slide" data-index="2">
+            <div class="slide-content">
+                <div class="slide-icon">📦</div>
+                <h1 class="slide-title">Все типы контента</h1>
+                <p class="slide-subtitle">От идеи до готового продукта — один сервис</p>
+
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎬</span>
+                            <span class="category-name">Видео</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Генерация из текста</li>
+                            <li>Генерация из изображений</li>
+                            <li>Продолжение видео</li>
+                            <li>Смена фона</li>
+                            <li>Анимация персонажей</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎨</span>
+                            <span class="category-name">Изображения</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Текст в изображение</li>
+                            <li>Стилизация фото</li>
+                            <li>Улучшение качества</li>
+                            <li>Удаление фона</li>
+                            <li>Дизайн интерьеров</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">📝</span>
+                            <span class="category-name">Текст</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Сценарии и сценарии</li>
+                            <li>Описание товаров</li>
+                            <li>SEO-оптимизация</li>
+                            <li>Переводы</li>
+                            <li>Анализ данных</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎙️</span>
+                            <span class="category-name">Аудио</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Синтез речи</li>
+                            <li>Клонирование голоса</li>
+                            <li>Музыка генерация</li>
+                            <li>Звуковые эффекты</li>
+                            <li>Подкасты</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🔄</span>
+                            <span class="category-name">Автоматизация</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Цепочки процессов</li>
+                            <li>GPT-агенты</li>
+                            <li>n8n интеграции</li>
+                            <li>Webhooks</li>
+                            <li>API доступ</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">👤</span>
+                            <span class="category-name">Персонажи</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Создание аватаров</li>
+                            <li>Анимация лиц</li>
+                            <li>Синхронизация губ</li>
+                            <li>Стилизация</li>
+                            <li>Загрузка своих</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Parallel Processing -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <div class="slide-icon">⚡</div>
+                <h1 class="slide-title">Параллельная обработка</h1>
+                <p class="slide-subtitle">Запускай сотни задач одновременно</p>
+
+                <div class="parallel-viz">
+                    <h3 class="parallel-title">🚀 Сравнение скорости: 4 видео одновременно</h3>
+                    <div class="parallel-comparison">
+                        <div class="parallel-card old">
+                            <h4 class="parallel-card-title">❌ Последовательно (другие сервисы)</h4>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 1</span>
+                                <div class="task-track">
+                                    <div class="task-fill sequential" style="width: 25%;"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 2</span>
+                                <div class="task-track">
+                                    <div class="task-fill sequential" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 3</span>
+                                <div class="task-track">
+                                    <div class="task-fill sequential" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 4</span>
+                                <div class="task-track">
+                                    <div class="task-fill sequential" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <p style="color: #ef4444; margin-top: 15px; font-weight: 600;">Время: ~40 минут</p>
+                        </div>
+                        <div class="parallel-card new">
+                            <h4 class="parallel-card-title">✓ СИНЕМАТОК (параллельно)</h4>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 1</span>
+                                <div class="task-track">
+                                    <div class="task-fill parallel parallel-1"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 2</span>
+                                <div class="task-track">
+                                    <div class="task-fill parallel parallel-2"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 3</span>
+                                <div class="task-track">
+                                    <div class="task-fill parallel parallel-3"></div>
+                                </div>
+                            </div>
+                            <div class="task-bar">
+                                <span class="task-label">Видео 4</span>
+                                <div class="task-track">
+                                    <div class="task-fill parallel parallel-4"></div>
+                                </div>
+                            </div>
+                            <p style="color: #0ea5e9; margin-top: 15px; font-weight: 600;">Время: ~10 минут</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px; color: #10b981; font-size: 24px; font-weight: 600;">
+                    Экономия времени: 75% | Обработка: В 4 раза быстрее
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Access Methods -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <div class="slide-icon">🌐</div>
+                <h1 class="slide-title">Три способа доступа</h1>
+                <p class="slide-subtitle">Работай там, где тебе удобно</p>
+
+                <div class="access-grid">
+                    <div class="access-card">
+                        <div class="access-icon">📱</div>
+                        <h3 class="access-name">Телеграм Бот</h3>
+                        <ul class="access-features">
+                            <li>Быстрый доступ в мессенджере</li>
+                            <li>Минимум кликов до результата</li>
+                            <li>Мобильная работа на ходу</li>
+                            <li>Push-уведомления</li>
+                            <li>Быстрые правки</li>
+                        </ul>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">📲</div>
+                        <h3 class="access-name">Мобильное приложение</h3>
+                        <ul class="access-features">
+                            <li>Полный функционал в кармане</li>
+                            <li>Офлайн-возможности</li>
+                            <li>Галерея готовых видео</li>
+                            <li>Избранные шаблоны</li>
+                            <li>Работа из любого места</li>
+                        </ul>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">💻</div>
+                        <h3 class="access-name">Веб-платформа</h3>
+                        <ul class="access-features">
+                            <li>Полная аналитика и статистика</li>
+                            <li>Управление командой</li>
+                            <li>API для интеграций</li>
+                            <li>Webhook автоматизация</li>
+                            <li>Расширенные настройки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: CTA -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <div class="slide-icon">🚀</div>
+                <h1 class="slide-title">Бери и используй</h1>
+                <p class="slide-subtitle">90+ нейросетей в одном месте</p>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-number">5000+</div>
+                        <div class="stat-label">Активных пользователей</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Обработанных запросов</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime сервиса</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 20px; color: #f1f5f9; line-height: 1.6;">
+                        "СИНЕМАТОК заменил нам 5 разных сервисов. 
+                        Теперь всё в одном окне, с параллельной обработкой. Экономия $500/месяц."
+                    </p>
+                    <p style="color: #0ea5e9; margin-top: 15px;">— CTO контент-студии</p>
+                </div>
+
+                <div class="video-section">
+                    <div class="video-header">
+                        <span class="video-icon">🎬</span>
+                        <h3 class="video-title">Видеопрезентация СИНЕМАТОК</h3>
+                    </div>
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">
+                            <span class="play-button">▶</span>
+                            <span class="video-placeholder-text">Видеопрезентация скоро появится</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Попробовать бесплатно →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" id="prev-btn">←</button>
+        <button class="nav-arrow" id="next-btn">→</button>
+    </div>
+
+    <script>
+        // Create network animation
+        const networkBg = document.getElementById('network-bg');
+        for (let i = 0; i < 15; i++) {
+            const node = document.createElement('div');
+            node.className = 'network-node';
+            node.style.left = Math.random() * 100 + '%';
+            node.style.top = Math.random() * 100 + '%';
+            node.style.animationDelay = Math.random() * 3 + 's';
+            networkBg.appendChild(node);
+        }
+
+        // Slides navigation
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.progress-dot');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i < index) slide.classList.add('prev');
+            });
+            slides[index].classList.add('active');
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentSlide = index;
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) showSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) showSlide(currentSlide - 1);
+            }
+        });
+
+        // Animate parallel bars
+        const parallelSlide = document.querySelector('[data-index="3"]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.task-fill.parallel');
+                    fills.forEach((fill, i) => {
+                        fill.style.width = '0%';
+                        setTimeout(() => {
+                            fill.style.width = '100%';
+                        }, i * 150);
+                    });
+                }
+            });
+        });
+
+        if (parallelSlide) {
+            observer.observe(parallelSlide);
+        }
+    </script>
+</body>
+</html>
