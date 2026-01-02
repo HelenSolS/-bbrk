@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СИНЕМАТОК-Трио | Экосистема видеоконтента</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #020617;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, #0f172a 0%, #020617 70%);
+            overflow: hidden;
+        }
+
+        /* Animated background orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(14, 165, 233, 0.15);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(217, 119, 6, 0.15);
+            bottom: -50px;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(217, 70, 239, 0.15);
+            top: 50%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 20px) scale(0.9); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .logo-main {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #0ea5e9, #d946ef, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s infinite linear;
+            background-size: 200% 200%;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        /* Three Cards Container */
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1400px;
+        }
+
+        /* Branch Card */
+        .branch-card {
+            width: 380px;
+            height: 520px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: block;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .branch-card:hover::after {
+            transform: scale(1.1);
+        }
+
+        .branch-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Provider Card - Blue */
+        .card-provider {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
+        }
+
+        .card-provider::after {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="g1" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%230ea5e9" stop-opacity="0.3"/><stop offset="100%25" stop-color="%230c4a6e" stop-opacity="0.3"/></linearGradient></defs><rect fill="url(%23g1)" width="400" height="400"/><circle cx="200" cy="200" r="80" fill="none" stroke="%230ea5e9" stroke-width="2" opacity="0.5"/><circle cx="200" cy="200" r="120" fill="none" stroke="%230ea5e9" stroke-width="1" opacity="0.3"/><circle cx="200" cy="200" r="160" fill="none" stroke="%230ea5e9" stroke-width="1" opacity="0.2"/><circle cx="200" cy="200" r="40" fill="%230ea5e9" opacity="0.5"/></svg>');
+        }
+
+        /* Factory Card - Mustard */
+        .card-factory {
+            background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
+        }
+
+        .card-factory::after {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="g2" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%23d97706" stop-opacity="0.3"/><stop offset="100%25" stop-color="%2378350f" stop-opacity="0.3"/></linearGradient></defs><rect fill="url(%23g2)" width="400" height="400"/><rect x="150" y="100" width="100" height="200" fill="none" stroke="%23d97706" stroke-width="3" opacity="0.5"/><rect x="170" y="120" width="60" height="40" fill="%23d97706" opacity="0.4"/><rect x="170" y="180" width="60" height="40" fill="%23d97706" opacity="0.4"/><rect x="170" y="240" width="60" height="40" fill="%23d97706" opacity="0.4"/><path d="M250 200 L300 200" stroke="%23d97706" stroke-width="2" opacity="0.5"/><circle cx="310" cy="200" r="15" fill="%23d97706" opacity="0.5"/></svg>');
+        }
+
+        /* Animo Card - Fuchsia */
+        .card-animo {
+            background: linear-gradient(135deg, #831843 0%, #d946ef 100%);
+        }
+
+        .card-animo::after {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><linearGradient id="g3" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%23d946ef" stop-opacity="0.3"/><stop offset="100%25" stop-color="%23831843" stop-opacity="0.3"/></linearGradient></defs><rect fill="url(%23g3)" width="400" height="400"/><circle cx="200" cy="200" r="60" fill="%23d946ef" opacity="0.4"/><circle cx="200" cy="200" r="90" fill="none" stroke="%23d946ef" stroke-width="2" opacity="0.4"/><circle cx="200" cy="200" r="120" fill="none" stroke="%23d946ef" stroke-width="1" opacity="0.3"/><circle cx="140" cy="140" r="25" fill="%23d946ef" opacity="0.3"/><circle cx="260" cy="140" r="25" fill="%23d946ef" opacity="0.3"/><circle cx="260" cy="260" r="25" fill="%23d946ef" opacity="0.3"/><circle cx="140" cy="260" r="25" fill="%23d946ef" opacity="0.3"/></svg>');
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            z-index: 5;
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-provider .card-title { color: #0ea5e9; }
+        .card-factory .card-title { color: #fbbf24; }
+        .card-animo .card-title { color: #f0abfc; }
+
+        .card-subtitle {
+            font-size: 16px;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+
+        .card-features {
+            list-style: none;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .card-features li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .card-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: currentColor;
+        }
+
+        .card-provider .card-features li::before { color: #0ea5e9; }
+        .card-factory .card-features li::before { color: #fbbf24; }
+        .card-animo .card-features li::before { color: #d946ef; }
+
+        .card-cta {
+            margin-top: 20px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .card-provider .card-cta {
+            background: #0ea5e9;
+            color: #020617;
+        }
+
+        .card-factory .card-cta {
+            background: #d97706;
+            color: #020617;
+        }
+
+        .card-animo .card-cta {
+            background: #d946ef;
+            color: #020617;
+        }
+
+        .card-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 20px;
+            background: #0f172a;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-number.blue { color: #0ea5e9; }
+        .stat-number.mustard { color: #d97706; }
+        .stat-number.fuchsia { color: #d946ef; }
+        .stat-number.white { color: #f1f5f9; }
+
+        .stat-label {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        /* Video Presentations Section */
+        .videos-section {
+            padding: 80px 20px;
+            background: #0f172a;
+        }
+
+        .videos-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #0ea5e9, #d97706, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid;
+            transition: all 0.4s ease;
+        }
+
+        .video-card.provider {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .video-card.factory {
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .video-card.animo {
+            border-color: rgba(217, 70, 239, 0.3);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-card.provider:hover { border-color: #0ea5e9; }
+        .video-card.factory:hover { border-color: #d97706; }
+        .video-card.animo:hover { border-color: #d946ef; }
+
+        .video-preview {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            cursor: pointer;
+        }
+
+        .video-card.provider .video-preview {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(6, 182, 212, 0.2));
+        }
+
+        .video-card.factory .video-preview {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.2), rgba(245, 158, 11, 0.2));
+        }
+
+        .video-card.animo .video-preview {
+            background: linear-gradient(135deg, rgba(217, 70, 239, 0.2), rgba(147, 51, 234, 0.2));
+        }
+
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 56px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-preview:hover .video-play-btn {
+            transform: translate(-50%, -50%) scale(1.2);
+            opacity: 1;
+        }
+
+        .video-info {
+            padding: 25px;
+        }
+
+        .video-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .video-card.provider .video-name { color: #0ea5e9; }
+        .video-card.factory .video-name { color: #fbbf24; }
+        .video-card.animo .video-name { color: #f0abfc; }
+
+        .video-desc {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .video-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .video-card.provider .video-badge {
+            background: rgba(14, 165, 233, 0.2);
+            color: #0ea5e9;
+        }
+
+        .video-card.factory .video-badge {
+            background: rgba(217, 119, 6, 0.2);
+            color: #fbbf24;
+        }
+
+        .video-card.animo .video-badge {
+            background: rgba(217, 70, 239, 0.2);
+            color: #d946ef;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .branch-card {
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .branch-card:nth-child(1) { animation-delay: 0.2s; }
+        .branch-card:nth-child(2) { animation-delay: 0.4s; }
+        .branch-card:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .branch-card {
+                width: 100%;
+                max-width: 400px;
+                height: 450px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
+        <div class="hero-content">
+            <h1 class="logo-main">СИНЕМАТОК-ТРИО</h1>
+            <p class="hero-subtitle">Единая экосистема для создания видеоконтента</p>
+            <p class="hero-description">
+                Используй современные нейросети и технологии прямо в своём проекте.<br>
+                Просто. Удобно. Прибыльно.
+            </p>
+
+            <div class="cards-container">
+                <!-- Provider Card -->
+                <a href="provider.html" class="branch-card card-provider">
+                    <div class="card-content">
+                        <div class="card-icon">🔵</div>
+                        <h2 class="card-title">СИНЕМАТОК</h2>
+                        <p class="card-subtitle">Поставщик инструментов</p>
+                        <ul class="card-features">
+                            <li>90+ нейросетей в одном месте</li>
+                            <li>Параллельная обработка</li>
+                            <li>Видео, текст, звук, изображения</li>
+                            <li>API и интеграции</li>
+                        </ul>
+                        <span class="card-cta">Исследовать →</span>
+                    </div>
+                </a>
+
+                <!-- Factory Card -->
+                <a href="factory.html" class="branch-card card-factory">
+                    <div class="card-content">
+                        <div class="card-icon">🟠</div>
+                        <h2 class="card-title">КОНТЕНТ ЗАВОД</h2>
+                        <p class="card-subtitle">Фабрика по созданию</p>
+                        <ul class="card-features">
+                            <li>100+ готовых шаблонов</li>
+                            <li>Автоматизация рабочих процессов</li>
+                            <li>Все форматы соцсетей</li>
+                            <li>Масштабирование до 1000+/день</li>
+                        </ul>
+                        <span class="card-cta">Исследовать →</span>
+                    </div>
+                </a>
+
+                <!-- Animo Card -->
+                <a href="animo.html" class="branch-card card-animo">
+                    <div class="card-content">
+                        <div class="card-icon">🟣</div>
+                        <h2 class="card-title">АНИМО</h2>
+                        <p class="card-subtitle">Цифровое присутствие</p>
+                        <ul class="card-features">
+                            <li>Законное использование образа и голоса</li>
+                            <li>Ежедневные кастинги для аватаров</li>
+                            <li>Монетизация: 93% владельцу</li>
+                            <li>Гибкие тарифы и подписки</li>
+                        </ul>
+                        <span class="card-cta">Исследовать →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number blue">90+</div>
+                <div class="stat-label">Нейросетей</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number mustard">100+</div>
+                <div class="stat-label">Шаблонов</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number fuchsia">93%</div>
+                <div class="stat-label">Доход владельцам</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number white">2026</div>
+                <div class="stat-label">Полный запуск</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Presentations Section -->
+    <section class="videos-section">
+        <h2 class="videos-title">Видеопрезентации проектов</h2>
+        <div class="videos-grid">
+            <div class="video-card provider">
+                <a href="https://disk.yandex.ru/i/SfsnHxqpImANKQ" target="_blank" class="video-link">
+                    <div class="video-preview">
+                        <span class="video-play-btn">▶</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-name">СИНЕМАТОК</h3>
+                        <p class="video-desc">Поставщик инструментов и нейросетей</p>
+                        <span class="video-badge">Смотреть презентацию</span>
+                    </div>
+                </a>
+            </div>
+            <div class="video-card factory">
+                <div class="video-preview">
+                    <span class="video-play-btn">▶</span>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-name">КОНТЕНТ ЗАВОД</h3>
+                    <p class="video-desc">Фабрика по созданию видеоконтента</p>
+                    <span class="video-badge">Скоро появится</span>
+                </div>
+            </div>
+            <div class="video-card animo">
+                <div class="video-preview">
+                    <span class="video-play-btn">▶</span>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-name">АНИМО</h3>
+                    <p class="video-desc">Агентство персонажей и монетизация</p>
+                    <span class="video-badge">Скоро появится</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">© 2026 СИНЕМАТОК-Трио. Используй современные технологии в своём проекте.</p>
+    </footer>
+</body>
+</html>
