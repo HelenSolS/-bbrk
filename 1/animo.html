@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АНИМО — Цифровое присутствие нового поколения</title>
+    <style>
+        :root {
+            --primary: #9D4EDD;
+            --dark: #1A1A2E;
+            --darker: #0F0F1A;
+            --light: #FFFFFF;
+            --gray: #888888;
+            --accent: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 60px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 25px;
+            left: 35px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+        
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        h1 .highlight {
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+        
+        h2 .highlight {
+            color: var(--primary);
+        }
+        
+        .tagline {
+            font-size: 24px;
+            color: var(--accent);
+            text-align: center;
+            max-width: 700px;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: rgba(157, 78, 221, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .card.highlight-card {
+            background: rgba(157, 78, 221, 0.2);
+            border: 2px solid var(--primary);
+        }
+        
+        .card.highlight-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+        
+        .card.highlight-card p {
+            font-size: 15px;
+            color: var(--light);
+        }
+        
+        .big-card {
+            background: rgba(157, 78, 221, 0.15);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 35px 45px;
+            text-align: center;
+            max-width: 700px;
+            margin: 10px;
+        }
+        
+        .big-card h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .big-card p {
+            font-size: 18px;
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .big-feature {
+            background: rgba(157, 78, 221, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .big-feature:hover {
+            border-color: var(--primary);
+            background: rgba(157, 78, 221, 0.15);
+        }
+        
+        .big-feature h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .big-feature ul {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+        }
+        
+        .big-feature li {
+            font-size: 15px;
+            color: var(--light);
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.4;
+        }
+        
+        .big-feature li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .calculator-section {
+            background: rgba(157, 78, 221, 0.05);
+            border-radius: 20px;
+            padding: 35px 45px;
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+        
+        .calc-row {
+            margin-bottom: 25px;
+        }
+        
+        .calc-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .calc-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .calc-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(157, 78, 221, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        
+        .calc-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .calc-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        .calc-result {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .calc-result-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .calc-result-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #4CAF50;
+        }
+        
+        .calc-note {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin-bottom: 35px;
+        }
+        
+        .gallery-item {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .gallery-item .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-item h4 {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .gallery-item p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+        
+        .two-paths {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        .path-card {
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .path-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .path-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        
+        .path-card.create h3 {
+            color: #4CAF50;
+        }
+        
+        .path-card.rent h3 {
+            color: var(--primary);
+        }
+        
+        .path-card .path-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .path-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .stat-text {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+        
+        .video-section {
+            text-align: center;
+            max-width: 750px;
+        }
+        
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--dark);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0;
+            overflow: hidden;
+            border: 2px solid rgba(157, 78, 221, 0.5);
+        }
+        
+        .video-placeholder {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .video-placeholder-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-placeholder-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .video-placeholder-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+            margin-left: 4px;
+        }
+        
+        .video-placeholder p {
+            color: var(--gray);
+            font-size: 16px;
+        }
+        
+        .video-placeholder a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 18px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid rgba(157, 78, 221, 0.5);
+            background: rgba(157, 78, 221, 0.2);
+            color: var(--light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .progress-dots {
+            position: fixed;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-dot.active {
+            background: var(--primary);
+            width: 28px;
+            border-radius: 4px;
+        }
+        
+        .back-link {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-link:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title + Tagline + Stats -->
+        <div class="slide active" data-index="0">
+            <div class="slide-number">01 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h1>АНИМО</h1>
+            <p class="tagline">Цифровое присутствие нового поколения — от живого опыта к вечному цифровому активу</p>
+            
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-text">Активность без остановок</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-text">Потенциал роста</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">93%</div>
+                    <div class="stat-text">Доход владельцу</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Ecosystem Expanded -->
+        <div class="slide" data-index="1">
+            <div class="slide-number">02 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h2>Экосистема <span class="highlight">возможностей</span></h2>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="icon">⭐</div>
+                    <h4>Популярные персоны</h4>
+                    <p>Известные личности и знаменитости</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🎭</div>
+                    <h4>Вымышленные персонажи</h4>
+                    <p>Герои книг, игр и фильмов</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🐕</div>
+                    <h4>Звери реальные</h4>
+                    <p>Животные в их естественном виде</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🦄</div>
+                    <h4>Звери персонажи</h4>
+                    <p>Фантастические существа и антропоморфные</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🏰</div>
+                    <h4>Здания вымышленные</h4>
+                    <p>Замки, небоскрёбы, фэнтези-постройки</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🏛️</div>
+                    <h4>Здания существующие</h4>
+                    <p>Реальные достопримечательности мира</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="icon">🌍</div>
+                    <h4>Локации</h4>
+                    <p>Места на любой вкус и стиль</p>
+                </div>
+                <div class="gallery-item" style="background: rgba(157, 78, 221, 0.25); border-color: var(--accent);">
+                    <div class="icon">✨</div>
+                    <h4 style="color: var(--accent);">Сенсационные возможности!</h4>
+                    <p>Создавай своё или арендуй из базы</p>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <div class="big-feature">
+                    <h3>✨ Создай своё</h3>
+                    <ul>
+                        <li>Создайте уникального персонажа с нуля</li>
+                        <li>Настройте внешность, характер и стиль</li>
+                        <li>Загрузите свой голос или выберите синтез</li>
+                        <li>Персонаж становится вашим цифровым активом навсегда</li>
+                    </ul>
+                </div>
+                <div class="big-feature">
+                    <h3>🎯 Арендуй из базы</h3>
+                    <ul>
+                        <li>Выберите готового персонажа из библиотеки</li>
+                        <li>Гибкие тарифы: количество использований или период, или безлимит</li>
+                        <li>Мгновенный доступ к тысячам аватаров</li>
+                        <li>Идеально для тестирования и быстрых проектов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Calculator -->
+        <div class="slide" data-index="2">
+            <div class="slide-number">03 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h2>Калькулятор <span class="highlight">дохода</span></h2>
+            
+            <div class="calculator-section">
+                <div class="calc-row">
+                    <div class="calc-label">
+                        <span>Участие в кастингах в день</span>
+                        <span class="calc-value" id="castingsValue">5</span>
+                    </div>
+                    <input type="range" class="calc-slider" id="castingsSlider" min="1" max="10" value="5">
+                </div>
+                
+                <div class="calc-row">
+                    <div class="calc-label">
+                        <span>Процент побед на кастингах</span>
+                        <span class="calc-value" id="winrateValue">30%</span>
+                    </div>
+                    <input type="range" class="calc-slider" id="winrateSlider" min="5" max="80" value="30">
+                </div>
+                
+                <div class="calc-row">
+                    <div class="calc-label">
+                        <span>Стоимость использования (₽)</span>
+                        <span class="calc-value" id="priceValue">5 000</span>
+                    </div>
+                    <input type="range" class="calc-slider" id="priceSlider" min="1000" max="20000" step="500" value="5000">
+                </div>
+                
+                <div class="calc-result">
+                    <div class="calc-result-label">Примерный месячный доход (93% вам)</div>
+                    <div class="calc-result-value" id="earningsValue">209 250 ₽</div>
+                </div>
+                
+                <p class="calc-note">* Расчёт: (кастинги × процент побед) × стоимость × 30 дней × 0.93. Анимо получает 7% за использование системы.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Legal Use -->
+        <div class="slide" data-index="3">
+            <div class="slide-number">04 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h2>Законное использование и <span class="highlight">монетизация</span></h2>
+            
+            <div class="grid-4">
+                <div class="card highlight-card">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Законный образ</h3>
+                    <p>Официальное использование образа и голоса с полным юридическим оформлением</p>
+                </div>
+                <div class="card highlight-card">
+                    <div class="card-icon">🎬</div>
+                    <h3>Ежедневные кастинги</h3>
+                    <p>Ваш аватар участвует в кастингах каждый день — система подбирает лучшие проекты</p>
+                </div>
+                <div class="card highlight-card">
+                    <div class="card-icon">💎</div>
+                    <h3>93% владельцу</h3>
+                    <p>Мы берём только 7% за использование системы — остальное вы получаете</p>
+                </div>
+                <div class="card highlight-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Гибкие тарифы</h3>
+                    <p>Подписки на аватаров из базы: почасовой, посуточный и безлимитный доступ</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: How It Works -->
+        <div class="slide" data-index="4">
+            <div class="slide-number">05 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h2>Как это <span class="highlight">работает</span></h2>
+            
+            <div class="grid-2">
+                <div class="big-feature">
+                    <h3>📸 Оцифровка и создание аватара</h3>
+                    <ul>
+                        <li>Сканирование внешности или создание с нуля</li>
+                        <li>Синтез голоса на основе образцов</li>
+                        <li>Настройка мимики и жестов</li>
+                        <li>Обучение аватара вашим манерам и стилю речи</li>
+                    </ul>
+                </div>
+                <div class="big-feature">
+                    <h3>⚖️ Юридическая обвязка и лицензирование</h3>
+                    <ul>
+                        <li>Оформление прав на цифровой образ</li>
+                        <li>Лицензионные соглашения для каждого проекта</li>
+                        <li>Защита от несанкционированного использования</li>
+                        <li>Контракты с площадками и заказчиками</li>
+                    </ul>
+                </div>
+                <div class="big-feature">
+                    <h3>🌐 Представление в базе и кастинги</h3>
+                    <ul>
+                        <li>Ваш аватар доступен в каталоге</li>
+                        <li>Автоматический подбор подходящих проектов</li>
+                        <li>Участие в кастингах без вашего участия</li>
+                        <li>Система анализирует требования и предлагает лучшие варианты</li>
+                    </ul>
+                </div>
+                <div class="big-feature">
+                    <h3>💰 Распределение дохода</h3>
+                    <ul>
+                        <li>93% от каждого проекта — владельцу аватара</li>
+                        <li>7% — комиссия Анимо за использование платформы</li>
+                        <li>Прозрачная статистика всех транзакций</li>
+                        <li>Мгновенные выплаты на вашу карту или кошелёк</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Scenarios -->
+        <div class="slide" data-index="5">
+            <div class="slide-number">06 / 07</div>
+            <div class="logo">АНИМО</div>
+            <h2>Сценарии <span class="highlight">использования</span></h2>
+            
+            <div class="grid-4">
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <h3>Художественные фильмы</h3>
+                    <p>Актер играет роли любого возраста — от юного героя до пожилого персонажа</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📺</div>
+                    <h3>Сериалы</h3>
+                    <p>Съёмки без присутствия актера — аватар работает на площадке</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>Игры и метавселенные</h3>
+                    <p>Персонаж существует в игровых мирах и виртуальных пространствах</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Обучающие системы</h3>
+                    <p>Виртуальные преподаватели и наставники для любых курсов</p>
+                </div>
+            </div>
+            
+            <div class="grid-2" style="margin-top: 25px;">
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Мультимедиа и блогинг</h3>
+                    <p>Контент для соцсетей, YouTube, подкасты и стриминг — без остановок</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎬</div>
+                    <h3>Реклама и промо</h3>
+                    <p>Участие в рекламных роликах, презентациях и промо-акциях</p>
+                </div>
+            </div>
+            
+            <div class="big-card" style="margin-top: 30px; max-width: 500px;">
+                <h3>🎁 Первый персонаж — бесплатно!</h3>
+                <p>Создайте своего цифрового двойника при регистрации и начните зарабатывать</p>
+            </div>
+            
+            <a href="index.html" class="back-link">← Вернуться к обзору проектов</a>
+        </div>
+        
+        <!-- Slide 7: Video -->
+        <div class="slide" data-index="6">
+            <div class="slide-number">07 / 07</div>
+            <div class="logo">АНИМО</div>
+            <div class="video-section">
+                <h2>Подробная <span class="highlight">презентация</span></h2>
+                <p style="color: var(--gray); font-size: 16px; margin-bottom: 20px;">Смотрите полное видео, чтобы узнать все детали о проекте АНИМО</p>
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <div class="video-placeholder-icon">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                        <p>Видеопрезентация проекта</p>
+                        <p style="margin-top: 10px; font-size: 14px;">
+                            <a href="https://disk.yandex.ru/i/SfsnHxqpImANKQ" target="_blank">Открыть видео в новом окне</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <a href="index.html" class="back-link">← Вернуться к обзору проектов</a>
+        </div>
+    </div>
+    
+    <div class="progress-dots">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+    </div>
+    
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" disabled>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="nav-btn" id="nextBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+    
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.progress-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+            currentSlide = index;
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+        
+        // Calculator Logic with 93% distribution
+        const castingsSlider = document.getElementById('castingsSlider');
+        const winrateSlider = document.getElementById('winrateSlider');
+        const priceSlider = document.getElementById('priceSlider');
+        
+        const castingsValue = document.getElementById('castingsValue');
+        const winrateValue = document.getElementById('winrateValue');
+        const priceValue = document.getElementById('priceValue');
+        const earningsValue = document.getElementById('earningsValue');
+        
+        function calculateEarnings() {
+            const castings = parseInt(castingsSlider.value);
+            const winrate = parseInt(winrateSlider.value);
+            const price = parseInt(priceSlider.value);
+            
+            castingsValue.textContent = castings;
+            winrateValue.textContent = winrate + '%';
+            priceValue.textContent = price.toLocaleString('ru-RU');
+            
+            // Formula: (castings × winrate%) × price × 30 days × 93%
+            const monthlyEarnings = (castings * (winrate / 100)) * price * 30 * 0.93;
+            earningsValue.textContent = monthlyEarnings.toLocaleString('ru-RU') + ' ₽';
+        }
+        
+        castingsSlider.addEventListener('input', calculateEarnings);
+        winrateSlider.addEventListener('input', calculateEarnings);
+        priceSlider.addEventListener('input', calculateEarnings);
+        
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                } else if (diff < 0 && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
