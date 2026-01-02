@@ -11,11 +11,18 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: #020617;
             color: #f1f5f9;
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         /* Navigation */
@@ -24,12 +31,12 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 1001;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(180deg, rgba(2,6,23,0.9) 0%, transparent 100%);
+            background: linear-gradient(180deg, #020617 0%, rgba(2,6,23,0.9) 70%, transparent 100%);
         }
 
         .nav-back {
@@ -81,44 +88,59 @@
 
         /* Slides Container */
         .slides-container {
+            width: 100%;
             height: 100vh;
             overflow: hidden;
             position: relative;
+            background: #020617;
         }
 
         .slide {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 80px;
+            padding-bottom: 120px;
             opacity: 0;
             visibility: hidden;
             transform: translateX(100px);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
         }
 
         .slide.active {
             opacity: 1;
             visibility: visible;
             transform: translateX(0);
+            z-index: 5;
         }
 
         .slide.prev {
             transform: translateX(-100px);
+            z-index: 4;
         }
 
         /* Animated Background */
         .bg-animated {
-            position: absolute;
-            inset: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             overflow: hidden;
+            background: #020617;
         }
 
         .bg-orb {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             filter: blur(100px);
             animation: float 15s infinite ease-in-out;
@@ -139,6 +161,7 @@
             bottom: -100px;
             right: -100px;
             animation-delay: -5s;
+            position: fixed;
         }
 
         .bg-orb-3 {
@@ -148,6 +171,7 @@
             top: 50%;
             left: 30%;
             animation-delay: -10s;
+            position: fixed;
         }
 
         @keyframes float {
@@ -156,36 +180,16 @@
             66% { transform: translate(50px, -50px) scale(0.9); }
         }
 
-        /* Animated factory elements */
-        .factory-elements {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .gear {
-            position: absolute;
-            font-size: 60px;
-            animation: rotate 20s linear infinite;
-            opacity: 0.1;
-        }
-
-        .gear-1 { top: 10%; right: 10%; animation-duration: 25s; }
-        .gear-2 { bottom: 20%; left: 5%; animation-duration: 30s; animation-direction: reverse; }
-        .gear-3 { top: 60%; right: 5%; animation-duration: 35s; }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         /* Slide Content */
         .slide-content {
             position: relative;
             z-index: 10;
             text-align: center;
             max-width: 1200px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+            padding-bottom: 20px;
         }
 
         .slide-icon {
@@ -849,17 +853,21 @@
             transform: translateX(-50%);
             display: flex;
             gap: 20px;
-            z-index: 100;
+            z-index: 1001;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
         }
 
         .nav-arrow {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(217, 119, 6, 0.5);
             color: #d97706;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -962,11 +970,6 @@
             <div class="bg-orb bg-orb-1"></div>
             <div class="bg-orb bg-orb-2"></div>
             <div class="bg-orb bg-orb-3"></div>
-            <div class="factory-elements">
-                <div class="gear gear-1">⚙️</div>
-                <div class="gear gear-2">⚙️</div>
-                <div class="gear gear-3">⚙️</div>
-            </div>
         </div>
 
         <!-- Slide 1: Hero -->
@@ -1106,7 +1109,7 @@
             <div class="slide-content">
                 <div class="slide-icon">⚙️</div>
                 <h1 class="slide-title">Автоматизация и Воркфлоу</h1>
-                <p class="slide-subtitle">Сохраняй цепочки, запускайом, контролируй процесс</p>
+                <p class="slide-subtitle">Сохраняй цепочки, запускай批量ом, контролируй процесс</p>
 
                 <div class="automation-grid">
                     <div class="automation-card">
