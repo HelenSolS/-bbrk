@@ -1092,6 +1092,60 @@
                 font-size: 18px;
             }
         }
+
+        /* Contacts Block */
+        .contacts-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .contacts-qr {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        .contacts-info {
+            text-align: left;
+        }
+
+        .contacts-title {
+            font-size: 11px;
+            color: #0ea5e9;
+            margin-bottom: 2px;
+        }
+
+        .contacts-username {
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 2px;
+        }
+
+        .contacts-desc {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .contacts-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+                gap: 8px;
+            }
+
+            .contacts-info {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1145,6 +1199,16 @@
                     <div class="counter-box">
                         <div class="counter-number">∞</div>
                         <div class="counter-label">Параллельные задачи</div>
+                    </div>
+                </div>
+
+                <!-- Contacts Block -->
+                <div class="contacts-block">
+                    <img src="contacts_qr.png" alt="Telegram QR" class="contacts-qr">
+                    <div class="contacts-info">
+                        <div class="contacts-title">Связаться с нами</div>
+                        <div class="contacts-username">@ROMAN_KARG</div>
+                        <div class="contacts-desc">Напишите в Telegram для обсуждения сотрудничества</div>
                     </div>
                 </div>
 
