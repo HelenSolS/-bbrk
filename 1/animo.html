@@ -141,43 +141,33 @@
         .bg-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            animation: float 15s infinite ease-in-out;
+            filter: blur(60px);
+            opacity: 0.6;
+            will-change: transform;
         }
 
         .bg-orb-1 {
-            width: 600px;
-            height: 600px;
-            background: rgba(192, 132, 252, 0.2);
-            top: -200px;
-            left: -200px;
-            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: rgba(192, 132, 252, 0.15);
+            top: -100px;
+            left: -100px;
         }
 
         .bg-orb-2 {
-            width: 400px;
-            height: 400px;
-            background: rgba(232, 121, 249, 0.15);
-            bottom: -100px;
-            right: -100px;
-            animation-delay: -5s;
-            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: rgba(232, 121, 249, 0.1);
+            bottom: -50px;
+            right: -50px;
         }
 
         .bg-orb-3 {
-            width: 300px;
-            height: 300px;
-            background: rgba(167, 139, 250, 0.1);
-            top: 50%;
-            left: 30%;
-            animation-delay: -10s;
-            position: fixed;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-50px, 50px) scale(1.1); }
-            66% { transform: translate(50px, -50px) scale(0.9); }
+            width: 200px;
+            height: 200px;
+            background: rgba(167, 139, 250, 0.08);
+            top: 40%;
+            left: 50%;
         }
 
         /* Slide Content */
@@ -195,12 +185,6 @@
         .slide-icon {
             font-size: 80px;
             margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
         }
 
         .slide-title {
@@ -631,12 +615,6 @@
         .workflow-arrow {
             font-size: 28px;
             color: #c084fc;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: translateX(0); }
-            50% { opacity: 0.5; transform: translateX(5px); }
         }
 
         /* Comparison Cards */
@@ -1180,6 +1158,60 @@
                 font-size: 18px;
             }
         }
+
+        /* Contacts Block */
+        .contacts-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+
+        .contacts-qr {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        .contacts-info {
+            text-align: left;
+        }
+
+        .contacts-title {
+            font-size: 11px;
+            color: #c084fc;
+            margin-bottom: 2px;
+        }
+
+        .contacts-username {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e879f9;
+            margin-bottom: 2px;
+        }
+
+        .contacts-desc {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .contacts-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+                gap: 8px;
+            }
+
+            .contacts-info {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1234,8 +1266,10 @@
                         <div class="counter-label">Доход владельцу</div>
                     </div>
                 </div>
-            </div>
-        </div>
+
+                <div class="cta-section">
+                    <a href="index.html" class="cta-button">Вернуться к обзору проектов →</a>
+                </div>
 
         <!-- Slide 2: Ecosystem -->
         <div class="slide" data-index="1">
