@@ -1258,7 +1258,6 @@
             <div class="progress-dot" data-slide="3"></div>
             <div class="progress-dot" data-slide="4"></div>
             <div class="progress-dot" data-slide="5"></div>
-            <div class="progress-dot" data-slide="6"></div>
         </div>
     </nav>
 
@@ -1362,10 +1361,8 @@
             </div>
         </div>
 
-       
-
         <!-- Slide 4: Workflow Automation -->
-        <div class="slide" data-index="3">
+        <div class="slide" data-index="2">
             <div class="slide-content">
                 <div class="slide-icon">⚙️</div>
                 <h1 class="slide-title">Автоматизация и Воркфлоу</h1>
@@ -1445,7 +1442,7 @@
         </div>
 
         <!-- Slide 5: Templates -->
-        <div class="slide" data-index="4">
+        <div class="slide" data-index="3">
             <div class="slide-content">
                 <div class="slide-icon">📋</div>
                 <h1 class="slide-title">Библиотека шаблонов</h1>
@@ -1501,7 +1498,7 @@
         </div>
 
         <!-- Slide 6: Formats -->
-        <div class="slide" data-index="5">
+        <div class="slide" data-index="4">
             <div class="slide-content">
                 <div class="slide-icon">📱</div>
                 <h1 class="slide-title">Все форматы соцсетей</h1>
@@ -1578,34 +1575,26 @@
             </div>
         </div>
 
-        <!-- Slide 7: CTA -->
-        <div class="slide" data-index="6">
+        <!-- Slide 6: CTA -->
+        <div class="slide" data-index="5">
             <div class="slide-content">
                 <div class="slide-icon">🚀</div>
                 <h1 class="slide-title">Создавай быстрее всех</h1>
                 <p class="slide-subtitle">Начни экономить время уже сегодня</p>
 
                 <div class="stats-row">
-                    <div class="stat-box">
-                        <div class="stat-number">5000+</div>
-                        <div class="stat-label">Активных пользователей</div>
+                    <div class="counter-box">
+                        <div class="counter-number">100+</div>
+                        <div class="counter-label">Шаблонов</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">1M+</div>
-                        <div class="stat-label">Созданных видео</div>
+                    <div class="counter-box">
+                        <div class="counter-number">10×</div>
+                        <div class="counter-label">Скорость</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">99%</div>
-                        <div class="stat-label">Довольных клиентов</div>
+                    <div class="counter-box">
+                        <div class="counter-number">1000+</div>
+                        <div class="counter-label">Видео/день</div>
                     </div>
-                </div>
-
-                <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <p style="font-size: 20px; color: #f1f5f9; line-height: 1.6;">
-                        "КОНТЕНТ ЗАВОД сократил время создания видео в 20 раз. 
-                        Теперь одна студия делает то, на что раньше требовалось 5 человек."
-                    </p>
-                    <p style="color: #d97706; margin-top: 15px;">— Руководитель контент-агентства</p>
                 </div>
 
                 <div class="video-section">
@@ -1656,6 +1645,11 @@
             currentSlide = index;
             prevBtn.disabled = index === 0;
             nextBtn.disabled = index === slides.length - 1;
+        }
+
+        // Handle hash navigation (open last slide with video)
+        if (window.location.hash === '#video' && slides.length > 0) {
+            showSlide(slides.length - 1);
         }
 
         prevBtn.addEventListener('click', () => {
