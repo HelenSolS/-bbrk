@@ -2080,39 +2080,16 @@
                 <h1 class="slide-title">Бери и используй</h1>
                 <p class="slide-subtitle">90+ нейросетей в одном месте</p>
 
-                <div class="stats-row">
-                    <div class="stat-box">
-                        <div class="stat-number">5000+</div>
-                        <div class="stat-label">Активных пользователей</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-number">10M+</div>
-                        <div class="stat-label">Обработанных запросов</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-number">99.9%</div>
-                        <div class="stat-label">Uptime сервиса</div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <p style="font-size: 20px; color: #f1f5f9; line-height: 1.6;">
-                        "СИНЕМАТОК заменил нам 5 разных сервисов. 
-                        Теперь всё в одном окне, с параллельной обработкой. Экономия $500/месяц."
-                    </p>
-                    <p style="color: #0ea5e9; margin-top: 15px;">— CTO контент-студии</p>
-                </div>
-
                 <div class="video-section">
                     <div class="video-header">
                         <span class="video-icon">🎬</span>
                         <h3 class="video-title">Видеопрезентация СИНЕМАТОК</h3>
                     </div>
                     <div class="video-wrapper">
-                        <div class="video-placeholder">
+                        <a href="https://youtu.be/pE2zIcHYCzg" target="_blank" class="video-placeholder">
                             <span class="play-button">▶</span>
-                            <span class="video-placeholder-text">Видеопрезентация скоро появится</span>
-                        </div>
+                            <span class="video-placeholder-text">Смотреть видео на YouTube</span>
+                        </a>
                     </div>
                 </div>
 
@@ -2162,6 +2139,11 @@
             currentSlide = index;
             prevBtn.disabled = index === 0;
             nextBtn.disabled = index === slides.length - 1;
+        }
+
+        // Handle hash navigation (open last slide with video)
+        if (window.location.hash === '#video' && slides.length > 0) {
+            showSlide(slides.length - 1);
         }
 
         prevBtn.addEventListener('click', () => {
