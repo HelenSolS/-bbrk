@@ -389,7 +389,7 @@
             }
 
             .presentations-title {
-                font-size: 28px;
+                font-size: 24px;
                 margin-bottom: 24px;
             }
 
@@ -398,40 +398,27 @@
             }
 
             .presentation-card {
-                width: 100%;
-                max-width: 280px;
-                padding: 24px 20px;
-                border-radius: 16px;
+                width: 100px;
+                height: 100px;
+                border-radius: 12px;
             }
 
-            .presentation-card .card-icon {
-                font-size: 40px;
-            }
-
-            .presentation-card .card-name {
-                font-size: 22px;
-            }
-
-            .presentation-card .card-sub {
-                font-size: 12px;
-            }
-
-            .card-arrow {
-                font-size: 24px;
+            .play-triangle {
+                border-width: 12px 0 12px 20px !important;
             }
         }
 
         /* Presentations Section */
         .presentations-section {
-            padding: 80px 20px;
+            padding: 60px 20px;
             background: #020617;
             text-align: center;
         }
 
         .presentations-title {
-            font-size: 48px;
+            font-size: 24px;
             font-weight: 800;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             background: linear-gradient(90deg, #0ea5e9, #d946ef, #d97706, #0ea5e9);
             background-size: 300% 300%;
             -webkit-background-clip: text;
@@ -449,111 +436,93 @@
         .presentations-grid {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .presentation-card {
-            width: 280px;
-            padding: 40px 30px;
-            border-radius: 20px;
+            width: 120px;
+            height: 120px;
+            background: #000;
+            border-radius: 16px;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
         }
 
         .presentation-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
-            z-index: 1;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
         }
 
         .presentation-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
         }
 
-        .presentation-card:hover .card-arrow {
-            transform: translateX(10px);
+        .presentation-card:hover .play-triangle {
+            transform: scale(1.2);
         }
 
-        /* Provider - Blue */
-        .card-provider-link {
-            background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
-            border: 2px solid rgba(14, 165, 233, 0.4);
-        }
-
-        .card-provider-link .card-icon {
-            font-size: 56px;
-        }
-
-        .card-provider-link .card-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0ea5e9;
-        }
-
-        .card-provider-link .card-sub {
-            font-size: 14px;
-            color: #7dd3fc;
-        }
-
-        /* Factory - Orange */
-        .card-factory-link {
-            background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
-            border: 2px solid rgba(217, 119, 6, 0.4);
-        }
-
-        .card-factory-link .card-icon {
-            font-size: 56px;
-        }
-
-        .card-factory-link .card-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fbbf24;
-        }
-
-        .card-factory-link .card-sub {
-            font-size: 14px;
-            color: #fcd34d;
-        }
-
-        /* Animo - Fuchsia */
-        .card-animo-link {
-            background: linear-gradient(135deg, #831843 0%, #d946ef 100%);
-            border: 2px solid rgba(217, 70, 239, 0.4);
-        }
-
-        .card-animo-link .card-icon {
-            font-size: 56px;
-        }
-
-        .card-animo-link .card-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #f0abfc;
-        }
-
-        .card-animo-link .card-sub {
-            font-size: 14px;
-            color: #e879f9;
-        }
-
-        .card-arrow {
-            font-size: 32px;
-            color: rgba(255, 255, 255, 0.8);
+        .play-triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
             transition: transform 0.3s ease;
-            margin-top: 10px;
+            margin-left: 8px;
+        }
+
+        /* Provider - Blue Triangle */
+        .card-provider-link {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .card-provider-link:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .card-provider-link .play-triangle {
+            border-width: 15px 0 15px 26px;
+            border-color: transparent transparent transparent #0ea5e9;
+        }
+
+        /* Factory - Orange Triangle */
+        .card-factory-link {
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .card-factory-link:hover {
+            border-color: #d97706;
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.3);
+        }
+
+        .card-factory-link .play-triangle {
+            border-width: 15px 0 15px 26px;
+            border-color: transparent transparent transparent #d97706;
+        }
+
+        /* Animo - Fuchsia Triangle */
+        .card-animo-link {
+            border-color: rgba(217, 70, 239, 0.3);
+        }
+
+        .card-animo-link:hover {
+            border-color: #d946ef;
+            box-shadow: 0 10px 30px rgba(217, 70, 239, 0.3);
+        }
+
+        .card-animo-link .play-triangle {
+            border-width: 15px 0 15px 26px;
+            border-color: transparent transparent transparent #d946ef;
         }
 
         /* Footer */
@@ -676,31 +645,6 @@
         </div>
     </section>
 
-    <!-- Presentations Section -->
-    <section class="presentations-section">
-        <h2 class="presentations-title">Смотрите наши презентации</h2>
-        <div class="presentations-grid">
-            <a href="provider.html#video" class="presentation-card card-provider-link">
-                <div class="card-icon">🔵</div>
-                <div class="card-name">СИНЕМАТОК</div>
-                <div class="card-sub">Поставщик нейросетей</div>
-                <div class="card-arrow">→</div>
-            </a>
-            <a href="factory.html#video" class="presentation-card card-factory-link">
-                <div class="card-icon">🟠</div>
-                <div class="card-name">КОНТЕНТ ЗАВОД</div>
-                <div class="card-sub">Автоматизация видео</div>
-                <div class="card-arrow">→</div>
-            </a>
-            <a href="animo.html#video" class="presentation-card card-animo-link">
-                <div class="card-icon">🟣</div>
-                <div class="card-name">АНИМО</div>
-                <div class="card-sub">Цифровые аватары</div>
-                <div class="card-arrow">→</div>
-            </a>
-        </div>
-    </section>
-
     <!-- Stats Section -->
     <section class="stats-section">
         <div class="stats-grid">
@@ -720,6 +664,22 @@
                 <div class="stat-number white">2026</div>
                 <div class="stat-label">Полный запуск</div>
             </div>
+        </div>
+    </section>
+
+    <!-- Presentations Section -->
+    <section class="presentations-section">
+        <h2 class="presentations-title">Смотрите наши презентации</h2>
+        <div class="presentations-grid">
+            <a href="provider.html#video" class="presentation-card card-provider-link">
+                <div class="play-triangle"></div>
+            </a>
+            <a href="factory.html#video" class="presentation-card card-factory-link">
+                <div class="play-triangle"></div>
+            </a>
+            <a href="animo.html#video" class="presentation-card card-animo-link">
+                <div class="play-triangle"></div>
+            </a>
         </div>
     </section>
 
