@@ -331,8 +331,8 @@
         }
 
         .contacts-qr {
-            width: 140px;
-            height: 140px;
+            width: 100px;
+            height: 100px;
             border-radius: 10px;
         }
 
@@ -348,11 +348,17 @@
             letter-spacing: 1px;
         }
 
-        .contacts-username {
+        .contacts-username a {
             font-size: 18px;
             font-weight: 700;
             color: #38bdf8;
             margin-bottom: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contacts-username a:hover {
+            color: #0ea5e9;
         }
 
         .contacts-desc {
@@ -376,6 +382,178 @@
             .contacts-info {
                 text-align: center;
             }
+
+            /* Presentations Section Mobile */
+            .presentations-section {
+                padding: 40px 12px;
+            }
+
+            .presentations-title {
+                font-size: 28px;
+                margin-bottom: 24px;
+            }
+
+            .presentations-grid {
+                gap: 16px;
+            }
+
+            .presentation-card {
+                width: 100%;
+                max-width: 280px;
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .presentation-card .card-icon {
+                font-size: 40px;
+            }
+
+            .presentation-card .card-name {
+                font-size: 22px;
+            }
+
+            .presentation-card .card-sub {
+                font-size: 12px;
+            }
+
+            .card-arrow {
+                font-size: 24px;
+            }
+        }
+
+        /* Presentations Section */
+        .presentations-section {
+            padding: 80px 20px;
+            background: #020617;
+            text-align: center;
+        }
+
+        .presentations-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, #0ea5e9, #d946ef, #d97706, #0ea5e9);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-flow 6s ease infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .presentations-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .presentation-card {
+            width: 280px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .presentation-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            z-index: 1;
+        }
+
+        .presentation-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .presentation-card:hover .card-arrow {
+            transform: translateX(10px);
+        }
+
+        /* Provider - Blue */
+        .card-provider-link {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
+            border: 2px solid rgba(14, 165, 233, 0.4);
+        }
+
+        .card-provider-link .card-icon {
+            font-size: 56px;
+        }
+
+        .card-provider-link .card-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0ea5e9;
+        }
+
+        .card-provider-link .card-sub {
+            font-size: 14px;
+            color: #7dd3fc;
+        }
+
+        /* Factory - Orange */
+        .card-factory-link {
+            background: linear-gradient(135deg, #78350f 0%, #d97706 100%);
+            border: 2px solid rgba(217, 119, 6, 0.4);
+        }
+
+        .card-factory-link .card-icon {
+            font-size: 56px;
+        }
+
+        .card-factory-link .card-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fbbf24;
+        }
+
+        .card-factory-link .card-sub {
+            font-size: 14px;
+            color: #fcd34d;
+        }
+
+        /* Animo - Fuchsia */
+        .card-animo-link {
+            background: linear-gradient(135deg, #831843 0%, #d946ef 100%);
+            border: 2px solid rgba(217, 70, 239, 0.4);
+        }
+
+        .card-animo-link .card-icon {
+            font-size: 56px;
+        }
+
+        .card-animo-link .card-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f0abfc;
+        }
+
+        .card-animo-link .card-sub {
+            font-size: 14px;
+            color: #e879f9;
+        }
+
+        .card-arrow {
+            font-size: 32px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+            margin-top: 10px;
         }
 
         /* Footer */
@@ -439,9 +617,8 @@
 
         <div class="hero-content">
             <h1 class="logo-main">СИНЕМАТОК-ТРИО</h1>
-            <p class="hero-subtitle">Единая экосистема для создания видеоконтента</p>
+            <p class="hero-subtitle">Единая экосистема для создания видеоконтента на базе современных нейросети и технологий</p>
             <p class="hero-description">
-                Используй современные нейросети и технологии прямо в своём проекте.<br>
                 Просто. Удобно. Прибыльно.
             </p>
 
@@ -499,6 +676,31 @@
         </div>
     </section>
 
+    <!-- Presentations Section -->
+    <section class="presentations-section">
+        <h2 class="presentations-title">Смотрите наши презентации</h2>
+        <div class="presentations-grid">
+            <a href="provider.html#video" class="presentation-card card-provider-link">
+                <div class="card-icon">🔵</div>
+                <div class="card-name">СИНЕМАТОК</div>
+                <div class="card-sub">Поставщик нейросетей</div>
+                <div class="card-arrow">→</div>
+            </a>
+            <a href="factory.html#video" class="presentation-card card-factory-link">
+                <div class="card-icon">🟠</div>
+                <div class="card-name">КОНТЕНТ ЗАВОД</div>
+                <div class="card-sub">Автоматизация видео</div>
+                <div class="card-arrow">→</div>
+            </a>
+            <a href="animo.html#video" class="presentation-card card-animo-link">
+                <div class="card-icon">🟣</div>
+                <div class="card-name">АНИМО</div>
+                <div class="card-sub">Цифровые аватары</div>
+                <div class="card-arrow">→</div>
+            </a>
+        </div>
+    </section>
+
     <!-- Stats Section -->
     <section class="stats-section">
         <div class="stats-grid">
@@ -527,7 +729,7 @@
             <img src="contacts_qr.png" alt="Telegram QR" class="contacts-qr">
             <div class="contacts-info">
                 <div class="contacts-title">Связаться с нами</div>
-                <div class="contacts-username">@ROMAN_KARG</div>
+                <div class="contacts-username"><a href="https://t.me/ROMAN_KARG" target="_blank">@ROMAN_KARG</a></div>
                 <div class="contacts-desc">Напишите в Telegram для обсуждения сотрудничества</div>
             </div>
         </div>
