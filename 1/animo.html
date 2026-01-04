@@ -692,7 +692,7 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
             border: 2px solid rgba(192, 132, 252, 0.2);
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -721,6 +721,13 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
             overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .video-placeholder {
@@ -1601,19 +1608,24 @@
         <div class="slide" data-index="6">
             <div class="slide-content">
                 <div class="slide-icon">🎬</div>
-                <h1 class="slide-title">Подробная презентация</h1>
+                <h1 class="slide-title">Видеопрезентация</h1>
                 <p class="slide-subtitle">Узнайте больше о проекте АНИМО</p>
 
                 <div class="video-section">
                     <div class="video-header">
                         <span class="video-icon">🎬</span>
-                        <h3 class="video-title">Видеопрезентация АНИМО</h3>
+                        <h3 class="video-title">Видео АНИМО</h3>
                     </div>
                     <div class="video-wrapper">
-                        <a href="https://youtu.be/jHqBGsxzeAg" target="_blank" class="video-placeholder">
-                            <span class="play-button">▶</span>
-                            <span class="video-placeholder-text">Смотреть видео на YouTube</span>
-                        </a>
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://www.youtube.com/embed/jHqBGsxzeAg" 
+                            title="Видеопрезентация АНИМО" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
 
