@@ -591,7 +591,7 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
             border: 2px solid rgba(217, 119, 6, 0.2);
-            max-width: 600px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -620,6 +620,13 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
             overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .video-placeholder {
@@ -1600,13 +1607,18 @@
                 <div class="video-section">
                     <div class="video-header">
                         <span class="video-icon">🎬</span>
-                        <h3 class="video-title">Видеопрезентация КОНТЕНТ ЗАВОД</h3>
+                        <h3 class="video-title">Видео КОНТЕНТ ЗАВОД</h3>
                     </div>
                     <div class="video-wrapper">
-                        <a href="https://youtu.be/onDjE8r-thc" target="_blank" class="video-placeholder">
-                            <span class="play-button">▶</span>
-                            <span class="video-placeholder-text">Смотреть видео на YouTube</span>
-                        </a>
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://www.youtube.com/embed/onDjE8r-thc" 
+                            title="Видеопрезентация КОНТЕНТ ЗАВОД" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
 
