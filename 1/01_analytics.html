@@ -1,9 +1,18 @@
 <!DOCTYPE html>
+<!--
+    analytics-general.html — Общая статистика по использованию ИИ
+    Содержит данные из авторитетных источников:
+    - ВЦИОМ (Россия): использование ИИ населением, доверие, отношение
+    - Eurostat (ЕС): официальная статистика по бизнесу и населению
+    - Pew Research Center: международные данные по осведомлённости
+    - McKinsey Global Survey: данные по бизнесу
+    - АКАР/АРИР/РАМУ/ГИПП: рекламная индустрия России
+-->
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Аналитика ИИ | Факты и цифры</title>
+    <title>Искусственный интеллект: факты и цифры</title>
     <style>
         * {
             margin: 0;
@@ -249,22 +258,6 @@
             margin-top: 24px;
         }
 
-        .interpretation-note {
-            font-size: 13px;
-            color: #888;
-            font-style: italic;
-            margin-top: 8px;
-            padding: 12px 16px;
-            background: #0d0d12;
-            border-left: 3px solid #3b82f6;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .interpretation-note strong {
-            color: #aaa;
-            font-style: normal;
-        }
-
         .comparison-table th,
         .comparison-table td {
             padding: 16px 20px;
@@ -319,6 +312,22 @@
         .nav-back svg {
             width: 20px;
             height: 20px;
+        }
+
+        .interpretation-note {
+            font-size: 13px;
+            color: #888;
+            font-style: italic;
+            margin-top: 8px;
+            padding: 12px 16px;
+            background: #0d0d12;
+            border-left: 3px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .interpretation-note strong {
+            color: #aaa;
+            font-style: normal;
         }
 
         @media (max-width: 768px) {
@@ -644,7 +653,6 @@
     </div>
 
     <script>
-        // Анимация появления при скролле
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -666,7 +674,6 @@
             observer.observe(el);
         });
 
-        // Анимация заполнения полосок
         const barObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
