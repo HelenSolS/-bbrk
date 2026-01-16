@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+    analytics.html — Страница-вход в раздел аналитики
+    Содержит две карточки-ссылки на детальные аналитические страницы:
+    1. analytics-general.html — Общая статистика по ИИ (Россия, мир, бизнес)
+    2. analytics-creative.html — ИИ в креативных индустриях (кино, реклама, аватары)
+-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аналитика | SINEMATOK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: #888;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: #12121a;
+            border: 1px solid #1e1e2a;
+            border-radius: 20px;
+            padding: 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            border-color: #3b82f6;
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .card-description {
+            font-size: 15px;
+            color: #888;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #3b82f6;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .card-link svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-link svg {
+            transform: translateX(4px);
+        }
+
+        .card.blue {
+            border-color: #1a3a5a;
+            background: linear-gradient(135deg, #12121a 0%, #0d1520 100%);
+        }
+
+        .card.purple {
+            border-color: #3a1a5a;
+            background: linear-gradient(135deg, #12121a 0%, #150d20 100%);
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 40px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-back:hover {
+            color: #fff;
+        }
+
+        .nav-back svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #1a1a24;
+            color: #888;
+        }
+
+        .tag.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .tag.purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 28px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            На главную
+        </a>
+
+        <header class="page-header">
+            <h1 class="page-title">Аналитика</h1>
+            <p class="page-subtitle">Факты и данные об искусственном интеллекте</p>
+        </header>
+
+        <div class="cards-grid">
+            <!-- Блок 1: Общая статистика -->
+            <a href="analytics-general.html" class="card blue">
+                <div class="card-icon">📊</div>
+                <div class="tags">
+                    <span class="tag blue">Россия</span>
+                    <span class="tag blue">Мир</span>
+                    <span class="tag blue">Бизнес</span>
+                </div>
+                <h2 class="card-title">Использование ИИ: Россия и мир</h2>
+                <p class="card-description">
+                    Официальная статистика и исследования ведущих организаций мира.
+                    Данные о распространении ИИ среди населения и бизнеса.
+                </p>
+                <span class="card-link">
+                    Открыть аналитику
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </span>
+            </a>
+
+            <!-- Блок 2: Креативные индустрии -->
+            <a href="analytics-creative.html" class="card purple">
+                <div class="card-icon">🎬</div>
+                <div class="tags">
+                    <span class="tag purple">Кино</span>
+                    <span class="tag purple">Реклама</span>
+                    <span class="tag purple">Аватары</span>
+                </div>
+                <h2 class="card-title">ИИ в креативных индустриях</h2>
+                <p class="card-description">
+                    Рынок AI в кино, рекламе и цифровых людях. Китайский опыт и данные
+                    по виртуальным инфлюэнсерам.
+                </p>
+                <span class="card-link">
+                    Открыть аналитику
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
