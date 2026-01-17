@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аналитика | SINEMATOK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: #888;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 40px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-back:hover {
+            color: #fff;
+        }
+
+        .nav-back svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .chart-container {
+            background: #12121a;
+            border: 1px solid #1e1e2a;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .chart-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bar-label {
+            width: 120px;
+            font-size: 15px;
+            color: #aaa;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-wrapper {
+            flex: 1;
+            height: 44px;
+            background: #1a1a24;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .bar-fill.blue { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+        .bar-fill.green { background: linear-gradient(90deg, #16a34a, #22c55e); }
+        .bar-fill.orange { background: linear-gradient(90deg, #d97706, #f59e0b); }
+        .bar-fill.purple { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+
+        .stat-source {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #1e1e2a;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding: 30px 0;
+            margin-bottom: 24px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #1a1a24;
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-point {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin: 0 auto 12px;
+            border: 4px solid #0a0a0f;
+        }
+
+        .timeline-dot.current {
+            background: #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+
+        .timeline-year {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .timeline-value {
+            font-size: 15px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .sources-section {
+            background: #12121a;
+            border: 1px solid #1e1e2a;
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .sources-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .source-item h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .source-item h3.blue { color: #0ea5e9; }
+        .source-item h3.purple { color: #a855f7; }
+
+        .source-item p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .source-item strong {
+            color: #ccc;
+        }
+
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 28px;
+            }
+
+            .bar-label {
+                width: 80px;
+                font-size: 13px;
+            }
+
+            .chart-container {
+                padding: 24px;
+            }
+
+            .timeline-value {
+                font-size: 12px;
+            }
+
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            На главную
+        </a>
+
+        <header class="page-header">
+            <h1 class="page-title">Аналитика</h1>
+            <p class="page-subtitle">Ключевые данные об искусственном интеллекте</p>
+        </header>
+
+        <!-- График 1: Россия vs ЕС -->
+        <div class="chart-container">
+            <h2 class="chart-title">Использование ИИ за последний год: Россия vs Европейский союз</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Россия</span>
+                    <div class="bar-wrapper">
+                        <div class="bar-fill blue" style="width: 63%;">63%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">ЕС</span>
+                    <div class="bar-wrapper">
+                        <div class="bar-fill blue" style="width: 32.7%;">32,7%</div>
+                    </div>
+                </div>
+            </div>
+            <p class="stat-source">Источники: ВЦИОМ (Россия, 2024–2025), Eurostat (ЕС, 2025)</p>
+        </div>
+
+        <!-- График 2: Размер бизнеса -->
+        <div class="chart-container">
+            <h2 class="chart-title">Использование ИИ по размеру бизнеса (ЕС, 2025)</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Крупный</span>
+                    <div class="bar-wrapper">
+                        <div class="bar-fill green" style="width: 55%;">55%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Средний</span>
+                    <div class="bar-wrapper">
+                        <div class="bar-fill orange" style="width: 30.4%;">30,4%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Малый</span>
+                    <div class="bar-wrapper">
+                        <div class="bar-fill purple" style="width: 7%;">7%</div>
+                    </div>
+                </div>
+            </div>
+            <p class="stat-source">Источник: Eurostat, 2025</p>
+        </div>
+
+        <!-- График 3: Прогноз рынка -->
+        <div class="chart-container">
+            <h2 class="chart-title">Прогноз роста рынка AI в кинопроизводстве</h2>
+            <div class="timeline">
+                <div class="timeline-point">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-value">$1.8–3.2 млрд</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-value">$4.06 млрд</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="timeline-dot current"></div>
+                    <div class="timeline-year">2033</div>
+                    <div class="timeline-value">$14–24 млрд</div>
+                </div>
+            </div>
+            <p class="stat-source">Источники: Market.us, Grand View Research (2024)</p>
+        </div>
+
+        <!-- Источники -->
+        <div class="sources-section">
+            <h2 class="sources-title">Источники данных</h2>
+            <div class="sources-grid">
+                <div class="source-item">
+                    <h3 class="blue">Государственная статистика</h3>
+                    <p>
+                        <strong>Eurostat</strong> — официальная статистическая служба Европейского союза<br><br>
+                        <strong>ВЦИОМ</strong> — Всероссийский центр изучения общественного мнения
+                    </p>
+                </div>
+                <div class="source-item">
+                    <h3 class="purple">Международные исследования</h3>
+                    <p>
+                        <strong>Pew Research Center</strong> — данные в докладах ООН и правительств<br><br>
+                        <strong>McKinsey Global Survey</strong> — глобальные опросы бизнеса
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
