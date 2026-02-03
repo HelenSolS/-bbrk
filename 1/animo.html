@@ -1318,7 +1318,7 @@
                         <div class="counter-label">Потенциал роста</div>
                     </div>
                     <div class="counter-box">
-                        <div class="counter-number">93%</div>
+                        <div class="counter-number">85%</div>
                         <div class="counter-label">Доход владельцу</div>
                     </div>
                 </div>
@@ -1394,47 +1394,7 @@
             </div>
         </div>
 
-        <!-- Slide 3: Calculator -->
-        <div class="slide" data-index="2">
-            <div class="slide-content">
-                <div class="slide-icon">🧮</div>
-                <h1 class="slide-title">Калькулятор дохода</h1>
-                <p class="slide-subtitle">Рассчитай потенциальный заработок</p>
-
-                <div class="calculator-section">
-                    <div class="calc-row">
-                        <div class="calc-label">
-                            <span>Участие в кастингах в день</span>
-                            <span class="calc-value" id="castingsValue">5</span>
-                        </div>
-                        <input type="range" class="calc-slider" id="castingsSlider" min="1" max="10" value="5">
-                    </div>
-                    
-                    <div class="calc-row">
-                        <div class="calc-label">
-                            <span>Процент побед на кастингах</span>
-                            <span class="calc-value" id="winrateValue">30%</span>
-                        </div>
-                        <input type="range" class="calc-slider" id="winrateSlider" min="5" max="80" value="30">
-                    </div>
-                    
-                    <div class="calc-row">
-                        <div class="calc-label">
-                            <span>Стоимость использования (₽)</span>
-                            <span class="calc-value" id="priceValue">5 000</span>
-                        </div>
-                        <input type="range" class="calc-slider" id="priceSlider" min="1000" max="20000" step="500" value="5000">
-                    </div>
-                    
-                    <div class="calc-result">
-                        <div class="calc-result-label">Примерный месячный доход (93% вам)</div>
-                        <div class="calc-result-value" id="earningsValue">209 250 ₽</div>
-                    </div>
-                    
-                    <p class="calc-note">* Расчёт: (кастинги × процент побед) × стоимость × 30 дней × 0.93. Анимо получает 7% за использование системы.</p>
-                </div>
-            </div>
-        </div>
+       
 
         <!-- Slide 4: Legal Use -->
         <div class="slide" data-index="3">
@@ -1456,8 +1416,8 @@
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">💎</div>
-                        <div class="feature-name">93% владельцу</div>
-                        <div class="feature-desc">Мы берём только 7% за использование системы — остальное вы получаете</div>
+                        <div class="feature-name">85% владельцу</div>
+                        <div class="feature-desc">Мы берём % за использование системы </div>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📊</div>
@@ -1497,7 +1457,7 @@
                     <div class="workflow-step">
                         <div class="workflow-step-icon">💰</div>
                         <div class="workflow-step-title">Доход</div>
-                        <div class="workflow-step-time">93% вам</div>
+                        <div class="workflow-step-time">85% вам</div>
                     </div>
                 </div>
 
@@ -1545,8 +1505,8 @@
                             <h3 class="big-feature-title">Распределение дохода</h3>
                         </div>
                         <ul class="big-feature-list">
-                            <li>93% от каждого проекта — владельцу аватара</li>
-                            <li>7% — комиссия Анимо за использование платформы</li>
+                            <li>85% от каждого проекта — владельцу аватара</li>
+                            <li>15% — комиссия Анимо за использование платформы</li>
                             <li>Прозрачная статистика всех транзакций</li>
                             <li>Регулярные выплаты дохода</li>
                         </ul>
@@ -1693,7 +1653,7 @@
             }
         });
 
-        // Calculator Logic with 93% distribution
+        // Calculator Logic with 85% distribution
         const castingsSlider = document.getElementById('castingsSlider');
         const winrateSlider = document.getElementById('winrateSlider');
         const priceSlider = document.getElementById('priceSlider');
@@ -1712,8 +1672,8 @@
             winrateValue.textContent = winrate + '%';
             priceValue.textContent = price.toLocaleString('ru-RU');
             
-            // Formula: (castings × winrate%) × price × 30 days × 93%
-            const monthlyEarnings = (castings * (winrate / 100)) * price * 30 * 0.93;
+            // Formula: (castings × winrate%) × price × 30 days × 85%
+            const monthlyEarnings = (castings * (winrate / 100)) * price * 30 * 0.85;
             earningsValue.textContent = monthlyEarnings.toLocaleString('ru-RU') + ' ₽';
         }
         
