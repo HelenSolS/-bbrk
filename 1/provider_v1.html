@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СИНЕМАТОК | Поставщик нейросетей и инструментов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #020617;
+            color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, #020617 0%, rgba(2,6,23,0.9) 70%, transparent 100%);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #f1f5f9;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-5px);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0ea5e9;
+        }
+
+        .nav-progress {
+            display: flex;
+            gap: 10px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #0ea5e9;
+            transform: scale(1.3);
+        }
+
+        .progress-dot:hover {
+            background: rgba(14, 165, 233, 0.6);
+        }
+
+        /* Slides Container */
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: #020617;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            padding-bottom: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            z-index: 5;
+        }
+
+        .slide.prev {
+            transform: translateX(-100px);
+            z-index: 4;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background: #020617;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .bg-orb-1 {
+            width: 700px;
+            height: 700px;
+            background: rgba(14, 165, 233, 0.2);
+            top: -250px;
+            left: -250px;
+        }
+
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(59, 130, 246, 0.15);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .bg-orb-3 {
+            width: 400px;
+            height: 400px;
+            background: rgba(6, 182, 212, 0.1);
+            top: 30%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 50px) scale(1.1); }
+            66% { transform: translate(50px, -50px) scale(0.9); }
+        }
+
+        /* Network animation */
+        .network-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .network-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #0ea5e9;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: pulse 3s infinite;
+        }
+
+        .network-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+            opacity: 0.2;
+            animation: scan 4s infinite linear;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Slide Content */
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+            padding-bottom: 20px;
+        }
+
+        .slide-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .slide-title {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-subtitle {
+            font-size: 28px;
+            color: #7dd3fc;
+            margin-bottom: 40px;
+        }
+
+        .slide-description {
+            font-size: 20px;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Stats with Animations */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 72px;
+            font-weight: 800;
+            color: #0ea5e9;
+            text-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #7dd3fc;
+            margin-top: 10px;
+        }
+
+        /* AI Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: #0ea5e9;
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.3);
+        }
+
+        .model-card.featured {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(56, 189, 248, 0.1) 100%);
+            border: 2px solid rgba(14, 165, 233, 0.5);
+        }
+
+        .model-card.featured::before {
+            content: '🔥';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 16px;
+        }
+
+        .model-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .model-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .model-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-bottom: 6px;
+        }
+
+        .model-desc {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .model-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(14, 165, 233, 0.2);
+            border-radius: 15px;
+            font-size: 11px;
+            color: #7dd3fc;
+            margin-top: 10px;
+        }
+
+        .model-version {
+            position: absolute;
+            bottom: 8px;
+            right: 10px;
+            font-size: 10px;
+            color: rgba(14, 165, 233, 0.7);
+            font-weight: 600;
+        }
+
+        /* Model Categories Section */
+        .models-section {
+            margin-top: 35px;
+        }
+
+        .models-section-title {
+            font-size: 20px;
+            color: #7dd3fc;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .models-section-title span {
+            font-size: 24px;
+        }
+
+        .llm-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .llm-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .llm-card:hover {
+            background: rgba(14, 165, 233, 0.15);
+            border-color: rgba(14, 165, 233, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .llm-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .llm-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e0f2fe;
+            margin-bottom: 4px;
+        }
+
+        .llm-version {
+            font-size: 10px;
+            color: #38bdf8;
+            font-weight: 500;
+        }
+
+        /* Category Cards */
+        .category-section {
+            margin-top: 50px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            color: #7dd3fc;
+            margin-bottom: 25px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: #0ea5e9;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            font-size: 36px;
+        }
+
+        .category-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .category-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .category-list li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .category-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #0ea5e9;
+        }
+
+        /* Parallel Processing Visualization */
+        .parallel-viz {
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(14, 165, 233, 0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .parallel-title {
+            font-size: 24px;
+            color: #7dd3fc;
+            margin-bottom: 30px;
+        }
+
+        /* New Parallel Comparison Table Design */
+        .parallel-comparison-table {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .parallel-header-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .parallel-header-cell {
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .sequential-header {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            color: #ff6b6b;
+        }
+
+        .parallel-header {
+            background: rgba(14, 165, 233, 0.2);
+            border: 2px solid rgba(14, 165, 233, 0.5);
+            color: #0ea5e9;
+        }
+
+        .parallel-time-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .parallel-time-cell {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .time-badge {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .time-slow {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(217, 119, 6, 0.3));
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .time-fast {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(0, 255, 136, 0.2));
+            border: 2px solid #0ea5e9;
+            color: #0ea5e9;
+        }
+
+        .time-subtitle {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .parallel-tasks-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        /* Sequential Tasks */
+        .sequential-tasks {
+            padding: 20px;
+            background: rgba(239, 68, 68, 0.08);
+            border-radius: 16px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .task-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sequential-tasks .task-label {
+            width: 70px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .task-bar.slow {
+            flex: 1;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .task-fill-slow {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #d97706);
+            border-radius: 14px;
+        }
+
+        .task-arrow {
+            text-align: center;
+            color: #ef4444;
+            font-size: 20px;
+            padding: 8px 0;
+        }
+
+        /* Parallel Tasks */
+        .parallel-tasks {
+            padding: 20px;
+            background: rgba(14, 165, 233, 0.08);
+            border-radius: 16px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallel-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .parallel-task {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9, #00ff88);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #020617;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        }
+
+        .parallel-task-num {
+            color: #020617;
+        }
+
+        .parallel-note {
+            margin-top: 16px;
+            font-size: 16px;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        /* Success Bar */
+        .success-bar {
+            margin-top: 20px;
+            padding: 20px 40px;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
+            border: 2px solid #10b981;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .success-bar span {
+            font-size: 28px;
+            font-weight: 800;
+            color: #10b981;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .parallel-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .parallel-card {
+            padding: 25px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-card.old {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .parallel-card.new {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .parallel-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .parallel-card.old .parallel-card-title { color: #ef4444; }
+        .parallel-card.new .parallel-card-title { color: #0ea5e9; }
+
+        .task-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .task-label {
+            width: 80px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .task-track {
+            flex: 1;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .task-fill {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 1s ease;
+        }
+
+        .task-fill.sequential {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            width: 25%;
+        }
+
+        .task-fill.parallel {
+            background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+            width: 100%;
+        }
+
+        .task-fill.parallel-1 { width: 100%; animation: parallelFill 3s ease forwards; animation-delay: 0s; }
+        .task-fill.parallel-2 { width: 100%; animation: parallelFill 3s ease forwards; animation-delay: 0s; }
+        .task-fill.parallel-3 { width: 100%; animation: parallelFill 3s ease forwards; animation-delay: 0s; }
+        .task-fill.parallel-4 { width: 100%; animation: parallelFill 3s ease forwards; animation-delay: 0s; }
+
+        @keyframes parallelFill {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+
+        /* Speed Comparison Circles */
+        .speed-comparison-circles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .circle-container {
+            text-align: center;
+        }
+
+        .circle-chart {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .circle-chart svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 20;
+        }
+
+        .circle-segment {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+            transition: all 0.6s ease;
+        }
+
+        .circle-chart.sequential .circle-segment {
+            stroke: #ef4444;
+            opacity: 1;
+        }
+
+        .circle-chart.sequential .seg-1 { opacity: 1; }
+        .circle-chart.sequential .seg-2 { opacity: 0.8; }
+        .circle-chart.sequential .seg-3 { opacity: 0.6; }
+        .circle-chart.sequential .seg-4 { opacity: 0.4; }
+
+        .circle-chart.parallel .circle-segment {
+            stroke: #0ea5e9;
+            opacity: 0.9;
+        }
+
+        .circle-chart.parallel .seg-1 { opacity: 1; }
+        .circle-chart.parallel .seg-2 { opacity: 0.9; }
+        .circle-chart.parallel .seg-3 { opacity: 0.8; }
+        .circle-chart.parallel .seg-4 { opacity: 0.7; }
+
+        .circle-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .circle-time {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .circle-chart.sequential .circle-time { color: #ef4444; }
+        .circle-chart.parallel .circle-time { color: #0ea5e9; }
+
+        .circle-label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .circle-legend {
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ef4444; }
+        .dot.blue { background: #0ea5e9; }
+
+        .vs-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vs-divider span {
+            font-size: 24px;
+            font-weight: 800;
+            color: #64748b;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        /* Access Methods */
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .access-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .access-card:hover {
+            transform: translateY(-10px);
+            border-color: #0ea5e9;
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.2);
+        }
+
+        .access-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .access-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .access-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .access-features li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .access-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0ea5e9;
+        }
+
+        /* Video Presentation Section */
+        .video-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .video-icon {
+            font-size: 40px;
+        }
+
+        .video-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.2));
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(56, 189, 248, 0.3));
+        }
+
+        .play-button {
+            font-size: 64px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover .play-button {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .video-placeholder-text {
+            font-size: 16px;
+            color: #7dd3fc;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            margin-top: 50px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #020617;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(14, 165, 233, 0.6);
+        }
+
+        /* Navigation Arrows */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1001;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(14, 165, 233, 0.5);
+            color: #0ea5e9;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            background: #0ea5e9;
+            color: #020617;
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Counter Box */
+        .counter-box {
+            display: inline-block;
+            margin: 0 20px;
+            padding: 20px 40px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .counter-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0ea5e9;
+        }
+
+        .counter-label {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* Responsive - Tablet */
+        @media (max-width: 900px) {
+            .slide {
+                padding: 100px 20px 80px;
+            }
+
+            .slide-title {
+                font-size: 42px;
+            }
+
+            .slide-subtitle {
+                font-size: 22px;
+            }
+
+            .models-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .access-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .parallel-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 48px;
+            }
+        }
+
+        /* Category Blocks for Models Slide */
+        .models-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .model-category {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        .model-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .model-item:last-child {
+            border-bottom: none;
+        }
+
+        .model-item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .model-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .model-item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 2px;
+        }
+
+        .model-item-desc {
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.3;
+        }
+
+        .model-item-provider {
+            font-size: 10px;
+            color: #0ea5e9;
+            margin-top: 2px;
+        }
+
+        /* Model item gradient backgrounds */
+        .model-item-icon.openai { background: linear-gradient(135deg, #10a37f, #1a7f64); }
+        .model-item-icon.anthropic { background: linear-gradient(135deg, #d4a574, #8b6914); }
+        .model-item-icon.google { background: linear-gradient(135deg, #4285f4, #34a853); }
+        .model-item-icon.deepseek { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+        .model-item-icon.kuai { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .model-item-icon.runway { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .model-item-icon.blackforest { background: linear-gradient(135deg, #000, #333); }
+        .model-item-icon.midjourney { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .model-item-icon.xai { background: linear-gradient(135deg, #000, #444); }
+        .model-item-icon.elevenlabs { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+        .model-item-icon.suno { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .model-item-icon.notebooklm { background: linear-gradient(135deg, #facc15, #eab308); }
+
+        /* Responsive - Mobile Phone */
+        @media (max-width: 480px) {
+            /* Critical: Prevent horizontal scroll */
+            html, body {
+                overflow-x: hidden;
+                max-width: 100vw;
+            }
+
+            /* Navigation - Compact */
+            .nav {
+                padding: 8px 12px;
+            }
+
+            .nav-back {
+                font-size: 11px;
+                padding: 6px 10px;
+                border-radius: 15px;
+            }
+
+            .nav-logo {
+                font-size: 16px;
+            }
+
+            .nav-progress {
+                gap: 4px;
+            }
+
+            .progress-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            /* Slides - Fit viewport */
+            .slide {
+                padding: 60px 12px 90px;
+                overflow-x: hidden;
+            }
+
+            .slide-content {
+                max-height: calc(100vh - 140px);
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            /* Typography - Compact */
+            .slide-icon {
+                font-size: 44px;
+                margin-bottom: 10px;
+            }
+
+            .slide-title {
+                font-size: 24px;
+                line-height: 1.2;
+                margin-bottom: 8px;
+                word-wrap: break-word;
+                max-width: 100%;
+            }
+
+            .slide-subtitle {
+                font-size: 15px;
+                margin-bottom: 16px;
+            }
+
+            .slide-description {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            /* Stats and Counters - Compact */
+            .stats-row {
+                gap: 8px;
+                margin-top: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .counter-box {
+                margin: 0 5px;
+                padding: 10px 14px;
+                border-radius: 10px;
+            }
+
+            .counter-number {
+                font-size: 26px;
+            }
+
+            .counter-label {
+                font-size: 10px;
+            }
+
+            .stat-number {
+                font-size: 32px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            /* Models Grid - 2 columns with safe gaps */
+            .models-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-top: 16px;
+            }
+
+            .model-card {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .model-icon {
+                font-size: 22px;
+            }
+
+            .model-name {
+                font-size: 12px;
+            }
+
+            .model-desc {
+                font-size: 10px;
+            }
+
+            /* LLM Grid - 2 columns for small screens */
+            .llm-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .llm-card {
+                padding: 8px 6px;
+            }
+
+            .llm-logo {
+                width: 28px;
+                height: 28px;
+                font-size: 11px;
+            }
+
+            .llm-name {
+                font-size: 10px;
+            }
+
+            .llm-version {
+                font-size: 8px;
+            }
+
+            /* Category Grid */
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .category-card {
+                padding: 16px;
+            }
+
+            .category-name {
+                font-size: 16px;
+            }
+
+            .category-list li {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+
+            /* Access Grid */
+            .access-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .access-card {
+                padding: 16px;
+            }
+
+            .access-icon {
+                font-size: 36px;
+            }
+
+            .access-name {
+                font-size: 17px;
+            }
+
+            .access-features li {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+
+            /* Parallel Processing - Compact */
+            .parallel-viz {
+                padding: 12px;
+                margin-top: 16px;
+                border-radius: 12px;
+            }
+
+            .parallel-comparison-table {
+                gap: 8px;
+            }
+
+            .parallel-header-cell {
+                padding: 8px 10px;
+                font-size: 11px;
+                border-radius: 6px;
+            }
+
+            .parallel-time-cell {
+                padding: 8px;
+            }
+
+            .time-badge {
+                padding: 6px 12px;
+                font-size: 20px;
+                border-radius: 20px;
+            }
+
+            .time-subtitle {
+                font-size: 10px;
+                margin-top: 4px;
+            }
+
+            .parallel-tasks-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .sequential-tasks,
+            .parallel-tasks {
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .task-row {
+                gap: 4px;
+            }
+
+            .sequential-tasks .task-label {
+                width: 50px;
+                font-size: 9px;
+            }
+
+            .task-bar.slow {
+                height: 16px;
+            }
+
+            .task-arrow {
+                font-size: 12px;
+                padding: 2px 0;
+            }
+
+            .parallel-grid {
+                gap: 6px;
+            }
+
+            .parallel-task {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                border-radius: 6px;
+            }
+
+            .parallel-note {
+                font-size: 11px;
+                margin-top: 8px;
+            }
+
+            .success-bar {
+                padding: 10px 12px;
+                margin-top: 10px;
+                border-radius: 8px;
+            }
+
+            .success-bar span {
+                font-size: 16px;
+            }
+
+            /* Video Section */
+            .video-section {
+                padding: 12px;
+                margin-top: 16px;
+                border-radius: 12px;
+            }
+
+            .play-button {
+                font-size: 36px;
+            }
+
+            /* CTA Button */
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 14px;
+                border-radius: 25px;
+            }
+
+            /* Navigation Arrows - Touch friendly */
+            .nav-arrows {
+                bottom: 12px;
+                padding: 8px 14px;
+                gap: 10px;
+                border-radius: 20px;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            /* Models Categories */
+            .models-categories {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-top: 16px;
+            }
+
+            .model-category {
+                padding: 12px;
+                border-radius: 10px;
+            }
+
+            .category-header {
+                padding-bottom: 8px;
+                margin-bottom: 8px;
+            }
+
+            .model-item-icon {
+                width: 26px;
+                height: 26px;
+                font-size: 11px;
+            }
+
+            .model-item-name {
+                font-size: 12px;
+            }
+
+            .model-item-desc {
+                font-size: 9px;
+            }
+
+            /* Contacts Block */
+            .contacts-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+                gap: 6px;
+                margin-top: 16px;
+                border-radius: 8px;
+            }
+
+            .contacts-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+            .contacts-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+                gap: 8px;
+            }
+
+            .contacts-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-back">
+            ← Назад к СИНЕМАТОК-Трио
+        </a>
+        <div class="nav-logo">СИНЕМАТОК</div>
+        <div class="nav-progress">
+            <div class="progress-dot active" data-slide="0"></div>
+            <div class="progress-dot" data-slide="1"></div>
+            <div class="progress-dot" data-slide="2"></div>
+            <div class="progress-dot" data-slide="3"></div>
+            <div class="progress-dot" data-slide="4"></div>
+            <div class="progress-dot" data-slide="5"></div>
+        </div>
+    </nav>
+
+    <!-- Slides Container -->
+    <div class="slides-container">
+        <!-- Animated Background -->
+        <div class="bg-animated">
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="bg-orb bg-orb-3"></div>
+            <div class="network-bg" id="network-bg"></div>
+        </div>
+
+        <!-- Slide 1: Hero -->
+        <div class="slide active" data-index="0">
+            <div class="slide-content">
+                <div class="slide-icon">🔵</div>
+                <h1 class="slide-title">СИНЕМАТОК</h1>
+                <p class="slide-subtitle">Поставщик нейросетей и инструментов</p>
+                <p class="slide-description">
+                    90+ современных нейросетевых моделей в одном месте.<br>
+                    Параллельная обработка. Простой доступ. Без очередей.
+                </p>
+
+                <div class="stats-row">
+                    <div class="counter-box">
+                        <div class="counter-number">90+</div>
+                        <div class="counter-label">Нейросетей</div>
+                    </div>
+                    <div class="counter-box">
+                        <div class="counter-number">4K</div>
+                        <div class="counter-label">Качество видео</div>
+                    </div>
+                    <div class="counter-box">
+                        <div class="counter-number">∞</div>
+                        <div class="counter-label">Параллельные задачи</div>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Начать использовать →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: AI Models -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <div class="slide-icon">🧠</div>
+                <h1 class="slide-title">90+ современных моделей</h1>
+                <p class="slide-subtitle">Всё топовое 2026 года в одном месте</p>
+
+                <div class="models-categories">
+                    <!-- Языковые модели (LLM) -->
+                    <div class="model-category">
+                        <div class="category-header">
+                            <span class="category-icon">🗣️</span>
+                            <span class="category-title">Языковые модели (LLM)</span>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon openai">GPT</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">GPT-4 Turbo</div>
+                                <div class="model-item-desc">Самая мощная</div>
+                                <div class="model-item-provider">OpenAI</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon anthropic">C</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Claude 3.5 Opus</div>
+                                <div class="model-item-desc">Лучше всего понимает контекст</div>
+                                <div class="model-item-provider">Anthropic</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon google">G</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Gemini 2.0 Pro</div>
+                                <div class="model-item-desc">Интегрирована с Google сервисами</div>
+                                <div class="model-item-provider">Google</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon deepseek">DS</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">DeepSeek-R1</div>
+                                <div class="model-item-desc">Китайский стандарт, очень быстро</div>
+                                <div class="model-item-provider">DeepSeek</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Генерация видео -->
+                    <div class="model-category">
+                        <div class="category-header">
+                            <span class="category-icon">🎬</span>
+                            <span class="category-title">Генерация видео</span>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon kuai">K</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Kling 2.5</div>
+                                <div class="model-item-desc">Лучшее качество, 4K, синхронизация по движению</div>
+                                <div class="model-item-provider">Kuaishou</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon openai">S</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Sora 2.0</div>
+                                <div class="model-item-desc">Реалистичные сцены, контроль камеры</div>
+                                <div class="model-item-provider">OpenAI</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon runway">R</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Runway Gen-4</div>
+                                <div class="model-item-desc">Быстро, качественно, есть лица</div>
+                                <div class="model-item-provider">Runway</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon google">V</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Veo 2</div>
+                                <div class="model-item-desc">Высокое разрешение, физика реалистична</div>
+                                <div class="model-item-provider">Google</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Генерация изображений -->
+                    <div class="model-category">
+                        <div class="category-header">
+                            <span class="category-icon">🎨</span>
+                            <span class="category-title">Генерация изображений</span>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon blackforest">F</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Flux Ultra</div>
+                                <div class="model-item-desc">Быстро и качественно</div>
+                                <div class="model-item-provider">Black Forest Labs</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon midjourney">M</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Midjourney v7</div>
+                                <div class="model-item-desc">Стиль и креатив</div>
+                                <div class="model-item-provider">Midjourney</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon xai">X</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Grok Vision</div>
+                                <div class="model-item-desc">Новинка 2026, агрессивный стиль</div>
+                                <div class="model-item-provider">xAI</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Синтез речи и звука -->
+                    <div class="model-category">
+                        <div class="category-header">
+                            <span class="category-icon">🎧</span>
+                            <span class="category-title">Синтез речи и звука</span>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon elevenlabs">E</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">ElevenLabs v3</div>
+                                <div class="model-item-desc">100+ голосов, естественность</div>
+                                <div class="model-item-provider">ElevenLabs</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon suno">S</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">Suno 4</div>
+                                <div class="model-item-desc">Музыка и звуки за промптом</div>
+                                <div class="model-item-provider">Suno</div>
+                            </div>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-item-icon notebooklm">N</div>
+                            <div class="model-item-content">
+                                <div class="model-item-name">NotebookLM</div>
+                                <div class="model-item-desc">Подкасты в два клика</div>
+                                <div class="model-item-provider">Google</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 30px; color: #64748b; font-size: 13px;">
+                    Итого: 16 моделей в основном реестре (остальные 74+ — интеграции и специализированные)
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Categories -->
+        <!-- Slide 3: Categories -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <div class="slide-icon">📦</div>
+                <h1 class="slide-title">Все типы контента</h1>
+                <p class="slide-subtitle">От идеи до готового продукта — один сервис</p>
+
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎬</span>
+                            <span class="category-name">Видео</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Генерация из текста</li>
+                            <li>Генерация из изображений</li>
+                            <li>Продолжение видео</li>
+                            <li>Смена фона</li>
+                            <li>Анимация персонажей</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎨</span>
+                            <span class="category-name">Изображения</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Текст в изображение</li>
+                            <li>Стилизация фото</li>
+                            <li>Улучшение качества</li>
+                            <li>Удаление фона</li>
+                            <li>Дизайн интерьеров</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">📝</span>
+                            <span class="category-name">Текст</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Сценарии и сценарии</li>
+                            <li>Описание товаров</li>
+                            <li>SEO-оптимизация</li>
+                            <li>Переводы</li>
+                            <li>Анализ данных</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🎙️</span>
+                            <span class="category-name">Аудио</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Синтез речи 50+ голосов</li>
+                            <li>Клонирование голоса</li>
+                            <li>Suno музыка из текста</li>
+                            <li>Озвучка и закадровый голос</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">🔄</span>
+                            <span class="category-name">Автоматизация</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Готовые воркфлоу-цепочки</li>
+                            <li>Шаблоны процессов</li>
+                            <li>Один клик — весь пайплайн</li>
+                            <li>Batch-обработка</li>
+                            <li>API интеграции</li>
+                        </ul>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-header">
+                            <span class="category-icon">👤</span>
+                            <span class="category-name">Персонажи</span>
+                        </div>
+                        <ul class="category-list">
+                            <li>Доступ к базе АНИМО</li>
+                            <li>Гибкие тарифы подписки</li>
+                            <li>Создание своих аватаров</li>
+                            <li>Монетизация персонажей</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Parallel Processing -->
+        <!-- Slide 4: Parallel Processing -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <div class="slide-icon">⚡</div>
+                <h1 class="slide-title">⚡ Параллельная обработка</h1>
+                <p class="slide-subtitle">Запускай свои задачи одновременно</p>
+
+                <div class="parallel-viz">
+                    <div class="parallel-comparison-table">
+                        <!-- Header Row -->
+                        <div class="parallel-header-row">
+                            <div class="parallel-header-cell sequential-header">ПОСЛЕДОВАТЕЛЬНО</div>
+                            <div class="parallel-header-cell parallel-header">ПАРАЛЛЕЛЬНО</div>
+                        </div>
+                        
+                        <!-- Time Row -->
+                        <div class="parallel-time-row">
+                            <div class="parallel-time-cell">
+                                <div class="time-badge time-slow">⏳ 40 минут</div>
+                                <div class="time-subtitle">Старый способ</div>
+                            </div>
+                            <div class="parallel-time-cell">
+                                <div class="time-badge time-fast">⚡ 10 минут</div>
+                                <div class="time-subtitle">СИНЕМАТОК-Трио</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tasks Visualization -->
+                        <div class="parallel-tasks-row">
+                            <!-- Sequential Tasks -->
+                            <div class="sequential-tasks">
+                                <div class="task-row">
+                                    <span class="task-label">Задача 1</span>
+                                    <div class="task-bar slow"><div class="task-fill-slow" style="width: 100%"></div></div>
+                                </div>
+                                <div class="task-arrow">↓</div>
+                                <div class="task-row">
+                                    <span class="task-label">Задача 2</span>
+                                    <div class="task-bar slow"><div class="task-fill-slow" style="width: 100%"></div></div>
+                                </div>
+                                <div class="task-arrow">↓</div>
+                                <div class="task-row">
+                                    <span class="task-label">Задача 3</span>
+                                    <div class="task-bar slow"><div class="task-fill-slow" style="width: 100%"></div></div>
+                                </div>
+                                <div class="task-arrow">↓</div>
+                                <div class="task-row">
+                                    <span class="task-label">Задача 4</span>
+                                    <div class="task-bar slow"><div class="task-fill-slow" style="width: 100%"></div></div>
+                                </div>
+                                <div class="task-arrow">↓</div>
+                                <div class="task-row">
+                                    <span class="task-label">Задача 5</span>
+                                    <div class="task-bar slow"><div class="task-fill-slow" style="width: 100%"></div></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Parallel Tasks -->
+                            <div class="parallel-tasks">
+                                <div class="parallel-grid">
+                                    <div class="parallel-task"><span class="parallel-task-num">1</span></div>
+                                    <div class="parallel-task"><span class="parallel-task-num">2</span></div>
+                                    <div class="parallel-task"><span class="parallel-task-num">3</span></div>
+                                    <div class="parallel-task"><span class="parallel-task-num">4</span></div>
+                                    <div class="parallel-task"><span class="parallel-task-num">5</span></div>
+                                </div>
+                                <div class="parallel-note">все одновременно</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Success Bar -->
+                        <div class="success-bar">
+                            <span>🚀 В 4 РАЗА БЫСТРЕЕ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Access Methods -->
+        <!-- Slide 5: Three Ways to Access -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <div class="slide-icon">🌐</div>
+                <h1 class="slide-title">Три способа доступа</h1>
+                <p class="slide-subtitle">Работай там, где тебе удобно</p>
+
+                <div class="access-grid">
+                    <div class="access-card">
+                        <div class="access-icon">📱</div>
+                        <h3 class="access-name">Телеграм Бот</h3>
+                        <ul class="access-features">
+                            <li>Быстрый доступ в мессенджере</li>
+                            <li>Минимум кликов до результата</li>
+                            <li>Мобильная работа на ходу</li>
+                            <li>Push-уведомления</li>
+                            <li>Быстрые правки</li>
+                        </ul>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">📲</div>
+                        <h3 class="access-name">Мобильное приложение</h3>
+                        <ul class="access-features">
+                            <li>Полный функционал в кармане</li>
+                            <li>Офлайн-возможности</li>
+                            <li>Галерея готовых видео</li>
+                            <li>Избранные шаблоны</li>
+                            <li>Работа из любого места</li>
+                        </ul>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">💻</div>
+                        <h3 class="access-name">Веб-платформа</h3>
+                        <ul class="access-features">
+                            <li>Полная аналитика и статистика</li>
+                            <li>Управление командой</li>
+                            <li>API для интеграций</li>
+                            <li>Webhook автоматизация</li>
+                            <li>Расширенные настройки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: CTA -->
+        <!-- Slide 6: CTA -->
+        <div class="slide" data-index="6">
+            <div class="slide-content">
+                <div class="slide-icon">🚀</div>
+                <h1 class="slide-title">Бери и используй</h1>
+                <p class="slide-subtitle">90+ нейросетей в одном месте</p>
+
+                <div class="video-section">
+                    <div class="video-header">
+                        <span class="video-icon">🎬</span>
+                        <h3 class="video-title">Видео СИНЕМАТОК</h3>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://www.youtube.com/embed/pE2zIcHYCzg" 
+                            title="Видеопрезентация СИНЕМАТОК" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <a href="#" class="cta-button">Попробовать →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" id="prev-btn">←</button>
+        <button class="nav-arrow" id="next-btn">→</button>
+    </div>
+
+    <script>
+        // Create network animation
+        const networkBg = document.getElementById('network-bg');
+        for (let i = 0; i < 15; i++) {
+            const node = document.createElement('div');
+            node.className = 'network-node';
+            node.style.left = Math.random() * 100 + '%';
+            node.style.top = Math.random() * 100 + '%';
+            node.style.animationDelay = Math.random() * 3 + 's';
+            networkBg.appendChild(node);
+        }
+
+        // Slides navigation
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.progress-dot');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i < index) slide.classList.add('prev');
+            });
+            slides[index].classList.add('active');
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentSlide = index;
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+        }
+
+        // Handle hash navigation (open last slide with video)
+        if (window.location.hash === '#video' && slides.length > 0) {
+            showSlide(slides.length - 1);
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) showSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) showSlide(currentSlide - 1);
+            }
+        });
+
+        // Animate parallel bars
+        const parallelSlide = document.querySelector('[data-index="3"]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.task-fill.parallel');
+                    fills.forEach((fill, i) => {
+                        fill.style.width = '0%';
+                        setTimeout(() => {
+                            fill.style.width = '100%';
+                        }, i * 150);
+                    });
+                }
+            });
+        });
+
+        if (parallelSlide) {
+            observer.observe(parallelSlide);
+        }
+    </script>
+</body>
+</html>
