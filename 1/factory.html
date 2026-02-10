@@ -623,7 +623,75 @@
         }
 
 
+        /* HLS Player - Factory Theme (9:16 Vertical) */
+        .vertical-tv-wrapper {
+            position: relative;
+            width: 360px;
+            max-width: 100%;
+            margin: 30px auto 0;
+            background: #020617;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(217, 119, 6, 0.3);
+            border: 2px solid rgba(217, 119, 6, 0.3);
+        }
 
+        .vertical-tv-wrapper video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9 / 16;
+        }
+
+        .vertical-tv-wrapper .video-poster {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #020617, #1a1a2e);
+            z-index: 1;
+        }
+
+        .vertical-tv-wrapper .video-poster-text {
+            color: #d97706;
+            font-size: 28px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .vertical-tv-wrapper .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(217, 119, 6, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .vertical-tv-wrapper .play-btn:hover {
+            background: #d97706;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .vertical-tv-wrapper .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid #020617;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 3px;
+        }
         .video-wrapper iframe {
             position: absolute;
             inset: 0;
@@ -931,6 +999,29 @@
                 overflow-x: hidden;
             }
 
+        .video-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        .vertical-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(217, 119, 6, 0.3);
+            background: #000;
+        }
+
+        .vertical-video-container video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+        }
             /* Typography - Compact */
             .slide-icon {
                 font-size: 44px;
@@ -1252,6 +1343,9 @@
             }
         }
     </style>
+        <!-- HLS.js CDN for HLS streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
+
 </head>
 <body>
     <!-- Navigation -->
@@ -1609,20 +1703,18 @@
                         <h3 class="video-title">Видео КОНТЕНТ ЗАВОД</h3>
                     </div>
 
-                    <div class="video-wrapper" style="background: #000; border-radius: 16px; overflow: hidden;">
-                        <video
-                            id="animo-stream-player"
-                            class="video-js vjs-big-play-centered vjs-theme-city"
-                            controls
-                            preload="auto"
-                            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect fill='%230f0f1a' width='640' height='360'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23c084fc' font-size='48' font-family='Arial'%3EАНИМО%3C/text%3E%3C/svg%3E"
-                            data-setup='{"fluid": true, "playbackRates": [0.5, 1, 1.5, 2]}'>
+                    <div class="vertical-video-container">
+                        <video id="factory-stream-player" playsinline>
                             <source src="https://garden.v-element.app/videos/%D0%A2%D0%A2%D0%A2%20%D0%9B%D0%95%D0%A8%D0%90%2055.mp4/stream" type="application/x-mpegURL">
-                            <p class="vjs-no-js">
-                                Ваш браузер не поддерживает видео. 
-                                <a href="https://garden.v-element.app/videos/%D0%A2%D0%A2%D0%A2%20%D0%9B%D0%95%D0%A8%D0%90%2055.mp4/stream" target="_blank">Скачать видео</a>
-                            </p>
                         </video>
+                        <button class="custom-play-btn" id="factory-play-btn"></button>
+                        <div class="video-controls">
+                            <button class="video-control-btn" id="factory-play-pause">▶</button>
+                            <div class="video-progress" id="factory-progress">
+                                <div class="video-progress-fill" id="factory-progress-fill"></div>
+                            </div>
+                            <span class="video-time" id="factory-time">0:00 / 0:00</span>
+                        </div>
                     </div>
 
                     
